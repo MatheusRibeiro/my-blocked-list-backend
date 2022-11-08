@@ -1,10 +1,10 @@
-import express from 'express';
+import express from 'express'
 
-const app = express();
+const app = express()
 
 app.get('/', (req, res) => {
-    return res.send('Hi');
-});
+  return res.send('Hi')
+})
 
-app.listen(8080);
-console.log('Application is running on port 8080');
+app.listen(8080)
+console.log('Application is running on port 8080')
