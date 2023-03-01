@@ -2,7 +2,7 @@ import DomainError from "../../Base/DomainException"
 import Contact from "./Contact"
 import Email from "../../Base/ValueObject/Email"
 import Phone from "../../Base/ValueObject/Phone"
-import FullName from "../../Base/ValueObject/FullName"
+import PersonName from "../../Base/ValueObject/PersonName"
 
 const validPhone1 = '+55 9876-5432'
 const validPhone2 = '+55 9123-4567'
@@ -14,7 +14,7 @@ describe('Add Account', () => {
     beforeEach(() => {
       contact = new Contact(
         'contact id',
-        new FullName({ firstName: "John", lastName: "Doe" }),
+        new PersonName({ firstName: "John", lastName: "Doe" }),
         'contact description') 
     })
     test('add valid accounts contact', () => {
@@ -61,7 +61,7 @@ describe('Is Valid', () => {
 
         const contact = new Contact(
             'contact id',
-            new FullName({ firstName: "John", lastName: "Doe" }),
+            new PersonName({ firstName: "John", lastName: "Doe" }),
             'contact description'
         )
         contact.addAcount(phone)
@@ -71,17 +71,17 @@ describe('Is Valid', () => {
     test('is valid with an empty description', () => {
         const contact = new Contact(
             'contact id',
-            new FullName({ firstName: "John", lastName: "Doe" }),
+            new PersonName({ firstName: "John", lastName: "Doe" }),
             ''
         )
         contact.addAcount(phone)
 
         expect(contact.isValid()).toBeTruthy()
     })
-    test('is not valid with invalid full name', () => {
+    test('is not valid with invalid person name', () => {
         const contact = new Contact(
             'contact id',
-            new FullName({ firstName: "", lastName: "Doe" }),
+            new PersonName({ firstName: "", lastName: "Doe" }),
             ''
         )
         contact.addAcount(phone)
@@ -92,7 +92,7 @@ describe('Is Valid', () => {
 
         const contact = new Contact(
             'contact id',
-            new FullName({ firstName: "John", lastName: "Doe" }),
+            new PersonName({ firstName: "John", lastName: "Doe" }),
             'contact description'
         )
 

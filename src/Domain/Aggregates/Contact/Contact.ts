@@ -1,27 +1,27 @@
 import DomainError from "../../Base/DomainException"
 import Entity from "../../Base/Entity"
 import Email from "../../Base/ValueObject/Email"
-import FullName from "../../Base/ValueObject/FullName"
+import PersonName from "../../Base/ValueObject/PersonName"
 import Phone from "../../Base/ValueObject/Phone"
 
 type ContactAccount = Email|Phone
 
 export default class Contact extends Entity {
   public readonly contactId: string
-  public readonly fullName: FullName
+  public readonly personName: PersonName
   public readonly description: string
   public readonly accounts: ContactAccount[]
 
-  constructor (contactId: string, fullName: FullName, description: string) {
+  constructor (contactId: string, personName: PersonName, description: string) {
     super()
     this.contactId = contactId
-    this.fullName = fullName
+    this.personName = personName
     this.description = description
     this.accounts = []
   }
 
   public isValid(): boolean {
-    return this.fullName.isValid() && this.accounts.length > 0
+    return this.personName.isValid() && this.accounts.length > 0
   }
 
   public addAcount(account: ContactAccount): void {

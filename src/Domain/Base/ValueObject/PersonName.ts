@@ -1,11 +1,11 @@
 import ValueObject from "./ValueObject";
 
-interface IFullName {
+interface IPersonlName {
     firstName: string
     lastName: string
 }
 
-export default class FullName extends ValueObject<IFullName> {
+export default class PersoName extends ValueObject<IPersonlName> {
     public isValid() {
         return !!this.value.firstName
     }
