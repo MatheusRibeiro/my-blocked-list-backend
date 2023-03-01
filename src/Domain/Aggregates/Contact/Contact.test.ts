@@ -3,69 +3,93 @@ import Contact from "./Contact"
 import EmailAccount from "./ValueObjects/EmailAccount"
 import PhoneAccount from "./ValueObjects/PhoneAccount"
 
-const validPhone = '+55 9876-5432'
-const validEmail = 'email@gmail.com'
+const validPhone1 = '+55 9876-5432'
+const validPhone2 = '+55 9123-4567'
+const validEmail1 = 'email1@gmail.com'
+const validEmail2 = 'email2@gmail.com'
 
-test('phone is valid', () => {
-    const phone = new PhoneAccount(validPhone)
-    expect(phone.isValid()).toBeTruthy
-})
-test('phone is invalid', () => {
-    const phone = new PhoneAccount('invalid')
-    expect(phone.isValid()).toBeFalsy
-})
-test('phone is equal', () => {
-    const phone1 = new PhoneAccount(validPhone)
-    const phone2 = new PhoneAccount(validPhone)
-    expect(phone1.isEqual(phone2)).toBeTruthy
-})
-test('email is valid', () => {
-    const email = new EmailAccount(validEmail)
-    expect(email.isValid()).toBeTruthy
-})
-test('phone is invalid', () => {
-    const email = new EmailAccount('invalid')
-    expect(email.isValid()).toBeFalsy
-})
-test('phone is equal', () => {
-    const email1 = new EmailAccount(validEmail)
-    const email2 = new EmailAccount(validEmail)
-    expect(email1.isEqual(email2)).toBeTruthy
+describe('Phone Value Object', () => {
+    test('phone is valid', () => {
+        const phone = new PhoneAccount(validPhone1)
+        expect(phone.isValid()).toBeTruthy
+    })
+    test('phone is invalid', () => {
+        const phone = new PhoneAccount('invalid')
+        expect(phone.isValid()).toBeFalsy
+    })
+    test('phone is equal', () => {
+        const phone1 = new PhoneAccount(validPhone1)
+        const phone2 = new PhoneAccount(validPhone1)
+        expect(phone1.isEqual(phone2)).toBeTruthy
+    })
+
+    test('phone is not equal', () => {
+        const phone1 = new PhoneAccount(validPhone1)
+        const phone2 = new PhoneAccount(validPhone2)
+        expect(phone1.isEqual(phone2)).toBeFalsy
+    })
 })
 
-test('add multiple valid accounts contact', () => {
-    const contact = new Contact("contact id", "contact name", "contact description")
-    const email1 = new EmailAccount(validEmail)
-    const email2 = new EmailAccount(`another${validEmail}`)
-    const phone = new PhoneAccount(validPhone)
-    contact.addAcount(email1)
-    contact.addAcount(email2)
-    contact.addAcount(phone)
-
-    expect(contact.accounts.length).toBe(3)
+describe ('Email Value Object', () => {
+    test('email is valid', () => {
+        const email = new EmailAccount(validEmail1)
+        expect(email.isValid()).toBeTruthy
+    })
+    test('email is invalid', () => {
+        const email = new EmailAccount('invalid')
+        expect(email.isValid()).toBeFalsy
+    })
+    test('email is equal', () => {
+        const email1 = new EmailAccount(validEmail1)
+        const email2 = new EmailAccount(validEmail1)
+        expect(email1.isEqual(email2)).toBeTruthy
+    })
+    test('email is not equal', () => {
+        const email1 = new EmailAccount(validEmail1)
+        const email2 = new EmailAccount(validEmail2)
+        expect(email1.isEqual(email2)).toBeTruthy
+    })
 })
 
-test('add invalid phone to contact', () => {
-    const contact = new Contact("contact id", "contact name", "contact description")
-    const phone = new PhoneAccount('invalid')
+describe('Add Account', () => {
+    test('add valid accounts contact', () => {
+        const contact = new Contact("contact id", "contact name", "contact description")
+        const email1 = new EmailAccount(validEmail1)
+        const email2 = new EmailAccount(validEmail2)
+        const phone = new PhoneAccount(validPhone1)
 
-    const methodCall = () => contact.addAcount(phone)
-    expect(methodCall).toThrow(Error)
-})
+        contact.addAcount(email1)
+        contact.addAcount(email2)
+        contact.addAcount(phone)
+    
+        expect(contact.accounts.length).toBe(3)
+    })
+    
+    test('add invalid phone to contact', () => {
+        const contact = new Contact("contact id", "contact name", "contact description")
+        const phone = new PhoneAccount('invalid')
+    
+        const methodCall = () => contact.addAcount(phone)
+        expect(methodCall).toThrow(Error)
+    })
+    
+    test('add invalid email to contact', () => {
+        const contact = new Contact("contact id", "contact name", "contact description")
+        const email = new EmailAccount('invalid')
 
-test('add invalid email to contact', () => {
-    const contact = new Contact("contact id", "contact name", "contact description")
-    const email = new EmailAccount('invalid')
-    const methodCall = () => contact.addAcount(email)
-    expect(methodCall).toThrow(DomainError)
-})
+        const methodCall = () => contact.addAcount(email)
+        expect(methodCall).toThrow(DomainError)
+    })
+    
+    test('add duplicated account contact', () => {
+        const contact = new Contact("contact id", "contact name", "contact description")
+        const email1 = new EmailAccount(validEmail1)
+        const email2 = new EmailAccount(validEmail1)
 
-test('add duplicated account contact', () => {
-    const contact = new Contact("contact id", "contact name", "contact description")
-    const email1 = new EmailAccount(validEmail)
-    const email2 = new EmailAccount(validEmail)
-    contact.addAcount(email1)
-    const methodCall = () => contact.addAcount(email2)
-
-    expect(methodCall).toThrow(DomainError)
+        contact.addAcount(email1)
+        const methodCall = () => contact.addAcount(email2)
+    
+        expect(methodCall).toThrow(DomainError)
+    })
+    
 })
