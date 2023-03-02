@@ -1,3 +1,4 @@
+import UUID from "../../Base/ValueObject/UUID"
 import Complaint from "./Complaint"
 import ComplaintDescription from "./ValueObjects/ComplaintDescription"
 import ComplaintType, { ComplaintCategory, ComplaintSeverity } from "./ValueObjects/ComplaintType"
@@ -7,12 +8,14 @@ const complaintType = new ComplaintType({
     complaintSeverity: ComplaintSeverity.ALERT
 
 })
+
+const validUuid = new UUID('f22d6b94-bc16-4766-80c7-23063106fb2e')
 describe('Is Valid', () => {
     test('is valid with all fields', () => {
         const complaint = new Complaint(
-            'complaint id',
+            validUuid,
             new ComplaintDescription('12345'),
-            'contact Id',
+            validUuid,
             complaintType
         )
 
@@ -21,9 +24,9 @@ describe('Is Valid', () => {
     })
     test('is not valid with description shorter than 5 characters', () => {
         const complaint = new Complaint(
-            'complaint id',
+            validUuid,
             new ComplaintDescription('1234'),
-            'contact id',
+            validUuid,
             complaintType
         )
 
@@ -31,9 +34,9 @@ describe('Is Valid', () => {
     })
     test('is not valid with a description longer than 255 characters', () => {
         const complaint = new Complaint(
-            'complaint id',
+            validUuid,
             new ComplaintDescription('a'.repeat(256)),
-            'contact id',
+            validUuid,
             complaintType
         )
 
@@ -45,9 +48,9 @@ describe('Is Valid', () => {
             complaintSeverity: 6
         })
         const complaint = new Complaint(
-            'complaint id',
+            validUuid,
             new ComplaintDescription('description'),
-            'contact id',
+            validUuid,
             invalidComplaintType
         )
 

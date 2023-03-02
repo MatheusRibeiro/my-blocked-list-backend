@@ -3,16 +3,17 @@ import Entity from "../../Base/Entity"
 import Email from "../../Base/ValueObject/Email"
 import PersonName from "../../Base/ValueObject/PersonName"
 import Phone from "../../Base/ValueObject/Phone"
+import UUID from "../../Base/ValueObject/UUID"
 
 type ContactAccount = Email|Phone
 
 export default class Contact extends Entity {
-  public readonly contactId: string
+  public readonly contactId: UUID
   public readonly personName: PersonName
   public readonly description: string
   public readonly accounts: ContactAccount[]
 
-  constructor (contactId: string, personName: PersonName, description: string) {
+  constructor (contactId: UUID, personName: PersonName, description: string) {
     super()
     this.contactId = contactId
     this.personName = personName

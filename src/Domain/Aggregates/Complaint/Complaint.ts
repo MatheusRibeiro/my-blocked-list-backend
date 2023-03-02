@@ -1,17 +1,18 @@
 import Entity from "../../Base/Entity";
+import UUID from "../../Base/ValueObject/UUID";
 import ComplaintDescription from "./ValueObjects/ComplaintDescription";
 import ComplaintType from "./ValueObjects/ComplaintType";
 
 export default class Complaint extends Entity {
-    public readonly complaintId: string
+    public readonly complaintId: UUID
     public readonly description: ComplaintDescription
-    public readonly contactId: string
+    public readonly contactId: UUID
     public readonly complaintType: ComplaintType
 
     constructor(
-        complaintId: string,
+        complaintId: UUID,
         description: ComplaintDescription,
-        contactId: string,
+        contactId: UUID,
         complaintType: ComplaintType
     ) {
         super()

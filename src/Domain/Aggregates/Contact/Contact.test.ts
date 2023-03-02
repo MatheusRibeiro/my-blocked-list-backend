@@ -3,17 +3,20 @@ import Contact from "./Contact"
 import Email from "../../Base/ValueObject/Email"
 import Phone from "../../Base/ValueObject/Phone"
 import PersonName from "../../Base/ValueObject/PersonName"
+import UUID from "../../Base/ValueObject/UUID"
 
 const validPhone1 = '+55 9876-5432'
 const validPhone2 = '+55 9123-4567'
 const validEmail1 = 'email1@gmail.com'
 const validEmail2 = 'email2@gmail.com'
 
+const validUuid = new UUID('f22d6b94-bc16-4766-80c7-23063106fb2e')
+
 describe('Add Account', () => {
     let contact: Contact
     beforeEach(() => {
       contact = new Contact(
-        'contact id',
+        validUuid,
         new PersonName({ firstName: "John", lastName: "Doe" }),
         'contact description') 
     })
@@ -60,7 +63,7 @@ describe('Is Valid', () => {
     test('is valid with all fields', () => {
 
         const contact = new Contact(
-            'contact id',
+            validUuid,
             new PersonName({ firstName: "John", lastName: "Doe" }),
             'contact description'
         )
@@ -70,7 +73,7 @@ describe('Is Valid', () => {
     })
     test('is valid with an empty description', () => {
         const contact = new Contact(
-            'contact id',
+            validUuid,
             new PersonName({ firstName: "John", lastName: "Doe" }),
             ''
         )
@@ -80,7 +83,7 @@ describe('Is Valid', () => {
     })
     test('is not valid with invalid person name', () => {
         const contact = new Contact(
-            'contact id',
+            validUuid,
             new PersonName({ firstName: "", lastName: "Doe" }),
             ''
         )
@@ -91,7 +94,7 @@ describe('Is Valid', () => {
     test('is not valid without account', () => {
 
         const contact = new Contact(
-            'contact id',
+            validUuid,
             new PersonName({ firstName: "John", lastName: "Doe" }),
             'contact description'
         )
