@@ -1,22 +1,32 @@
+import { autoInjectable } from "tsyringe";
 import IAuthenticationService, { AuthenticationResponse, LoginRequest, RegisterRequest } from "./IAuthenticationService";
+import IJwtTokenGenerator from "./IJwtTokenGenerator";
 
+@autoInjectable()
 export default class AuthenticationService implements IAuthenticationService {
+    private readonly jwtTokenGenerator: IJwtTokenGenerator
+
+    constructor(jwtTokenGenerator: IJwtTokenGenerator) {
+        this.jwtTokenGenerator = jwtTokenGenerator
+    }
+
     public async login(loginRequest: LoginRequest): Promise<AuthenticationResponse> {
+        const { username, password } = loginRequest
+        const userId = 'uuid'
+        const token = this.jwtTokenGenerator.generateToken(userId, 'f', 'l', username)
         return {
             id: 'uuid',
             firstName: 'First',
             lastName: 'Last',
-            username: loginRequest.username,
-            token: 'jwt token generated'
+            username,
+            token
         }
     }
     public async register(registerRequest: RegisterRequest): Promise<AuthenticationResponse> {
-        return {
-            id: 'uuid',
-            firstName: registerRequest.firstName,
-            lastName: registerRequest.lastName,
-            username: registerRequest.username,
-            token: 'jwt token generated'
-        }
+        const { firstName, lastName, username, password } = registerRequest
+        const userId = 'uuid'
+        const token = this.jwtTokenGenerator.generateToken(userId, firstName, lastName, username)
+
+        return { id: userId, firstName, lastName, username, token}
     }
 }

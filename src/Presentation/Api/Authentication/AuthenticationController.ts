@@ -1,26 +1,30 @@
 import { Request } from "express"
-import AuthenticationService from "../../../Application/Services/Authentication/AuthenticationService"
+import { autoInjectable } from "tsyringe"
 import IAuthenticationService, { AuthenticationResponse } from "../../../Application/Services/Authentication/IAuthenticationService"
 
+
+@autoInjectable()
 export default class AuthenticationController {
     private authService: IAuthenticationService
-    constructor(authService?: IAuthenticationService) {
-        this.authService = authService ? authService : new AuthenticationService()
+
+    constructor(authService: IAuthenticationService) {
+        this.authService = authService
     }
 
     public login  = (req: Request): Promise<AuthenticationResponse>  => {
-        return this.authService.login({
-            username: req.body.username,
-            password: req.body.password
-        })
+        const { username, password } = req?.body || {}
+
+        return this.authService.login({ username, password })
     }
 
     public register = (req: Request): Promise<AuthenticationResponse> => {
-        return this.authService.register({
-            firstName: req.body.first_name,
-            lastName: req.body.last_name,
-            username: req.body.username,
-            password: req.body.password
-        })
+        const {
+            first_name: firstName,
+            last_name: lastName,
+            username,
+            password
+        } = req?.body || {}
+
+        return this.authService.register({ firstName, lastName, username, password })
     }
 }

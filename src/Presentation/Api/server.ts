@@ -1,6 +1,9 @@
+import 'reflect-metadata'
+
 import bodyParser from 'body-parser'
 import express, { Request, Response, Router } from 'express'
 import router from './router'
+
 const app = express()
 
 app.use(bodyParser.json({ limit: '10mb' }))
