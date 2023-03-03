@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express"
 import authenticationRouter from "./Authentication/AuthentictionRouter"
-const router = new Router()
+const router = Router()
 
 router.use('/auth', authenticationRouter)
 
