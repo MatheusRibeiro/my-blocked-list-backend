@@ -1,12 +1,9 @@
-import { Request, Response } from "express"
+import { Request } from "express"
+
 
 const AuthenticationController = {
-    login: () => ({
-        msg: 'login'
-    }),
-    register: () => ({
-        msg: 'register'
-    })
+    login: (req: Request) => req.body,
+    register: (req: Request) => req.body
 }
 
 export default AuthenticationController

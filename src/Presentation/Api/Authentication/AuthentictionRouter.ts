@@ -4,7 +4,7 @@ import resultHandler from "../controllerResultHandler";
 
 const authenticationRouter = new Router()
 
-authenticationRouter.get('/login', resultHandler(controller.login))
-authenticationRouter.get('/register', resultHandler(controller.register))
+authenticationRouter.post('/login', resultHandler(controller.login))
+authenticationRouter.post('/register', resultHandler(controller.register))
 
 export default authenticationRouter
