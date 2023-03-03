@@ -6,17 +6,20 @@ import ComplaintType, { ComplaintCategory, ComplaintSeverity } from "./ValueObje
 const complaintType = new ComplaintType({
     complaintCategory: ComplaintCategory.SPAM,
     complaintSeverity: ComplaintSeverity.ALERT
-
 })
 
-const validUuid = new UUID('f22d6b94-bc16-4766-80c7-23063106fb2e')
+const validContactId = UUID.generate()
+const validAuthorId = UUID.generate()
+const validComplaintId = UUID.generate()
+
 describe('Is Valid', () => {
     test('is valid with all fields', () => {
         const complaint = new Complaint(
-            validUuid,
+            validComplaintId,
             new ComplaintDescription('12345'),
-            validUuid,
-            complaintType
+            validContactId,
+            complaintType,
+            validAuthorId
         )
 
 
@@ -24,20 +27,22 @@ describe('Is Valid', () => {
     })
     test('is not valid with description shorter than 5 characters', () => {
         const complaint = new Complaint(
-            validUuid,
+            validComplaintId,
             new ComplaintDescription('1234'),
-            validUuid,
-            complaintType
+            validContactId,
+            complaintType,
+            validAuthorId
         )
 
         expect(complaint.isValid()).toBeFalsy()
     })
     test('is not valid with a description longer than 255 characters', () => {
         const complaint = new Complaint(
-            validUuid,
+            validComplaintId,
             new ComplaintDescription('a'.repeat(256)),
-            validUuid,
-            complaintType
+            validContactId,
+            complaintType,
+            validAuthorId
         )
 
         expect(complaint.isValid()).toBeFalsy()
@@ -48,10 +53,11 @@ describe('Is Valid', () => {
             complaintSeverity: 6
         })
         const complaint = new Complaint(
-            validUuid,
+            validComplaintId,
             new ComplaintDescription('description'),
-            validUuid,
-            invalidComplaintType
+            validContactId,
+            invalidComplaintType,
+            validAuthorId
         )
 
         expect(complaint.isValid()).toBeFalsy()

@@ -11,39 +11,17 @@ export default class Contact extends Entity {
   public readonly contactId: ContactId
   public readonly personName: PersonName
   public readonly description: string
-  public readonly accounts: ContactAccount[]
+  public readonly account: ContactAccount
 
-  constructor (contactId: ContactId, personName: PersonName, description: string) {
+  constructor (contactId: ContactId, personName: PersonName, description: string, account: ContactAccount) {
     super()
     this.contactId = contactId
     this.personName = personName
     this.description = description
-    this.accounts = []
+    this.account = account
   }
 
   public isValid(): boolean {
-    return this.personName.isValid() && this.accounts.length > 0
-  }
-
-  public addAcount(account: ContactAccount): void {
-    if(!account.isValid()) {
-      throw new DomainError("Invalid Account")
-    }
-
-    if(this.hasAccount(account)) {
-      throw new DomainError("Duplicated account")
-    }
-  
-    this.accounts.push(account)
-  }
-
-  private hasAccount(account: ContactAccount): boolean {
-    for(let addedAccount of this.accounts) {
-      const isOfSameClass = account.constructor === addedAccount.constructor
-      if(isOfSameClass && account.isEqual(addedAccount)) {
-        return true
-      }
-    }
-    return false
+    return this.personName?.isValid() && this.account?.isValid()
   }
 }

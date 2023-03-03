@@ -5,79 +5,67 @@ import Phone from "../../Base/ValueObject/Phone"
 import PersonName from "../../Base/ValueObject/PersonName"
 import UUID from "../../Base/ValueObject/UUID"
 
-const validPhone1 = '+55 9876-5432'
-const validPhone2 = '+55 9123-4567'
-const validEmail1 = 'email1@gmail.com'
-const validEmail2 = 'email2@gmail.com'
-
-const validUuid = new UUID('f22d6b94-bc16-4766-80c7-23063106fb2e')
-
-describe('Add Account', () => {
-    let contact: Contact
-    beforeEach(() => {
-      contact = new Contact(
-        validUuid,
-        new PersonName({ firstName: "John", lastName: "Doe" }),
-        'contact description') 
-    })
-    test('add valid accounts contact', () => {
-        const email1 = new Email(validEmail1)
-        const email2 = new Email(validEmail2)
-        const phone = new Phone(validPhone1)
-
-        contact.addAcount(email1)
-        contact.addAcount(email2)
-        contact.addAcount(phone)
-
-        expect(contact.accounts.length).toBe(3)
-    })
-    
-    test('add invalid phone to contact', () => {
-        const phone = new Phone('invalid')
-
-        const methodCall = () => contact.addAcount(phone)
-        expect(methodCall).toThrow(Error)
-    })
-    
-    test('add invalid email to contact', () => {
-        const email = new Email('invalid')
-
-        const methodCall = () => contact.addAcount(email)
-        expect(methodCall).toThrow(DomainError)
-    })
-    
-    test('add duplicated account contact', () => {
-        const email1 = new Email(validEmail1)
-        const email2 = new Email(validEmail1)
-
-        contact.addAcount(email1)
-        const methodCall = () => contact.addAcount(email2)
-
-        expect(methodCall).toThrow(DomainError)
-    })
-    
-})
-
 describe('Is Valid', () => {
-    const phone = new Phone(validPhone1)
-    test('is valid with all fields', () => {
+    const validPhone = new Phone('+55 9876-5432')
+    const validEmail = new Email('email1@gmail.com')
+    const validPersonName = new PersonName({ firstName: "John", lastName: "Doe" })
+    const validUuid = UUID.generate()
 
+    test('add valid phone to contact', () => {
         const contact = new Contact(
             validUuid,
-            new PersonName({ firstName: "John", lastName: "Doe" }),
-            'contact description'
+            validPersonName,
+            'contact description',
+            validPhone
         )
-        contact.addAcount(phone)
 
         expect(contact.isValid()).toBeTruthy()
     })
+
+    test('add invalid email to contact', () => {
+        const contact = new Contact(
+            validUuid,
+            validPersonName,
+            'contact description',
+            validEmail
+        )
+
+        expect(contact.isValid()).toBeTruthy()
+    })
+
+    test('add invalid phone to contact', () => {
+        const phone = new Phone('invalid')
+
+        const contact = new Contact(
+            validUuid,
+            validPersonName,
+            'contact description',
+            phone
+        )
+
+        expect(contact.isValid()).toBeFalsy()
+    })
+
+    test('add invalid email to contact', () => {
+        const email = new Email('invalid')
+
+        const contact = new Contact(
+            validUuid,
+            validPersonName,
+            'contact description',
+            email
+        )
+
+        expect(contact.isValid()).toBeFalsy()
+    })
+
     test('is valid with an empty description', () => {
         const contact = new Contact(
             validUuid,
-            new PersonName({ firstName: "John", lastName: "Doe" }),
-            ''
+            validPersonName,
+            '',
+            validPhone
         )
-        contact.addAcount(phone)
 
         expect(contact.isValid()).toBeTruthy()
     })
@@ -85,18 +73,8 @@ describe('Is Valid', () => {
         const contact = new Contact(
             validUuid,
             new PersonName({ firstName: "", lastName: "Doe" }),
-            ''
-        )
-        contact.addAcount(phone)
-
-        expect(contact.isValid()).toBeFalsy()
-    })
-    test('is not valid without account', () => {
-
-        const contact = new Contact(
-            validUuid,
-            new PersonName({ firstName: "John", lastName: "Doe" }),
-            'contact description'
+            '',
+            validPhone
         )
 
         expect(contact.isValid()).toBeFalsy()
