@@ -1,4 +1,5 @@
 import ValueObject from "./ValueObject";
+import { v4 as uuidv4 } from 'uuid'
 
 export default class UUID extends ValueObject<string> {
     public isValid(other: ValueObject<string>): boolean {
@@ -6,4 +7,7 @@ export default class UUID extends ValueObject<string> {
         return !!this.value.match(uuidRegex)
     }
 
+    public static generate(): UUID {
+        return new UUID(uuidv4())
+    }
 }

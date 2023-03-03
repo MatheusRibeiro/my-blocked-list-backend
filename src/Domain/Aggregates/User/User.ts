@@ -1,15 +1,15 @@
 import Entity from "../../Base/Entity";
-import UUID from "../../Base/ValueObject/UUID";
 import Password from "./ValueObjects/Password";
+import UserId from "./ValueObjects/UserId";
 import Username from "./ValueObjects/Username";
 
 export default class User extends Entity {
-    public readonly userId: UUID
+    public readonly userId: UserId
     public readonly username: Username
     private readonly password: Password
 
     constructor(
-        userId: UUID,
+        userId: UserId,
         username: Username,
         password: Password
     ) {

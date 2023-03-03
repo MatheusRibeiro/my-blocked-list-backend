@@ -22,4 +22,8 @@ describe ('UUID Value Object', () => {
         const uuid2 = new UUID(validUuid2)
         expect(uuid1.isEqual(uuid2)).toBeFalsy()
     })
+    test('generate a valid uuid', () => {
+        const generated = UUID.generate()
+        expect(generated.isValid()).toBeTruthy()
+    })
 })

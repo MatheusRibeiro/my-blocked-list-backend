@@ -1,19 +1,23 @@
 import Entity from "../../Base/Entity";
-import UUID from "../../Base/ValueObject/UUID";
+import ContactId from "../Contact/ValueObjects/ContactId";
+import UserId from "../User/ValueObjects/UserId";
 import ComplaintDescription from "./ValueObjects/ComplaintDescription";
+import ComplaintId from "./ValueObjects/ComplaintId";
 import ComplaintType from "./ValueObjects/ComplaintType";
 
 export default class Complaint extends Entity {
-    public readonly complaintId: UUID
+    public readonly complaintId: ComplaintId
     public readonly description: ComplaintDescription
-    public readonly contactId: UUID
+    public readonly contactId: ContactId
     public readonly complaintType: ComplaintType
+    public readonly authorId: UserId
 
     constructor(
-        complaintId: UUID,
+        complaintId: ComplaintId,
         description: ComplaintDescription,
-        contactId: UUID,
-        complaintType: ComplaintType
+        contactId: ContactId,
+        complaintType: ComplaintType,
+        authorId: UserId
     ) {
         super()
 
@@ -21,6 +25,7 @@ export default class Complaint extends Entity {
         this.description = description
         this.contactId = contactId
         this.complaintType = complaintType
+        this.authorId = authorId
     }
 
     public isValid(): boolean {
