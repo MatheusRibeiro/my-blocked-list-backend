@@ -1,12 +1,15 @@
-import { autoInjectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import IAuthenticationService, { AuthenticationResponse, LoginRequest, RegisterRequest } from "./IAuthenticationService";
 import IJwtTokenGenerator from "./IJwtTokenGenerator";
 
-@autoInjectable()
+@injectable()
 export default class AuthenticationService implements IAuthenticationService {
     private readonly jwtTokenGenerator: IJwtTokenGenerator
 
-    constructor(jwtTokenGenerator: IJwtTokenGenerator) {
+    constructor(
+        @inject("JwtTokenGenerator")
+        jwtTokenGenerator: IJwtTokenGenerator
+    ) {
         this.jwtTokenGenerator = jwtTokenGenerator
     }
 

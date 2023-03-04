@@ -18,8 +18,7 @@ export interface AuthenticationResponse {
     token: string
 }
 
-// not using interface or abstract class due known issues with DI lib tsyringe
-export default class IAuthenticationService {
-    login(loginRequest: LoginRequest): Promise<AuthenticationResponse> {throw Error}
-    register(registerRequest: RegisterRequest): Promise<AuthenticationResponse> {throw Error}
+export default abstract class IAuthenticationService {
+    abstract login(loginRequest: LoginRequest): Promise<AuthenticationResponse>
+    abstract register(registerRequest: RegisterRequest): Promise<AuthenticationResponse>
 }

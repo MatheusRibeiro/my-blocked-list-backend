@@ -1,13 +1,15 @@
 import { Request } from "express"
-import { autoInjectable } from "tsyringe"
+import { inject, injectable } from "tsyringe"
 import IAuthenticationService, { AuthenticationResponse } from "../../../Application/Services/Authentication/IAuthenticationService"
 
-
-@autoInjectable()
+@injectable()
 export default class AuthenticationController {
     private authService: IAuthenticationService
 
-    constructor(authService: IAuthenticationService) {
+    constructor(
+        @inject("AuthenticationService")
+        authService: IAuthenticationService
+    ) {
         this.authService = authService
     }
 

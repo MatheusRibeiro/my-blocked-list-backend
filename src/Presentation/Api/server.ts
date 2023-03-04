@@ -2,6 +2,8 @@ import 'reflect-metadata'
 
 import bodyParser from 'body-parser'
 import express, { Request, Response, Router } from 'express'
+
+import "./dependencyInjection"
 import router from './router'
 
 const app = express()
