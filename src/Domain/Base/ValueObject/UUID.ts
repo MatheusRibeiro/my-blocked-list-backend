@@ -1,13 +1,14 @@
-import ValueObject from "./ValueObject";
+import ValueObject from "./ValueObject"
 import { v4 as uuidv4 } from 'uuid'
+import Id from "./Id"
 
-export default class UUID extends ValueObject<string> {
-    public isValid(other: ValueObject<string>): boolean {
+export default class UUID extends Id<string> {
+    public isValid(other: UUID): boolean {
         const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
-        return !!this.value.match(uuidRegex)
+        return !!this.value?.match(uuidRegex)
     }
 
-    public static generate(): UUID {
-        return new UUID(uuidv4())
+    public generate(): string {
+        return uuidv4()
     }
 }

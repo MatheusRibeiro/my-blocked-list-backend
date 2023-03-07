@@ -9,7 +9,7 @@ describe('Is Valid', () => {
     const validPhone = new Phone('+55 9876-5432')
     const validEmail = new Email('email1@gmail.com')
     const validPersonName = new PersonName({ firstName: "John", lastName: "Doe" })
-    const validUuid = UUID.generate()
+    const validUuid = new UUID()
 
     test('add valid phone to contact', () => {
         const contact = new Contact(

@@ -8,9 +8,9 @@ const complaintType = new ComplaintType({
     complaintSeverity: ComplaintSeverity.ALERT
 })
 
-const validContactId = UUID.generate()
-const validAuthorId = UUID.generate()
-const validComplaintId = UUID.generate()
+const validContactId = new UUID()
+const validAuthorId = new UUID()
+const validComplaintId = new UUID()
 
 describe('Is Valid', () => {
     test('is valid with all fields', () => {

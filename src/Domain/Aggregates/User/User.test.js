@@ -3,7 +3,7 @@ import User from "./User"
 import Password from "./ValueObjects/Password"
 import Username from "./ValueObjects/Username"
 
-const validUuid = UUID.generate()
+const validUuid = new UUID()
 const validUsername = new Username('my_username')
 const validPassword = new Password('1234')
 
