@@ -1,5 +1,5 @@
 export default abstract class ValueObject<T> {
-    protected value: T
+    public value: T
 
     constructor(value:T) {
         this.value = value

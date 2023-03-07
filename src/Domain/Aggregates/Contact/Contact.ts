@@ -22,6 +22,10 @@ export default class Contact extends Entity {
   }
 
   public isValid(): boolean {
-    return this.personName?.isValid() && this.account?.isValid()
+    return this.personName.isValid() && this.account.isValid()
+  }
+
+  public isEqual(entity: Contact): boolean {
+    return this.contactId.isEqual(entity.contactId)
   }
 }

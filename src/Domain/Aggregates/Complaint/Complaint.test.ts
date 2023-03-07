@@ -63,3 +63,48 @@ describe('Is Valid', () => {
         expect(complaint.isValid()).toBeFalsy()
     })
 })
+
+describe('is Equal', () => {
+    test('should be equal when have the same id', () => {
+        const id = new UUID()
+        const sameId = new UUID(id.value)
+
+        const complaint = new Complaint(
+            id,
+            new ComplaintDescription('first'),
+            new UUID(),
+            complaintType,
+            new UUID()
+        )
+
+        const differentComplaint = new Complaint(
+            sameId,
+            new ComplaintDescription('second'),
+            new UUID(),
+            complaintType,
+            new UUID()
+        )
+        expect(complaint.isEqual(differentComplaint)).toBeTruthy()
+    })
+    test('should not be equal when have different ids', () => {
+        const id = new UUID()
+        const anotherId = new UUID()
+
+        const complaint = new Complaint(
+            id,
+            new ComplaintDescription('same'),
+            validContactId,
+            complaintType,
+            validAuthorId
+        )
+
+        const sameIdComplaint = new Complaint(
+            anotherId,
+            new ComplaintDescription('same'),
+            validContactId,
+            complaintType,
+            validAuthorId
+        )
+        expect(complaint.isEqual(sameIdComplaint)).toBeFalsy()
+    })
+})

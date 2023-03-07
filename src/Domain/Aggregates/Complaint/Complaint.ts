@@ -29,6 +29,10 @@ export default class Complaint extends Entity {
     }
 
     public isValid(): boolean {
-        return !!this.contactId && this.description?.isValid() && this.complaintType.isValid()
+        return this.description.isValid() && this.complaintType.isValid()
+    }
+
+    public isEqual(entity: Complaint): boolean {
+        return this.complaintId.isEqual(entity.complaintId)
     }
 }

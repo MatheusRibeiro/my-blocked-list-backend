@@ -36,3 +36,41 @@ describe('is valid', () => {
         expect(user.isValid()).toBeFalsy()
     })
 })
+
+describe('is Equal', () => {
+    test('should be equal when have the same id', () => {
+        const id = new UUID()
+        const sameId = new UUID(id.value)
+
+        const user = new User(
+            id,
+            new Username('first_one'),
+            new Password('1234')
+        )
+        const sameIdUser = new User(
+            sameId,
+            new Username('second_one'),
+            new Password('5678'),
+        )
+
+        expect(user.isEqual(sameIdUser)).toBeTruthy()
+    })
+
+    test('should not be equal when have different ids', () => {
+        const id = new UUID()
+        const anotherId = new UUID()
+
+        const user = new User(
+            id,
+            validUsername,
+            validPassword
+        )
+        const differentUser = new User(
+            anotherId,
+            validUsername,
+            validPassword
+        )
+
+        expect(user.isEqual(differentUser)).toBeFalsy()
+    })
+})

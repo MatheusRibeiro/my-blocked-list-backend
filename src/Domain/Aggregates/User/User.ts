@@ -21,5 +21,7 @@ export default class User extends Entity {
     public isValid(): boolean {
         return this.username.isValid() && this.password.isValid()
     }
-
+    public isEqual(entity: User): boolean {
+        return this.userId.isEqual(entity.userId)
+    }
 }
