@@ -13,5 +13,4 @@ export default class JwtTokenGenerator implements IJwtTokenGenerator {
 
         return jwt.sign(payload, secret)
     }
-
 }
