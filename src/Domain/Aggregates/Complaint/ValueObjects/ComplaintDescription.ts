@@ -1,10 +1,10 @@
-import ValueObject from "../../../Base/ValueObject/ValueObject"
+import ValueObject from '../../../Base/ValueObject/ValueObject'
 
 const MIN_LENGTH = 5
 const MAX_LENGTH = 255
 
 export default class ComplaintDescription extends ValueObject<string> {
-    public isValid(): boolean {
-        return this.value.length >= MIN_LENGTH && this.value.length <= MAX_LENGTH
-    }
+  public isValid (): boolean {
+    return this.value.length >= MIN_LENGTH && this.value.length <= MAX_LENGTH
+  }
 }
