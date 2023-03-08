@@ -10,8 +10,20 @@ const validEmail = new Email('email1@gmail.com')
 const validPersonName = new PersonName({ firstName: "John", lastName: "Doe" })
 const validUuid = new UUID()
 
-describe('Is Valid', () => {
+describe('get Id', () => {
+    test('should return the contact id', () => {
+        const contact = new Contact(
+            validUuid,
+            validPersonName,
+            'contact description',
+            validPhone
+        )
 
+        expect(contact.getId().isEqual(validUuid)).toBeTruthy()
+    })
+})
+
+describe('Is Valid', () => {
     test('add valid phone to contact', () => {
         const contact = new Contact(
             validUuid,

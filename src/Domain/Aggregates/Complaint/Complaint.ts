@@ -1,4 +1,5 @@
 import Entity from "../../Base/Entity";
+import Id from "../../Base/ValueObject/Id";
 import ContactId from "../Contact/ValueObjects/ContactId";
 import UserId from "../User/ValueObjects/UserId";
 import ComplaintDescription from "./ValueObjects/ComplaintDescription";
@@ -6,11 +7,11 @@ import ComplaintId from "./ValueObjects/ComplaintId";
 import ComplaintType from "./ValueObjects/ComplaintType";
 
 export default class Complaint extends Entity {
-    public readonly complaintId: ComplaintId
-    public readonly description: ComplaintDescription
-    public readonly contactId: ContactId
-    public readonly complaintType: ComplaintType
-    public readonly authorId: UserId
+    public complaintId: ComplaintId
+    public description: ComplaintDescription
+    public contactId: ContactId
+    public complaintType: ComplaintType
+    public authorId: UserId
 
     constructor(
         complaintId: ComplaintId,
@@ -26,6 +27,10 @@ export default class Complaint extends Entity {
         this.contactId = contactId
         this.complaintType = complaintType
         this.authorId = authorId
+    }
+
+    public getId(): ComplaintId {
+        return this.complaintId
     }
 
     public isValid(): boolean {

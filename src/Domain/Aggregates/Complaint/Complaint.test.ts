@@ -12,6 +12,20 @@ const validContactId = new UUID()
 const validAuthorId = new UUID()
 const validComplaintId = new UUID()
 
+describe('get Id', () => {
+    test('should return the complaintId', () => {
+        const complaint = new Complaint(
+            validComplaintId,
+            new ComplaintDescription('12345'),
+            validContactId,
+            complaintType,
+            validAuthorId
+        )
+
+        expect(complaint.getId().isEqual(validComplaintId)).toBeTruthy()
+    })
+})
+
 describe('Is Valid', () => {
     test('is valid with all fields', () => {
         const complaint = new Complaint(
@@ -21,7 +35,6 @@ describe('Is Valid', () => {
             complaintType,
             validAuthorId
         )
-
 
         expect(complaint.isValid()).toBeTruthy()
     })

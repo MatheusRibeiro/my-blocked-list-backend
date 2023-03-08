@@ -7,6 +7,18 @@ const validUuid = new UUID()
 const validUsername = new Username('my_username')
 const validPassword = new Password('1234')
 
+describe('get Id', () => {
+    test('should return the userId', () => {
+        const user = new User(
+            validUuid,
+            validUsername,
+            validPassword
+        )
+
+        expect(user.getId().isEqual(validUuid)).toBeTruthy()
+    })
+})
+
 describe('is valid', () => {
     test('is valid when all required fields are filled', () => {
         const user = new User(

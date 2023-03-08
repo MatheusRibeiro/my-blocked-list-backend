@@ -1,6 +1,7 @@
 import DomainError from "../../Base/DomainException"
 import Entity from "../../Base/Entity"
 import Email from "../../Base/ValueObject/Email"
+import Id from "../../Base/ValueObject/Id"
 import PersonName from "../../Base/ValueObject/PersonName"
 import Phone from "../../Base/ValueObject/Phone"
 import ContactId from "./ValueObjects/ContactId"
@@ -8,10 +9,10 @@ import ContactId from "./ValueObjects/ContactId"
 type ContactAccount = Email|Phone
 
 export default class Contact extends Entity {
-  public readonly contactId: ContactId
-  public readonly personName: PersonName
-  public readonly description: string
-  public readonly account: ContactAccount
+  public contactId: ContactId
+  public personName: PersonName
+  public description: string
+  public account: ContactAccount
 
   constructor (contactId: ContactId, personName: PersonName, description: string, account: ContactAccount) {
     super()
@@ -19,6 +20,10 @@ export default class Contact extends Entity {
     this.personName = personName
     this.description = description
     this.account = account
+  }
+
+  public getId(): ContactId {
+    return this.contactId
   }
 
   public isValid(): boolean {
