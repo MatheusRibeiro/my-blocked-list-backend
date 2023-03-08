@@ -1,4 +1,4 @@
-import ValueObject from "./ValueObject";
+import ValueObject from './ValueObject'
 
 interface IPersonlName {
     firstName: string
@@ -6,7 +6,7 @@ interface IPersonlName {
 }
 
 export default class PersoName extends ValueObject<IPersonlName> {
-    public isValid() {
+    public isValid (): boolean {
         return !!this.value.firstName
     }
 }

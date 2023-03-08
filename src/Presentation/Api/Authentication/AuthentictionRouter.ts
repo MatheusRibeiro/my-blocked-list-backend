@@ -1,7 +1,7 @@
-import { Router } from "express"
+import { Router } from 'express'
 
-import AuthenticationController from "./AuthenticationController"
-import resultHandler from "../controllerResultHandler"
+import AuthenticationController from './AuthenticationController'
+import resultHandler from '../controllerResultHandler'
 
 import { container } from 'tsyringe'
 

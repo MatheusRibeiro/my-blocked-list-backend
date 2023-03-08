@@ -1,5 +1,5 @@
-import { Router } from "express"
-import authenticationRouter from "./Authentication/AuthentictionRouter"
+import { Router } from 'express'
+import authenticationRouter from './Authentication/AuthentictionRouter'
 const router = Router()
 
 router.use('/auth', authenticationRouter)

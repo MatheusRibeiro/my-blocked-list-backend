@@ -1,9 +1,9 @@
-import ValueObject from "./ValueObject"
+import ValueObject from './ValueObject'
 
-export default abstract class Id<T> extends ValueObject<T|undefined> {
-    constructor(value?: T) {
+export default abstract class Id<T> extends ValueObject<T | undefined> {
+    constructor (value?: T) {
         super(value)
-        if(!value) this.value = this.generate()
+        if (value === undefined) this.value = this.generate()
     }
-    abstract generate(): T
+    abstract generate (): T
 }

@@ -3,7 +3,7 @@ import Email from "./Email"
 const validEmail1 = 'email1@gmail.com'
 const validEmail2 = 'email2@gmail.com'
 
-describe ('Email Value Object', () => {
+describe('Email Value Object', () => {
     test('email is valid', () => {
         const email = new Email(validEmail1)
         expect(email.isValid()).toBeTruthy()

@@ -1,8 +1,9 @@
-import ValueObject from "./ValueObject";
+import ValueObject from './ValueObject'
 
 export default class PhoneAccount extends ValueObject<string> {
-    public isValid() {
+    public isValid (): boolean {
         const phoneRegex = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/
-        return !!this.value.match(phoneRegex)
+        const match = this.value.match(phoneRegex)
+        return !!match
     }
 }

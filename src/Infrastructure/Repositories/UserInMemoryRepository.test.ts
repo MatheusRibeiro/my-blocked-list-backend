@@ -1,11 +1,11 @@
-import User from "../../Domain/Aggregates/User/User"
-import Password from "../../Domain/Aggregates/User/ValueObjects/Password"
-import UserId from "../../Domain/Aggregates/User/ValueObjects/UserId"
-import Username from "../../Domain/Aggregates/User/ValueObjects/Username"
-import UserInMemoryRepository from "./UserInMemoryRepository"
+import User from '../../Domain/Aggregates/User/User'
+import Password from '../../Domain/Aggregates/User/ValueObjects/Password'
+import UserId from '../../Domain/Aggregates/User/ValueObjects/UserId'
+import Username from '../../Domain/Aggregates/User/ValueObjects/Username'
+import UserInMemoryRepository from './UserInMemoryRepository'
 
 describe('User In Memory Repository', () => {
-    const repo =  new UserInMemoryRepository()
+    const repo = new UserInMemoryRepository()
 
     const firstUser = new User(
         new UserId(),
@@ -36,5 +36,4 @@ describe('User In Memory Repository', () => {
         const total = await repo.count()
         expect(total).toBe(0)
     })
-
 })

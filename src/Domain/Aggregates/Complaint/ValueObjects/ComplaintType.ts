@@ -21,7 +21,7 @@ interface IComplaintType {
 }
 
 export default class ComplaintType extends ValueObject<IComplaintType> {
-    public isValid(): boolean {
+    public isValid (): boolean {
         return !!ComplaintCategory[this.value.complaintCategory] && !!ComplaintSeverity[this.value.complaintSeverity]
     }
 }

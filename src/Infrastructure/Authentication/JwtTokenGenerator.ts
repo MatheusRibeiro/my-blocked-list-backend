@@ -4,10 +4,10 @@ import jwt from "jsonwebtoken"
 const secret = '?'
 
 export default class JwtTokenGenerator implements IJwtTokenGenerator {
-    generateToken(userId: string, firstName: string, lastName: string, username: string): string {
+    generateToken (userId: string, firstName: string, lastName: string, username: string): string {
         const payload = {
-            userId: userId,
-            username: username,
+            userId,
+            username,
             fullname: `${firstName} ${lastName}`
         }
 

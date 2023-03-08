@@ -1,9 +1,9 @@
-import Entity from "../../Base/Entity";
-import ContactId from "../Contact/ValueObjects/ContactId";
-import UserId from "../User/ValueObjects/UserId";
-import ComplaintDescription from "./ValueObjects/ComplaintDescription";
-import ComplaintId from "./ValueObjects/ComplaintId";
-import ComplaintType from "./ValueObjects/ComplaintType";
+import Entity from '../../Base/Entity'
+import ContactId from '../Contact/ValueObjects/ContactId'
+import UserId from '../User/ValueObjects/UserId'
+import ComplaintDescription from './ValueObjects/ComplaintDescription'
+import ComplaintId from './ValueObjects/ComplaintId'
+import ComplaintType from './ValueObjects/ComplaintType'
 
 export default class Complaint extends Entity {
     public complaintId: ComplaintId
@@ -12,7 +12,7 @@ export default class Complaint extends Entity {
     public complaintType: ComplaintType
     public authorId: UserId
 
-    constructor(
+    constructor (
         complaintId: ComplaintId,
         description: ComplaintDescription,
         contactId: ContactId,
@@ -28,15 +28,15 @@ export default class Complaint extends Entity {
         this.authorId = authorId
     }
 
-    public getId(): ComplaintId {
+    public getId (): ComplaintId {
         return this.complaintId
     }
 
-    public isValid(): boolean {
+    public isValid (): boolean {
         return this.description.isValid() && this.complaintType.isValid()
     }
 
-    public isEqual(entity: Complaint): boolean {
+    public isEqual (entity: Complaint): boolean {
         return this.complaintId.isEqual(entity.complaintId)
     }
 }

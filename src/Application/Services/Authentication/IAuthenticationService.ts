@@ -19,6 +19,6 @@ export interface AuthenticationResponse {
 }
 
 export default abstract class IAuthenticationService {
-    abstract login(loginRequest: LoginRequest): Promise<AuthenticationResponse>
-    abstract register(registerRequest: RegisterRequest): Promise<AuthenticationResponse>
+    abstract login (loginRequest: LoginRequest): Promise<AuthenticationResponse>
+    abstract register (registerRequest: RegisterRequest): Promise<AuthenticationResponse>
 }

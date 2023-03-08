@@ -1,4 +1,4 @@
-import UUID from "./UUID"
+import UUID from './UUID'
 
 const validUuid1 = 'f22d6b94-bc16-4766-80c7-23063106fb2e'
 const validUuid2 = '24a68eec-2d74-4422-a998-e9db57d303ad'

@@ -10,17 +10,17 @@ const validPersonName2 = {
     lastName: 'Jane'
 }
 
-describe ('PersonName Value Object', () => {
+describe('PersonName Value Object', () => {
     test('person name is valid', () => {
         const personName = new PersonName(validPersonName1)
         expect(personName.isValid()).toBeTruthy()
     })
     test('person name with empty first name is invalid', () => {
-        const personName = new PersonName({ firstName: '', lastName: 'Doe'})
+        const personName = new PersonName({ firstName: '', lastName: 'Doe' })
         expect(personName.isValid()).toBeFalsy()
     })
     test('person name with empty last name is valid', () => {
-        const personName = new PersonName({ firstName: 'John', lastName: ''})
+        const personName = new PersonName({ firstName: 'John', lastName: '' })
         expect(personName.isValid()).toBeTruthy()
     })
     test('person name is equal', () => {

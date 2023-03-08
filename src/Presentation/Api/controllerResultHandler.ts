@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { Request, Response } from 'express'
 
 export type RequestHandler = (req: Request) => Promise<unknown>
 

@@ -100,14 +100,14 @@ describe('is Equal', () => {
 
         const contact = new Contact(
             id,
-            new PersonName({ firstName: 'John', lastName: ''}),
+            new PersonName({ firstName: 'John', lastName: '' }),
             'first',
             validPhone
         )
 
         const sameIdContact = new Contact(
             sameId,
-            new PersonName({ firstName: 'Mary', lastName: ''}),
+            new PersonName({ firstName: 'Mary', lastName: '' }),
             'second',
             validEmail
         )
@@ -120,14 +120,14 @@ describe('is Equal', () => {
 
         const contact = new Contact(
             id,
-            new PersonName({ firstName: 'John', lastName: ''}),
+            new PersonName({ firstName: 'John', lastName: '' }),
             'first',
             validPhone
         )
 
         const differentContact = new Contact(
             anotherId,
-            new PersonName({ firstName: 'John', lastName: ''}),
+            new PersonName({ firstName: 'John', lastName: '' }),
             'first',
             validPhone
         )

@@ -1,10 +1,10 @@
-import ValueObject from "../../../Base/ValueObject/ValueObject";
+import ValueObject from '../../../Base/ValueObject/ValueObject'
 
 const MIN_LENGTH = 4
 const MAX_LENGTH = 16
 
 export default class Username extends ValueObject<string> {
-    public isValid(): boolean {
+    public isValid (): boolean {
         if (this.value.length < MIN_LENGTH || this.value.length > MAX_LENGTH) {
             return false
         }
