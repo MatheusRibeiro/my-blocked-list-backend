@@ -1,5 +1,4 @@
 import Entity from "../../Base/Entity";
-import Id from "../../Base/ValueObject/Id";
 import ContactId from "../Contact/ValueObjects/ContactId";
 import UserId from "../User/ValueObjects/UserId";
 import ComplaintDescription from "./ValueObjects/ComplaintDescription";

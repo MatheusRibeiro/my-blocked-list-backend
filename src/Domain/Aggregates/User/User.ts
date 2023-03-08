@@ -1,5 +1,4 @@
 import Entity from "../../Base/Entity";
-import Id from "../../Base/ValueObject/Id";
 import Password from "./ValueObjects/Password";
 import UserId from "./ValueObjects/UserId";
 import Username from "./ValueObjects/Username";

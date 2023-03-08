@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 
 import bodyParser from 'body-parser'
-import express, { Request, Response, Router } from 'express'
+import express from 'express'
 
 import "../../DependencyInjection"
 import router from './router'

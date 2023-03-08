@@ -1,7 +1,5 @@
-import DomainError from "../../Base/DomainException"
 import Entity from "../../Base/Entity"
 import Email from "../../Base/ValueObject/Email"
-import Id from "../../Base/ValueObject/Id"
 import PersonName from "../../Base/ValueObject/PersonName"
 import Phone from "../../Base/ValueObject/Phone"
 import ContactId from "./ValueObjects/ContactId"

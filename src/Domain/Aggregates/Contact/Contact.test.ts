@@ -1,4 +1,3 @@
-import DomainError from "../../Base/DomainException"
 import Contact from "./Contact"
 import Email from "../../Base/ValueObject/Email"
 import Phone from "../../Base/ValueObject/Phone"
