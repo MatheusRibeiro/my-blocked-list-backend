@@ -13,7 +13,7 @@ describe('UUID Value Object', () => {
     expect(uuid.isValid()).toBeFalsy()
   })
   test('uuid is invalid when undefined', () => {
-    const uuid = new UUID()
+    const uuid = uuidFactory()
     expect(uuid.isValid()).toBeFalsy()
   })
   test('uuid is equal', () => {
