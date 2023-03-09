@@ -3,7 +3,10 @@ module.exports = {
     es2021: true,
     node: true
   },
-  extends: ['standard-with-typescript'],
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking'
+  ],
   ignorePatterns: ['dist/*'],
   overrides: [
     {
