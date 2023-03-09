@@ -13,20 +13,18 @@ export default class AuthenticationController {
     this.authService = authService
   }
 
-  public login = async (req: Request): Promise<AuthenticationResponse> => {
+  public login = async (req: Request): Promise<AuthenticationResponse | Error> => {
     const { username, password } = req.body
 
     return await this.authService.login({ username, password })
   }
 
-  public register = async (req: Request): Promise<AuthenticationResponse> => {
+  public register = async (req: Request): Promise<AuthenticationResponse | Error> => {
     const {
-      first_name: firstName,
-      last_name: lastName,
       username,
       password
     } = req.body
 
-    return await this.authService.register({ firstName, lastName, username, password })
+    return await this.authService.register({ username, password })
   }
 }

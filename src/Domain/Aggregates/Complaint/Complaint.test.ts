@@ -1,4 +1,4 @@
-import UUID from '../../Base/ValueObject/UUID'
+import UUID, { uuidFactory } from '../../Base/ValueObject/UUID'
 import Complaint from './Complaint'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintType, { ComplaintCategory, ComplaintSeverity } from './ValueObjects/ComplaintType'
@@ -8,9 +8,9 @@ const complaintType = new ComplaintType({
   complaintSeverity: ComplaintSeverity.ALERT
 })
 
-const validContactId = new UUID()
-const validAuthorId = new UUID()
-const validComplaintId = new UUID()
+const validContactId = uuidFactory()
+const validAuthorId = uuidFactory()
+const validComplaintId = uuidFactory()
 
 describe('get Id', () => {
   test('should return the complaintId', () => {
@@ -79,29 +79,29 @@ describe('Is Valid', () => {
 
 describe('is Equal', () => {
   test('should be equal when have the same id', () => {
-    const id = new UUID()
+    const id = uuidFactory()
     const sameId = new UUID(id.value)
 
     const complaint = new Complaint(
       id,
       new ComplaintDescription('first'),
-      new UUID(),
+      uuidFactory(),
       complaintType,
-      new UUID()
+      uuidFactory()
     )
 
     const differentComplaint = new Complaint(
       sameId,
       new ComplaintDescription('second'),
-      new UUID(),
+      uuidFactory(),
       complaintType,
-      new UUID()
+      uuidFactory()
     )
     expect(complaint.isEqual(differentComplaint)).toBeTruthy()
   })
   test('should not be equal when have different ids', () => {
-    const id = new UUID()
-    const anotherId = new UUID()
+    const id = uuidFactory()
+    const anotherId = uuidFactory()
 
     const complaint = new Complaint(
       id,

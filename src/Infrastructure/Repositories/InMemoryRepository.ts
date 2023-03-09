@@ -1,10 +1,10 @@
 import Entity from '../../Domain/Base/Entity'
-import Id from '../../Domain/Base/ValueObject/Id'
+import UUID, { uuidFactory } from '../../Domain/Base/ValueObject/UUID'
 
-export default class InMemoryRepository<IEntity extends Entity, IdType extends Id<unknown>> {
-  private storage: IEntity[] = []
+export default class InMemoryRepository<IEntity extends Entity, IdType extends UUID> {
+  protected storage: IEntity[] = []
 
-  public async findById (id: IdType): Promise<IEntity | undefined> {
+  public async findById (id: IdType): Promise<IEntity | void> {
     for (let i = 0; i < this.storage.length; i++) {
       if (this.storage[i].getId().isEqual(id)) {
         return this.storage[i]

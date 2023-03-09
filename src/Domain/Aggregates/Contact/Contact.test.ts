@@ -2,12 +2,12 @@ import Contact from './Contact'
 import Email from '../../Base/ValueObject/Email'
 import Phone from '../../Base/ValueObject/Phone'
 import PersonName from '../../Base/ValueObject/PersonName'
-import UUID from '../../Base/ValueObject/UUID'
+import UUID, { uuidFactory } from '../../Base/ValueObject/UUID'
 
 const validPhone = new Phone('+55 9876-5432')
 const validEmail = new Email('email1@gmail.com')
 const validPersonName = new PersonName({ firstName: 'John', lastName: 'Doe' })
-const validUuid = new UUID()
+const validUuid = uuidFactory()
 
 describe('get Id', () => {
   test('should return the contact id', () => {
@@ -95,7 +95,7 @@ describe('Is Valid', () => {
 
 describe('is Equal', () => {
   test('should be equal when have the same id', () => {
-    const id = new UUID()
+    const id = uuidFactory()
     const sameId = new UUID(id.value)
 
     const contact = new Contact(
@@ -115,8 +115,8 @@ describe('is Equal', () => {
   })
 
   test('should not be equal when have different ids', () => {
-    const id = new UUID()
-    const anotherId = new UUID()
+    const id = uuidFactory()
+    const anotherId = uuidFactory()
 
     const contact = new Contact(
       id,

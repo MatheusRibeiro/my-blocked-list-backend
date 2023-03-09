@@ -1,7 +1,7 @@
-import Id from './ValueObject/Id'
+import UUID from './ValueObject/UUID'
 
 export default abstract class Entity {
-  public abstract getId (): Id<unknown>
+  public abstract getId (): UUID
   public abstract isValid (): boolean
   public abstract isEqual (entity: Entity): boolean
 }

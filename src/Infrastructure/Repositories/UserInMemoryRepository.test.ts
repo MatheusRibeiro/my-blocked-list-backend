@@ -2,13 +2,14 @@ import User from '../../Domain/Aggregates/User/User'
 import Password from '../../Domain/Aggregates/User/ValueObjects/Password'
 import UserId from '../../Domain/Aggregates/User/ValueObjects/UserId'
 import Username from '../../Domain/Aggregates/User/ValueObjects/Username'
+import { uuidFactory } from '../../Domain/Base/ValueObject/UUID'
 import UserInMemoryRepository from './UserInMemoryRepository'
 
 describe('User In Memory Repository', () => {
   const repo = new UserInMemoryRepository()
 
   const firstUser = new User(
-    new UserId(),
+    new UserId(uuidFactory().value),
     new Username('username'),
     new Password('1234')
   )
@@ -20,6 +21,11 @@ describe('User In Memory Repository', () => {
 
   test('find by id', async () => {
     const found = await repo.findById(firstUser.userId)
+    expect(found?.isEqual(firstUser)).toBeTruthy()
+  })
+
+  test('find by username', async () => {
+    const found = await repo.findByUsername(firstUser.username)
     expect(found?.isEqual(firstUser)).toBeTruthy()
   })
 

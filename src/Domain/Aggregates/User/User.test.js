@@ -1,9 +1,9 @@
-import UUID from '../../Base/ValueObject/UUID'
+import UUID, { uuidFactory } from '../../Base/ValueObject/UUID'
 import User from './User'
 import Password from './ValueObjects/Password'
 import Username from './ValueObjects/Username'
 
-const validUuid = new UUID()
+const validUuid = uuidFactory()
 const validUsername = new Username('my_username')
 const validPassword = new Password('1234')
 
@@ -51,7 +51,7 @@ describe('is valid', () => {
 
 describe('is Equal', () => {
   test('should be equal when have the same id', () => {
-    const id = new UUID()
+    const id = uuidFactory()
     const sameId = new UUID(id.value)
 
     const user = new User(
@@ -69,8 +69,8 @@ describe('is Equal', () => {
   })
 
   test('should not be equal when have different ids', () => {
-    const id = new UUID()
-    const anotherId = new UUID()
+    const id = uuidFactory()
+    const anotherId = uuidFactory()
 
     const user = new User(
       id,
