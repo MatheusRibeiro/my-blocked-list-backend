@@ -23,7 +23,7 @@ export default {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -104,8 +104,8 @@ export default {
   preset: 'ts-jest',
   transform: {
     '^.+\\.(ts|tsx)?$': 'ts-jest',
-    "^.+\\.(js|jsx)$": "babel-jest",
-  },
+    '^.+\\.(js|jsx)$': 'babel-jest'
+  }
   // preset: undefined,
 
   // Run tests from one or more projects
@@ -198,4 +198,4 @@ export default {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-};
+}
