@@ -1,5 +1,5 @@
 import Entity from '../../Domain/Base/Entity'
-import UUID, { uuidFactory } from '../../Domain/Base/ValueObject/UUID'
+import UUID from '../../Domain/Base/ValueObject/UUID'
 
 export default class InMemoryRepository<IEntity extends Entity, IdType extends UUID> {
   protected storage: IEntity[] = []
