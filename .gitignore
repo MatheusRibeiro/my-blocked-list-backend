@@ -1,12 +1,4 @@
-# package directories
 node_modules
-jspm_packages
-package-lock.json
 dist
 coverage
-# Serverless directories
-.serverless
-.webpack
-Docs/.vuepress
-.layers-build/
 .DS_Store
