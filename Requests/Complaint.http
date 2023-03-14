@@ -6,6 +6,10 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "username": "myuser",
-    "password": "mypass"
+    "first_name": "",
+    "last_name": "",
+    "phone": "+5511987651234",
+    "description": "Any description",
+    "category": 1,
+    "severity": 3
 }
