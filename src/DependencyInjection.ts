@@ -4,11 +4,11 @@ import JwtTokenGenerator from '@src/Infrastructure/Authentication/JwtTokenGenera
 import IAuthenticationService from '@src/Application/Services/Authentication/IAuthenticationService'
 import AuthenticationService from '@src/Application/Services/Authentication/AuthenticationService'
 import IUserRepository from '@src/Domain/Aggregates/User/IUserRepository'
-import UserInMemoryRepository from '@src/Infrastructure/Repositories/UserInMemoryRepository'
+import UserInMemoryRepository from '@src/Infrastructure/Repositories/InMemory/UserRepository'
 import IComplaintRepository from '@src/Domain/Aggregates/Complaint/IComplaintRepository'
-import ComplaintInMemoryRepository from '@src/Infrastructure/Repositories/ComplaintInMemoryRepository'
+import ComplaintInMemoryRepository from '@src/Infrastructure/Repositories/InMemory/ComplaintRepository'
 import IContactRepository from '@src/Domain/Aggregates/Contact/IContactRepository'
-import ContactInMemoryRepository from '@src/Infrastructure/Repositories/ContactRepository'
+import ContactInMemoryRepository from '@src/Infrastructure/Repositories/InMemory/ContactRepository'
 
 container.registerSingleton<IJwtTokenGenerator>('JwtTokenGenerator', JwtTokenGenerator)
 container.registerSingleton<IAuthenticationService>('AuthenticationService', AuthenticationService)
