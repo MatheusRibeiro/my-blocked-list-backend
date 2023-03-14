@@ -30,8 +30,7 @@ export default class AuthenticationMiddleware {
         }
         const [, token] = splitedHeader
         try {
-            const tokenContent = await this.authService.validateToken(token)
-            console.log({ token, tokenContent })
+            res.locals.User = await this.authService.validateToken(token)
             next()
         } catch (error) {
             errorHandler(res, error)

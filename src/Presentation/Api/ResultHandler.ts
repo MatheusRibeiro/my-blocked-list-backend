@@ -4,7 +4,7 @@ import DomainError from '@src/Domain/Errors/AbstractDomainError'
 type BaseResponseTypes = string | number | boolean | null | object
 type ResponseType = BaseResponseTypes | BaseResponseTypes[]
 
-export type RequestHandler = (req: Request) => Promise<ResponseType>
+export type RequestHandler = (req: Request, res: Response) => Promise<ResponseType>
 
 interface ErrorDetails {
     title: string
@@ -14,7 +14,7 @@ interface ErrorDetails {
 
 export default (requestHandler: RequestHandler) => async (request: Request, response: Response) => {
     try {
-        const result = await requestHandler(request)
+        const result = await requestHandler(request, response)
 
         return response.json(result)
     } catch (error) {
