@@ -3,7 +3,7 @@ import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 import Username from '@src/Domain/Aggregates/User/ValueObjects/Username'
 
 export default interface IUserRepository {
-    create: (user: User) => Promise<void>
+    create: (user: User) => Promise<null>
     findById: (userId: UserId) => Promise<User | null>
     findByUsername: (username: Username) => Promise<User | null>
 }

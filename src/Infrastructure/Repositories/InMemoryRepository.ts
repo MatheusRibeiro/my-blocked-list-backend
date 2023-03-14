@@ -13,21 +13,24 @@ export default class InMemoryRepository<IEntity extends Entity, IdType extends U
         return null
     }
 
-    public async create(entity: IEntity): Promise<void> {
+    public async create(entity: IEntity): Promise<null> {
         this.storage.push(entity)
+        return null
     }
 
-    public async update(entity: IEntity): Promise<void> {
+    public async update(entity: IEntity): Promise<null> {
         for (let i = 0; i < this.storage.length; i++) {
             if (this.storage[i].isEqual(entity)) {
                 this.storage[i] = entity
-                return
+                return null
             }
         }
+        return null
     }
 
-    public async delete(entity: IEntity): Promise<void> {
+    public async delete(entity: IEntity): Promise<null> {
         this.storage = this.storage.filter(item => !item.isEqual(entity))
+        return null
     }
 
     public async count(): Promise<number> {
