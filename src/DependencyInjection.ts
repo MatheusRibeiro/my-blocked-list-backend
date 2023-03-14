@@ -3,7 +3,7 @@ import IJwtTokenGenerator from '@src/Application/Services/Authentication/IJwtTok
 import JwtTokenGenerator from '@src/Infrastructure/Authentication/JwtTokenGenerator'
 import IAuthenticationService from '@src/Application/Services/Authentication/IAuthenticationService'
 import AuthenticationService from '@src/Application/Services/Authentication/AuthenticationService'
-import IUserRepository from '@src/Application/Services/Authentication/IUserRepository'
+import IUserRepository from '@src/Domain/Aggregates/User/IUserRepository'
 import UserInMemoryRepository from '@src/Infrastructure/Repositories/UserInMemoryRepository'
 
 container.registerSingleton<IJwtTokenGenerator>('JwtTokenGenerator', JwtTokenGenerator)
