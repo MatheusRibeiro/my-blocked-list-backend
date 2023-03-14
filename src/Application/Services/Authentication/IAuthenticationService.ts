@@ -1,3 +1,5 @@
+import type AuthenticationResponse from './IAuthenticationResponse'
+
 export interface LoginRequest {
     username: string
     password: string
@@ -8,13 +10,13 @@ export interface RegisterRequest {
     password: string
 }
 
-export interface AuthenticationResponse {
-    id: string
+export interface UserTokenDetails {
+    userId: string
     username: string
-    token: string
 }
 
 export default abstract class IAuthenticationService {
-    abstract login(loginRequest: LoginRequest): Promise<AuthenticationResponse | Error>
-    abstract register(registerRequest: RegisterRequest): Promise<AuthenticationResponse | Error>
+    abstract login(loginRequest: LoginRequest): Promise<AuthenticationResponse>
+    abstract register(registerRequest: RegisterRequest): Promise<AuthenticationResponse>
+    abstract validateToken(token: string): Promise<UserTokenDetails>
 }

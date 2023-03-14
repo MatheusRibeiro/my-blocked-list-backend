@@ -1,12 +1,19 @@
 import { inject, injectable } from 'tsyringe'
-import IAuthenticationService, { AuthenticationResponse, LoginRequest, RegisterRequest } from './IAuthenticationService'
 import IJwtTokenGenerator from './IJwtTokenGenerator'
 import IUserRepository from './IUserRepository'
-import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
-import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import type IAuthenticationService from './IAuthenticationService'
+import type { RegisterRequest, LoginRequest, UserTokenDetails } from './IAuthenticationService'
+import type AuthenticationResponse from './IAuthenticationResponse'
 import User from '@src/Domain/Aggregates/User/User'
+import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 import Username from '@src/Domain/Aggregates/User/ValueObjects/Username'
 import Password from '@src/Domain/Aggregates/User/ValueObjects/Password'
+import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import ConflictError from '@src/Domain/Errors/ConflictError'
+import NotFoundError from '@src/Domain/Errors/NotFoundError'
+
+const usernameAlreadyTakenMessage = 'Username already taken.'
+const invalidCredentialsMessage = 'Invalid username or password.'
 
 @injectable()
 export default class AuthenticationService implements IAuthenticationService {
@@ -21,29 +28,41 @@ export default class AuthenticationService implements IAuthenticationService {
         this.userRepository = userRepository
     }
 
-    public async login(loginRequest: LoginRequest): Promise<AuthenticationResponse | Error> {
-        const { username } = loginRequest
+    public async register({ username, password }: RegisterRequest): Promise<AuthenticationResponse> {
+        const newUsername = new Username(username)
 
-        const user = await this.userRepository.findByUsername(new Username(username))
-        if (user == null) {
-            return new Error('Invalid username or password')
+        const userExists = await this.userRepository.findByUsername(newUsername)
+        if (userExists !== null) {
+            throw new ConflictError(usernameAlreadyTakenMessage)
         }
-        const token = this.jwtTokenGenerator.generateToken(user.userId.value, username)
-        return {
-            id: user.userId.value,
-            username,
-            token,
-        }
-    }
 
-    public async register(registerRequest: RegisterRequest): Promise<AuthenticationResponse> {
-        const { username, password } = registerRequest
         const userId = new UserId(uuidFactory().value)
-        const user = new User(userId, new Username(username), new Password(password))
+        const user = new User(userId, newUsername, new Password(password))
         await this.userRepository.create(user)
 
         const token = this.jwtTokenGenerator.generateToken(userId?.value, username)
 
         return { id: userId.value, username, token }
+    }
+
+    public async login(loginRequest: LoginRequest): Promise<AuthenticationResponse> {
+        const { username, password } = loginRequest
+
+        const user = await this.userRepository.findByUsername(new Username(username))
+        if (user === null) {
+            throw new NotFoundError(invalidCredentialsMessage)
+        }
+
+        if (!user.password.isEqual(new Password(password))) {
+            throw new NotFoundError(invalidCredentialsMessage)
+        }
+        const id = user.userId.value
+        const token = this.jwtTokenGenerator.generateToken(id, username)
+
+        return { id, username, token }
+    }
+
+    public async validateToken(token: string): Promise<UserTokenDetails> {
+        return this.jwtTokenGenerator.validateToken(token)
     }
 }

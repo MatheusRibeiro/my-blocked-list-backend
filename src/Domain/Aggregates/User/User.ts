@@ -6,7 +6,7 @@ import Username from './ValueObjects/Username'
 export default class User extends Entity {
     public userId: UserId
     public username: Username
-    private readonly password: Password
+    public password: Password
 
     constructor(userId: UserId, username: Username, password: Password) {
         super()
