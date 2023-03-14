@@ -1,0 +1,11 @@
+@host=http://localhost:8080
+@token=
+
+POST {{host}}/complaint/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "username": "myuser",
+    "password": "mypass"
+}
