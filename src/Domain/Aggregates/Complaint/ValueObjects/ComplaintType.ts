@@ -22,6 +22,7 @@ interface IComplaintType {
 
 export default class ComplaintType extends ValueObject<IComplaintType> {
     public isValid(): boolean {
-        return !!ComplaintCategory[this.value.complaintCategory] && !!ComplaintSeverity[this.value.complaintSeverity]
+        const { complaintCategory, complaintSeverity } = this.value
+        return ComplaintCategory[complaintCategory] !== undefined && ComplaintSeverity[complaintSeverity] !== undefined
     }
 }

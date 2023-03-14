@@ -5,7 +5,7 @@ import Username from './ValueObjects/Username'
 
 const validUuid = uuidFactory()
 const validUsername = new Username('my_username')
-const validPassword = new Password('1234')
+const validPassword = new Password('123456')
 
 describe('get Id', () => {
     test('should return the userId', () => {
