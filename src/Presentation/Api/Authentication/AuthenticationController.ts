@@ -1,30 +1,29 @@
 import { Request } from 'express'
 import { inject, injectable } from 'tsyringe'
-import IAuthenticationService, { AuthenticationResponse } from '../../../Application/Services/Authentication/IAuthenticationService'
+import IAuthenticationService, {
+    AuthenticationResponse,
+} from '@src/Application/Services/Authentication/IAuthenticationService'
 
 @injectable()
 export default class AuthenticationController {
-  private readonly authService: IAuthenticationService
+    private readonly authService: IAuthenticationService
 
-  constructor (
-  @inject('AuthenticationService')
-    authService: IAuthenticationService
-  ) {
-    this.authService = authService
-  }
+    constructor(
+        @inject('AuthenticationService')
+        authService: IAuthenticationService
+    ) {
+        this.authService = authService
+    }
 
-  public login = async (req: Request): Promise<AuthenticationResponse | Error> => {
-    const { username, password } = req.body
+    public login = async (req: Request): Promise<AuthenticationResponse | Error> => {
+        const { username, password } = req.body
 
-    return await this.authService.login({ username, password })
-  }
+        return await this.authService.login({ username, password })
+    }
 
-  public register = async (req: Request): Promise<AuthenticationResponse | Error> => {
-    const {
-      username,
-      password
-    } = req.body
+    public register = async (req: Request): Promise<AuthenticationResponse | Error> => {
+        const { username, password } = req.body
 
-    return await this.authService.register({ username, password })
-  }
+        return await this.authService.register({ username, password })
+    }
 }
