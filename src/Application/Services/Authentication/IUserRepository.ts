@@ -1,6 +1,6 @@
-import User from '../../../Domain/Aggregates/User/User'
-import UserId from '../../../Domain/Aggregates/User/ValueObjects/UserId'
-import Username from '../../../Domain/Aggregates/User/ValueObjects/Username'
+import User from '@src/Domain/Aggregates/User/User'
+import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
+import Username from '@src/Domain/Aggregates/User/ValueObjects/Username'
 
 export default interface IUserRepository {
     create: (user: User) => Promise<void>
