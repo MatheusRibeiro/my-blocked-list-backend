@@ -1,8 +1,7 @@
 import { Request } from 'express'
 import { inject, injectable } from 'tsyringe'
-import IAuthenticationService, {
-    AuthenticationResponse,
-} from '@src/Application/Services/Authentication/IAuthenticationService'
+import IAuthenticationService from '@src/Application/Services/Authentication/IAuthenticationService'
+import AuthenticationResponse from '@src/Application/Services/Authentication/IAuthenticationResponse'
 
 @injectable()
 export default class AuthenticationController {
