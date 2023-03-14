@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import IJwtTokenGenerator from './IJwtTokenGenerator'
-import IUserRepository from './IUserRepository'
+import IUserRepository from '@src/Domain/Aggregates/User/IUserRepository'
 import type IAuthenticationService from './IAuthenticationService'
 import type { RegisterRequest, LoginRequest, UserTokenDetails } from './IAuthenticationService'
 import type AuthenticationResponse from './IAuthenticationResponse'
