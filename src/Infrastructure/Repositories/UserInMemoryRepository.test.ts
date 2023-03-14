@@ -9,6 +9,8 @@ describe('User In Memory Repository', () => {
     const repo = new UserInMemoryRepository()
 
     const firstUser = new User(new UserId(uuidFactory().value), new Username('username'), new Password('1234'))
+    const anotherUser = new User(new UserId(uuidFactory().value), new Username('username2'), new Password('4321'))
+
     test('create', async () => {
         await repo.create(firstUser)
         const total = await repo.count()
@@ -20,17 +22,36 @@ describe('User In Memory Repository', () => {
         expect(found?.isEqual(firstUser)).toBeTruthy()
     })
 
+    test('not found by id', async () => {
+        const notFound = await repo.findById(uuidFactory())
+        expect(notFound).toBeNull()
+    })
+
     test('find by username', async () => {
         const found = await repo.findByUsername(firstUser.username)
         expect(found?.isEqual(firstUser)).toBeTruthy()
     })
 
+    test('not found by username', async () => {
+        const notFound = await repo.findByUsername(anotherUser.username)
+        expect(notFound).toBeNull()
+    })
+
     test('update', async () => {
         const newUsername = 'othername'
         firstUser.username = new Username(newUsername)
-        await repo.update(firstUser)
+        const result = await repo.update(firstUser)
         const found = await repo.findById(firstUser.userId)
+
+        expect(result).toBeNull()
         expect(found?.username.value).toBe(newUsername)
+    })
+
+    test('update inexistent user', async () => {
+        const newUsername = 'othername'
+        anotherUser.username = new Username(newUsername)
+        const result = await repo.update(anotherUser)
+        expect(result).toBeNull()
     })
 
     test('delete', async () => {
