@@ -7,28 +7,28 @@ import ContactId from './ValueObjects/ContactId'
 type ContactAccount = Email | Phone
 
 export default class Contact extends Entity {
-  public contactId: ContactId
-  public personName: PersonName
-  public description: string
-  public account: ContactAccount
+    public contactId: ContactId
+    public personName: PersonName
+    public description: string
+    public account: ContactAccount
 
-  constructor (contactId: ContactId, personName: PersonName, description: string, account: ContactAccount) {
-    super()
-    this.contactId = contactId
-    this.personName = personName
-    this.description = description
-    this.account = account
-  }
+    constructor(contactId: ContactId, personName: PersonName, description: string, account: ContactAccount) {
+        super()
+        this.contactId = contactId
+        this.personName = personName
+        this.description = description
+        this.account = account
+    }
 
-  public getId (): ContactId {
-    return this.contactId
-  }
+    public getId(): ContactId {
+        return this.contactId
+    }
 
-  public isValid (): boolean {
-    return this.personName.isValid() && this.account.isValid()
-  }
+    public isValid(): boolean {
+        return this.personName.isValid() && this.account.isValid()
+    }
 
-  public isEqual (entity: Contact): boolean {
-    return this.contactId.isEqual(entity.contactId)
-  }
+    public isEqual(entity: Contact): boolean {
+        return this.contactId.isEqual(entity.contactId)
+    }
 }

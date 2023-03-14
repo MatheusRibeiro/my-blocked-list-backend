@@ -10,128 +10,96 @@ const validPersonName = new PersonName({ firstName: 'John', lastName: 'Doe' })
 const validUuid = uuidFactory()
 
 describe('get Id', () => {
-  test('should return the contact id', () => {
-    const contact = new Contact(
-      validUuid,
-      validPersonName,
-      'contact description',
-      validPhone
-    )
+    test('should return the contact id', () => {
+        const contact = new Contact(validUuid, validPersonName, 'contact description', validPhone)
 
-    expect(contact.getId().isEqual(validUuid)).toBeTruthy()
-  })
+        expect(contact.getId().isEqual(validUuid)).toBeTruthy()
+    })
 })
 
 describe('Is Valid', () => {
-  test('add valid phone to contact', () => {
-    const contact = new Contact(
-      validUuid,
-      validPersonName,
-      'contact description',
-      validPhone
-    )
+    test('add valid phone to contact', () => {
+        const contact = new Contact(validUuid, validPersonName, 'contact description', validPhone)
 
-    expect(contact.isValid()).toBeTruthy()
-  })
+        expect(contact.isValid()).toBeTruthy()
+    })
 
-  test('add invalid email to contact', () => {
-    const contact = new Contact(
-      validUuid,
-      validPersonName,
-      'contact description',
-      validEmail
-    )
+    test('add invalid email to contact', () => {
+        const contact = new Contact(validUuid, validPersonName, 'contact description', validEmail)
 
-    expect(contact.isValid()).toBeTruthy()
-  })
+        expect(contact.isValid()).toBeTruthy()
+    })
 
-  test('add invalid phone to contact', () => {
-    const phone = new Phone('invalid')
+    test('add invalid phone to contact', () => {
+        const phone = new Phone('invalid')
+        const contact = new Contact(validUuid, validPersonName, 'contact description', phone)
 
-    const contact = new Contact(
-      validUuid,
-      validPersonName,
-      'contact description',
-      phone
-    )
+        expect(contact.isValid()).toBeFalsy()
+    })
 
-    expect(contact.isValid()).toBeFalsy()
-  })
+    test('add invalid email to contact', () => {
+        const email = new Email('invalid')
+        const contact = new Contact(validUuid, validPersonName, 'contact description', email)
 
-  test('add invalid email to contact', () => {
-    const email = new Email('invalid')
+        expect(contact.isValid()).toBeFalsy()
+    })
 
-    const contact = new Contact(
-      validUuid,
-      validPersonName,
-      'contact description',
-      email
-    )
+    test('is valid with an empty description', () => {
+        const contact = new Contact(validUuid, validPersonName, '', validPhone)
 
-    expect(contact.isValid()).toBeFalsy()
-  })
+        expect(contact.isValid()).toBeTruthy()
+    })
+    test('is not valid with invalid person name', () => {
+        const contact = new Contact(
+            validUuid,
+            new PersonName({ firstName: '', lastName: 'Doe' }),
+            'any desription',
+            validPhone
+        )
 
-  test('is valid with an empty description', () => {
-    const contact = new Contact(
-      validUuid,
-      validPersonName,
-      '',
-      validPhone
-    )
-
-    expect(contact.isValid()).toBeTruthy()
-  })
-  test('is not valid with invalid person name', () => {
-    const contact = new Contact(
-      validUuid,
-      new PersonName({ firstName: '', lastName: 'Doe' }),
-      '',
-      validPhone
-    )
-
-    expect(contact.isValid()).toBeFalsy()
-  })
+        expect(contact.isValid()).toBeFalsy()
+    })
 })
 
 describe('is Equal', () => {
-  test('should be equal when have the same id', () => {
-    const id = uuidFactory()
-    const sameId = new UUID(id.value)
+    test('should be equal when have the same id', () => {
+        const id = uuidFactory()
+        const sameId = new UUID(id.value)
 
-    const contact = new Contact(
-      id,
-      new PersonName({ firstName: 'John', lastName: '' }),
-      'first',
-      validPhone
-    )
+        const contact = new Contact(
+            id,
+            new PersonName({ firstName: 'John', lastName: '' }),
+            'first description',
+            validPhone
+        )
 
-    const sameIdContact = new Contact(
-      sameId,
-      new PersonName({ firstName: 'Mary', lastName: '' }),
-      'second',
-      validEmail
-    )
-    expect(contact.isEqual(sameIdContact)).toBeTruthy()
-  })
+        const sameIdContact = new Contact(
+            sameId,
+            new PersonName({ firstName: 'Mary', lastName: '' }),
+            'second description',
+            validEmail
+        )
+        expect(contact.isEqual(sameIdContact)).toBeTruthy()
+    })
 
-  test('should not be equal when have different ids', () => {
-    const id = uuidFactory()
-    const anotherId = uuidFactory()
+    test('should not be equal when have different ids', () => {
+        const id = uuidFactory()
+        const anotherId = uuidFactory()
 
-    const contact = new Contact(
-      id,
-      new PersonName({ firstName: 'John', lastName: '' }),
-      'first',
-      validPhone
-    )
+        const contact = new Contact(
+            id,
+            new PersonName({ firstName: 'John', lastName: '' }),
+            'any description',
+            validPhone
+        )
 
-    const differentContact = new Contact(
-      anotherId,
-      new PersonName({ firstName: 'John', lastName: '' }),
-      'first',
-      validPhone
-    )
+        const differentContact = new Contact(
+            anotherId,
+            new PersonName({ firstName: 'John', lastName: '' }),
+            'any description',
+            validPhone
+        )
 
-    expect(contact.isEqual(differentContact)).toBeFalsy()
-  })
+        expect(contact.isEqual(differentContact)).toBeFalsy()
+    })
 })
