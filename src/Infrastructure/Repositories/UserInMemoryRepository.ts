@@ -1,4 +1,4 @@
-import IUserRepository from '@src/Application/Services/Authentication/IUserRepository'
+import IUserRepository from '@src/Domain/Aggregates/User/IUserRepository'
 import User from '@src/Domain/Aggregates/User/User'
 import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 import Username from '@src/Domain/Aggregates/User/ValueObjects/Username'
