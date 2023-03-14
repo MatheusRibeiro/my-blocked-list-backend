@@ -5,7 +5,14 @@ import IAuthenticationService from '@src/Application/Services/Authentication/IAu
 import AuthenticationService from '@src/Application/Services/Authentication/AuthenticationService'
 import IUserRepository from '@src/Domain/Aggregates/User/IUserRepository'
 import UserInMemoryRepository from '@src/Infrastructure/Repositories/UserInMemoryRepository'
+import IComplaintRepository from '@src/Domain/Aggregates/Complaint/IComplaintRepository'
+import ComplaintInMemoryRepository from '@src/Infrastructure/Repositories/ComplaintInMemoryRepository'
+import IContactRepository from '@src/Domain/Aggregates/Contact/IContactRepository'
+import ContactInMemoryRepository from '@src/Infrastructure/Repositories/ContactRepository'
 
 container.registerSingleton<IJwtTokenGenerator>('JwtTokenGenerator', JwtTokenGenerator)
 container.registerSingleton<IAuthenticationService>('AuthenticationService', AuthenticationService)
+
 container.registerSingleton<IUserRepository>('UserRepository', UserInMemoryRepository)
+container.registerSingleton<IComplaintRepository>('ComplaintRepository', ComplaintInMemoryRepository)
+container.registerSingleton<IContactRepository>('ContactRepository', ContactInMemoryRepository)
