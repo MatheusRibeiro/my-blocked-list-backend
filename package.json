@@ -5,12 +5,12 @@
   "author": "Matheus Ribeiro <matheus.salgado@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev:server": "ts-node -r tsconfig-paths/register ./src/Presentation/Api/server.ts",
+    "dev:server": "nodemon",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "validate": "eslint . && jest --coverage",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.prod.json"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",
@@ -20,13 +20,18 @@
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "jest": "^29.4.3",
+    "prettier": "^2.8.4",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.2",
     "typescript": "^4.9.5"
   },
   "dependencies": {
