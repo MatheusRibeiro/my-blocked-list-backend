@@ -1,9 +1,8 @@
-import User from '@src/Domain/Aggregates/User/User'
-import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
-import Username from '@src/Domain/Aggregates/User/ValueObjects/Username'
+import User from './User'
+import UserId from './ValueObjects/UserId'
+import Username from './ValueObjects/Username'
+import IRepository from '@src/Domain/Base/AbstractRepository'
 
-export default interface IUserRepository {
-    create: (user: User) => Promise<null>
-    findById: (userId: UserId) => Promise<User | null>
+export default interface IUserRepository extends IRepository<User, UserId> {
     findByUsername: (username: Username) => Promise<User | null>
 }

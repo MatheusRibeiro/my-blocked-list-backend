@@ -3,8 +3,10 @@ import IContactRepository from '@src/Domain/Aggregates/Contact/IContactRepositor
 import PhoneAccount from '@src/Domain/Base/ValueObject/Phone'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
 import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
-import CreatePhoneContact from '@src/Domain/UseCases/CreatePhoneContact'
-import ReportContact from '@src/Domain/UseCases/ReportContact'
+import CreatePhoneContact, {
+    type CreatePhoneContactDTO,
+} from '@src/Domain/Aggregates/Contact/UseCases/CreatePhoneContact'
+import ReportContact, { type ReportContactDTO } from '@src/Domain/Aggregates/Complaint/UseCases/ReportContact'
 import Audit from '@src/Domain/Base/Audit'
 import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
@@ -18,11 +20,6 @@ interface CreateComplaintRequest {
     phone: string
 }
 
-interface ContactInfo {
-    firstName: string
-    lastName: string
-    phone: string
-}
 @injectable()
 export default class CreateComplaintCommand {
     private readonly contactRepository: IContactRepository
@@ -44,16 +41,14 @@ export default class CreateComplaintCommand {
             existingContact === null ? await this.createContact({ firstName, lastName, phone }, audit) : existingContact
 
         const reportContactUseCase = container.resolve(ReportContact)
-        const reportContactEvents = await reportContactUseCase.execute(
-            { contact, description, complaintCategory, complaintSeverity },
-            audit
-        )
+        const reportInfo: ReportContactDTO = { contact, description, complaintCategory, complaintSeverity }
+        const reportContactEvents = await reportContactUseCase.execute(reportInfo, audit)
         this.domainEvents.push(...reportContactEvents)
 
         return null
     }
 
-    private async createContact(contactInfo: ContactInfo, audit: Audit): Promise<Contact> {
+    private async createContact(contactInfo: CreatePhoneContactDTO, audit: Audit): Promise<Contact> {
         const createContactUseCase = container.resolve(CreatePhoneContact)
         const createContactEvents = await createContactUseCase.execute(contactInfo, audit)
         this.domainEvents.push(...createContactEvents)

@@ -1,5 +1,5 @@
-import Contact from '../Aggregates/Contact/Contact'
-import DomainEvent from '../Base/AbstractDomainEvent'
+import Contact from '../Contact'
+import DomainEvent from '../../../Base/AbstractDomainEvent'
 
 export interface PhoneAccountCreatedPayload {
     contactCreated: Contact

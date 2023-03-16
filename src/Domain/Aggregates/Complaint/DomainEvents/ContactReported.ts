@@ -1,6 +1,6 @@
-import Complaint from '../Aggregates/Complaint/Complaint'
-import Contact from '../Aggregates/Contact/Contact'
-import DomainEvent from '../Base/AbstractDomainEvent'
+import Complaint from '../Complaint'
+import Contact from '../../Contact/Contact'
+import DomainEvent from '../../../Base/AbstractDomainEvent'
 
 export interface ContactReportedPayload {
     contactReported: Contact

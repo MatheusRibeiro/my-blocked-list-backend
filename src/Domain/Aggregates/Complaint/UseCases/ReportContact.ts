@@ -1,12 +1,12 @@
 import { injectable, inject } from 'tsyringe'
-import IComplaintRepository from '../Aggregates/Complaint/IComplaintRepository'
-import UseCase from '../Base/AbstractUseCase'
-import Audit from '../Base/Audit'
-import DomainEvent from '../Base/AbstractDomainEvent'
+import IComplaintRepository from '../IComplaintRepository'
+import UseCase from '../../../Base/AbstractUseCase'
+import Audit from '../../../Base/Audit'
+import DomainEvent from '../../../Base/AbstractDomainEvent'
 import ContactReported from '../DomainEvents/ContactReported'
-import Contact from '../Aggregates/Contact/Contact'
-import { ComplaintCategory, ComplaintSeverity } from '../Aggregates/Complaint/ValueObjects/ComplaintType'
-import { complaintFactoryWithoutId } from '../Aggregates/Complaint/ComplaintFactory'
+import Contact from '../../Contact/Contact'
+import { ComplaintCategory, ComplaintSeverity } from '../ValueObjects/ComplaintType'
+import { complaintFactoryWithoutId } from '../ComplaintFactory'
 
 export interface ReportContactDTO {
     contact: Contact
