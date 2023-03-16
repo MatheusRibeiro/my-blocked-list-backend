@@ -1,4 +1,4 @@
-import TextValueObject from '@src/Domain/Base/ValueObject/Text'
+import TextValueObject from '@src/Domain/Base/ValueObject/AbstractText'
 
 export default class ComplaintDescription extends TextValueObject {
     public readonly minLength = 5
