@@ -6,10 +6,15 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "first_name": "",
-    "last_name": "",
-    "phone": "+5511987651234",
+    "first_name": "John",
+    "last_name": "Doe",
+    "phone": "+55 9123-4567",
     "description": "Any description",
     "category": 1,
     "severity": 3
 }
+
+###
+GET {{host}}/complaint/find-by-phone/+55 9123-4567
+Content-Type: application/json
+Authorization: Bearer {{token}}

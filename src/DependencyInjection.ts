@@ -9,6 +9,8 @@ import IComplaintRepository from '@src/Domain/Aggregates/Complaint/IComplaintRep
 import ComplaintInMemoryRepository from '@src/Infrastructure/Repositories/InMemory/ComplaintRepository'
 import IContactRepository from '@src/Domain/Aggregates/Contact/IContactRepository'
 import ContactInMemoryRepository from '@src/Infrastructure/Repositories/InMemory/ContactRepository'
+import IComplaintQueryRepository from '@src/Application/Queries/IComplaintQueryRespository'
+import ComplaintQueryInMemoryRepository from '@src/Infrastructure/Repositories/InMemory/ComplaintQueryRepository'
 
 container.registerSingleton<IJwtTokenGenerator>('JwtTokenGenerator', JwtTokenGenerator)
 container.registerSingleton<IAuthenticationService>('AuthenticationService', AuthenticationService)
@@ -16,3 +18,5 @@ container.registerSingleton<IAuthenticationService>('AuthenticationService', Aut
 container.registerSingleton<IUserRepository>('UserRepository', UserInMemoryRepository)
 container.registerSingleton<IComplaintRepository>('ComplaintRepository', ComplaintInMemoryRepository)
 container.registerSingleton<IContactRepository>('ContactRepository', ContactInMemoryRepository)
+
+container.registerSingleton<IComplaintQueryRepository>('ComplaintQueryRepository', ComplaintQueryInMemoryRepository)
