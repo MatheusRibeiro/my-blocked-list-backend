@@ -17,9 +17,16 @@ interface CreateComplaintRequest {
     complaintSeverity: number
     phone: string
 }
+
+interface ContactInfo {
+    firstName: string
+    lastName: string
+    phone: string
+}
 @injectable()
 export default class CreateComplaintCommand {
     private readonly contactRepository: IContactRepository
+    private readonly domainEvents: Array<DomainEvent<object>> = []
 
     constructor(@inject('ContactRepository') contactRepository: IContactRepository) {
         this.contactRepository = contactRepository
@@ -29,32 +36,32 @@ export default class CreateComplaintCommand {
         { firstName, lastName, description, complaintCategory, complaintSeverity, phone }: CreateComplaintRequest,
         authorId: string
     ): Promise<null> => {
-        const domainEvents: Array<DomainEvent<object>> = []
         const audit = new Audit(new UserId(authorId))
 
         const existingContact = await this.contactRepository.findByPhone(new PhoneAccount(phone))
 
-        let contact: Contact
-        if (existingContact === null) {
-            const contactInfo = { firstName, lastName, phone }
-            const createContactUseCase = container.resolve(CreatePhoneContact)
-            const createContactEvents = await createContactUseCase.execute(contactInfo, audit)
-            domainEvents.push(...createContactEvents)
-
-            const result = await this.contactRepository.findByPhone(new PhoneAccount(phone))
-            if (result === null) throw new NotFoundError('Unable to find contact')
-            contact = result
-        } else {
-            contact = existingContact
-        }
+        const contact =
+            existingContact === null ? await this.createContact({ firstName, lastName, phone }, audit) : existingContact
 
         const reportContactUseCase = container.resolve(ReportContact)
         const reportContactEvents = await reportContactUseCase.execute(
             { contact, description, complaintCategory, complaintSeverity },
             audit
         )
-        domainEvents.push(...reportContactEvents)
+        this.domainEvents.push(...reportContactEvents)
 
         return null
+    }
+
+    private async createContact(contactInfo: ContactInfo, audit: Audit): Promise<Contact> {
+        const createContactUseCase = container.resolve(CreatePhoneContact)
+        const createContactEvents = await createContactUseCase.execute(contactInfo, audit)
+        this.domainEvents.push(...createContactEvents)
+
+        const result = await this.contactRepository.findByPhone(new PhoneAccount(contactInfo.phone))
+        if (result === null) {
+            throw new NotFoundError('Unable to find contact')
+        }
+        return result
     }
 }
