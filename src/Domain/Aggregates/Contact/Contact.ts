@@ -1,4 +1,4 @@
-import Entity from '../../Base/Entity'
+import Entity from '../../Base/AbstractEntity'
 import Email from '../../Base/ValueObject/Email'
 import PersonName from '../../Base/ValueObject/PersonName'
 import Phone from '../../Base/ValueObject/Phone'
@@ -9,14 +9,12 @@ type ContactAccount = Email | Phone
 export default class Contact extends Entity {
     public contactId: ContactId
     public personName: PersonName
-    public description: string
     public account: ContactAccount
 
-    constructor(contactId: ContactId, personName: PersonName, description: string, account: ContactAccount) {
+    constructor(contactId: ContactId, personName: PersonName, account: ContactAccount) {
         super()
         this.contactId = contactId
         this.personName = personName
-        this.description = description
         this.account = account
     }
 

@@ -7,7 +7,6 @@ import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
 export interface RawContactDataWithoutId {
     firstName: string
     lastName: string
-    description: string
     email?: string
     phone?: string
 }
@@ -21,18 +20,10 @@ export function contactFactoryWithoutId(rawData: RawContactDataWithoutId): Conta
     return contactFactoryWithId(Object.assign({ contactId }, rawData))
 }
 
-export function contactFactoryWithId({
-    contactId,
-    firstName,
-    lastName,
-    description,
-    phone,
-    email,
-}: RawContactDataWithId): Contact {
+export function contactFactoryWithId({ contactId, firstName, lastName, phone, email }: RawContactDataWithId): Contact {
     return new Contact(
         new ContactId(contactId),
         new PersonName({ firstName, lastName }),
-        description,
         contactAccountFactory({ email, phone })
     )
 }

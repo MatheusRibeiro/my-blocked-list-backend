@@ -1,4 +1,4 @@
-import DomainError from './AbstractDomainError'
+import DomainError from '../Base/AbstractDomainError'
 
 export default class BadRequestError extends DomainError {
     public readonly code = 400

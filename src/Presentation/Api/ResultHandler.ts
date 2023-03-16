@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import DomainError from '@src/Domain/Errors/AbstractDomainError'
+import DomainError from '@src/Domain/Base/AbstractDomainError'
 
 type BaseResponseTypes = string | number | boolean | null | object
 type ResponseType = BaseResponseTypes | BaseResponseTypes[]

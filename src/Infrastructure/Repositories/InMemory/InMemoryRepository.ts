@@ -1,4 +1,4 @@
-import Entity from '@src/Domain/Base/Entity'
+import Entity from '@src/Domain/Base/AbstractEntity'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 export default class InMemoryRepository<IEntity extends Entity, IdType extends UUID> {

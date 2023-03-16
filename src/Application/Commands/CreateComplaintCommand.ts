@@ -1,10 +1,13 @@
-import { injectable, inject } from 'tsyringe'
-import { contactFactoryWithoutId } from '@src/Domain/Aggregates/Contact/ContactFactory'
+import { injectable, inject, container } from 'tsyringe'
 import IContactRepository from '@src/Domain/Aggregates/Contact/IContactRepository'
-import IComplaintRepository from '@src/Domain/Aggregates/Complaint/IComplaintRepository'
 import PhoneAccount from '@src/Domain/Base/ValueObject/Phone'
-import { complaintFactoryWithoutId } from '@src/Domain/Aggregates/Complaint/ComplaintFactory'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
+import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
+import CreatePhoneContact from '@src/Domain/UseCases/CreatePhoneContact'
+import ReportContact from '@src/Domain/UseCases/ReportContact'
+import Audit from '@src/Domain/Base/Audit'
+import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
+import NotFoundError from '@src/Domain/Errors/NotFoundError'
 
 interface CreateComplaintRequest {
     firstName: string
@@ -16,14 +19,9 @@ interface CreateComplaintRequest {
 }
 @injectable()
 export default class CreateComplaintCommand {
-    private readonly complaintRepository: IComplaintRepository
     private readonly contactRepository: IContactRepository
 
-    constructor(
-        @inject('ComplaintRepository') complaintRepository: IComplaintRepository,
-        @inject('ContactRepository') contactRepository: IContactRepository
-    ) {
-        this.complaintRepository = complaintRepository
+    constructor(@inject('ContactRepository') contactRepository: IContactRepository) {
         this.contactRepository = contactRepository
     }
 
@@ -31,24 +29,32 @@ export default class CreateComplaintCommand {
         { firstName, lastName, description, complaintCategory, complaintSeverity, phone }: CreateComplaintRequest,
         authorId: string
     ): Promise<null> => {
-        let contact: Contact
+        const domainEvents: Array<DomainEvent<object>> = []
+        const audit = new Audit(new UserId(authorId))
+
         const existingContact = await this.contactRepository.findByPhone(new PhoneAccount(phone))
 
+        let contact: Contact
         if (existingContact === null) {
-            contact = contactFactoryWithoutId({ firstName, lastName, description, phone })
-            await this.contactRepository.create(contact)
+            const contactInfo = { firstName, lastName, phone }
+            const createContactUseCase = container.resolve(CreatePhoneContact)
+            const createContactEvents = await createContactUseCase.execute(contactInfo, audit)
+            domainEvents.push(...createContactEvents)
+
+            const result = await this.contactRepository.findByPhone(new PhoneAccount(phone))
+            if (result === null) throw new NotFoundError('Unable to find contact')
+            contact = result
         } else {
             contact = existingContact
         }
 
-        const complaint = complaintFactoryWithoutId({
-            description,
-            authorId,
-            contactId: contact.contactId.value,
-            category: complaintCategory,
-            severity: complaintSeverity,
-        })
-        await this.complaintRepository.create(complaint)
+        const reportContactUseCase = container.resolve(ReportContact)
+        const reportContactEvents = await reportContactUseCase.execute(
+            { contact, description, complaintCategory, complaintSeverity },
+            audit
+        )
+        domainEvents.push(...reportContactEvents)
+
         return null
     }
 }
