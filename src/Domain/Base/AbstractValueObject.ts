@@ -8,10 +8,10 @@ export default abstract class ValueObject<T> {
     public abstract isValid(other: ValueObject<T>): boolean
 
     public isEqual(other: ValueObject<T>): boolean {
-        return JSON.stringify(this.toJson()) === JSON.stringify(other.toJson())
+        return JSON.stringify(this.toJSON()) === JSON.stringify(other.toJSON())
     }
 
-    public toJson(): T {
+    public toJSON(): T {
         return this.value
     }
 }
