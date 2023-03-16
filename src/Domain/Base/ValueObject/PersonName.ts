@@ -1,4 +1,4 @@
-import ValueObject from './ValueObject'
+import ValueObject from '../AbstractValueObject'
 
 interface IPersonlName {
     firstName: string

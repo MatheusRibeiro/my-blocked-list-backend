@@ -1,4 +1,4 @@
-import ValueObject from './ValueObject'
+import ValueObject from '../AbstractValueObject'
 
 export default class EmailAccount extends ValueObject<string> {
     public isValid(): boolean {

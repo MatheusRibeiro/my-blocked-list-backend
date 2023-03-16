@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import ValueObject from './ValueObject'
+import ValueObject from '../AbstractValueObject'
 
 export default class UUID extends ValueObject<string> {
     public isValid(): boolean {
