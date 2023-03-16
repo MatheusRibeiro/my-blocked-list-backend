@@ -1,6 +1,6 @@
 import Complaint from '../Complaint'
 import Contact from '../../Contact/Contact'
-import DomainEvent from '../../../Base/AbstractDomainEvent'
+import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
 
 export interface ContactReportedPayload {
     contactReported: Contact

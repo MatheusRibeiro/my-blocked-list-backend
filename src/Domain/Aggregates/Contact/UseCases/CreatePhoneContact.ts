@@ -1,8 +1,8 @@
 import { injectable, inject } from 'tsyringe'
+import UseCase from '@src/Domain/Base/AbstractUseCase'
+import Audit from '@src/Domain/Base/Audit'
+import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
 import IContactRepository from '../IContactRepository'
-import UseCase from '../../../Base/AbstractUseCase'
-import DomainEvent from '../../../Base/AbstractDomainEvent'
-import Audit from '../../../Base/Audit'
 import { contactFactoryWithoutId } from '../ContactFactory'
 import PhoneAccountCreated from '../DomainEvents/PhoneContactCreated'
 
