@@ -1,10 +1,6 @@
-import ValueObject from '../../../Base/AbstractValueObject'
+import TextValueObject from '@src/Domain/Base/ValueObject/Text'
 
-const MIN_LENGTH = 5
-const MAX_LENGTH = 255
-
-export default class ComplaintDescription extends ValueObject<string> {
-    public isValid(): boolean {
-        return this.value.length >= MIN_LENGTH && this.value.length <= MAX_LENGTH
-    }
+export default class ComplaintDescription extends TextValueObject {
+    public readonly minLength = 5
+    public readonly maxLength = 255
 }
