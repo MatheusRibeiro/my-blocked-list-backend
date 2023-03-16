@@ -1,4 +1,4 @@
-import ValueObject from '../../../Base/ValueObject/ValueObject'
+import ValueObject from '../../../Base/AbstractValueObject'
 
 const MIN_LENGTH = 5
 const MAX_LENGTH = 255

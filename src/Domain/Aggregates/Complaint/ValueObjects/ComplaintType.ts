@@ -1,4 +1,4 @@
-import ValueObject from '../../../Base/ValueObject/ValueObject'
+import ValueObject from '../../../Base/AbstractValueObject'
 
 export enum ComplaintCategory {
     SPAM,
