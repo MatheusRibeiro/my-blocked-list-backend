@@ -35,7 +35,7 @@ export default class CreatePhoneContact extends UseCase<CreatePhoneContactDTO> {
         contact.validate()
         await this.contactRepository.create(contact)
 
-        events.push(new PhoneAccountCreated({ contactCreated: contact }, audit))
+        events.push(new PhoneAccountCreated({ contact_created: contact.toJSON() }, audit))
         return events
     }
 }

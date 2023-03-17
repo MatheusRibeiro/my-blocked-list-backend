@@ -13,4 +13,14 @@ export default abstract class DomainEvent<Payload> {
         this.payload = payload
         this.audit = audit
     }
+
+    public toJSON(): object {
+        return {
+            id: this.eventId.toJSON(),
+            name: this.name,
+            payload: this.payload,
+            audit: this.audit.toJSON(),
+            version: this.version,
+        }
+    }
 }

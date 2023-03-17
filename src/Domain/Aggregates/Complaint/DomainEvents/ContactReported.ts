@@ -1,10 +1,10 @@
-import Complaint from '../Complaint'
-import Contact from '../../Contact/Contact'
+import { ComplaintJson } from '../Complaint'
 import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
+import { ContactJson } from '../../Contact/Contact'
 
 export interface ContactReportedPayload {
-    contactReported: Contact
-    complaint: Complaint
+    complaint: ComplaintJson
+    contact_reported: ContactJson
 }
 
 export default class ContactReported extends DomainEvent<ContactReportedPayload> {

@@ -8,4 +8,11 @@ export default class Audit {
         this.who = who
         this.when = new Date()
     }
+
+    public toJSON(): object {
+        return {
+            who: this.who.toJSON(),
+            when: this.when.toDateString(),
+        }
+    }
 }

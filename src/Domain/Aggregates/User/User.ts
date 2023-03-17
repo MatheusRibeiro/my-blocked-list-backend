@@ -26,4 +26,11 @@ export default class User extends Entity {
     public isEqual(entity: User): boolean {
         return this.userId.isEqual(entity.userId)
     }
+
+    public toJSON(): object {
+        return {
+            id: this.userId.toJSON(),
+            username: this.username.toJSON(),
+        }
+    }
 }

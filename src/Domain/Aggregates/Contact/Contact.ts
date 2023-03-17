@@ -6,6 +6,12 @@ import ContactId from './ValueObjects/ContactId'
 
 type ContactAccount = Email | Phone
 
+export interface ContactJson {
+    id: string
+    name: object
+    account: string
+}
+
 export default class Contact extends Entity {
     public contactId: ContactId
     public personName: PersonName
@@ -28,5 +34,13 @@ export default class Contact extends Entity {
 
     public isEqual(entity: Contact): boolean {
         return this.contactId.isEqual(entity.contactId)
+    }
+
+    public toJSON(): ContactJson {
+        return {
+            id: this.contactId.toJSON(),
+            name: this.personName.toJSON(),
+            account: this.account.toJSON(),
+        }
     }
 }

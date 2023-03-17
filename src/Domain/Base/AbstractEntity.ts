@@ -9,4 +9,5 @@ export default abstract class Entity {
         if (!this.isValid()) throw new BadRequestError(`Invalid paramenters for ${this.constructor.name}.`)
         return null
     }
+    public abstract toJSON(): object
 }

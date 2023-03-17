@@ -40,7 +40,7 @@ export default class ReportContact extends UseCase<ReportContactDTO> {
         complaint.validate()
         await this.complaintRepository.create(complaint)
 
-        events.push(new ContactReported({ complaint, contactReported: contact }, audit))
+        events.push(new ContactReported({ complaint: complaint.toJSON(), contact_reported: contact.toJSON() }, audit))
         return events
     }
 }

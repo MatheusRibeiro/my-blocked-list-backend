@@ -5,6 +5,14 @@ import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintId from './ValueObjects/ComplaintId'
 import ComplaintType from './ValueObjects/ComplaintType'
 
+export interface ComplaintJson {
+    id: string
+    description: string
+    contact: { id: string }
+    complaint_type: object
+    author: { id: string }
+}
+
 export default class Complaint extends Entity {
     public complaintId: ComplaintId
     public description: ComplaintDescription
@@ -37,5 +45,15 @@ export default class Complaint extends Entity {
 
     public isEqual(entity: Complaint): boolean {
         return this.complaintId.isEqual(entity.complaintId)
+    }
+
+    public toJSON(): ComplaintJson {
+        return {
+            id: this.complaintId.toJSON(),
+            description: this.description.toJSON(),
+            contact: { id: this.contactId.toJSON() },
+            complaint_type: this.complaintType.toJSON(),
+            author: { id: this.authorId.toJSON() },
+        }
     }
 }
