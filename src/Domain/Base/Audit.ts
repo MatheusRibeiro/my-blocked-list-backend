@@ -12,7 +12,7 @@ export default class Audit {
     public toJSON(): object {
         return {
             who: this.who.toJSON(),
-            when: this.when.toDateString(),
+            when: this.when.toJSON(),
         }
     }
 }
