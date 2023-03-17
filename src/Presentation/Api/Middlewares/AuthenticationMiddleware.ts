@@ -18,22 +18,38 @@ export default class AuthenticationMiddleware {
     }
 
     public execute = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const authorizationHeader = req.header('Authorization')
-        if (authorizationHeader === undefined) {
+        const method = req.method
+        const token = method === 'GET' ? this.getTokenFromUrl(req) : this.getTokenFromHeader(req)
+        if (token === null) {
             errorHandler(res, new UnauthenticatedError(missingTokenError))
             return
         }
-        const splitedHeader = authorizationHeader.split(' ')
-        if (splitedHeader.length !== 2) {
-            errorHandler(res, new UnauthenticatedError(missingTokenError))
-            return
-        }
-        const [, token] = splitedHeader
         try {
             res.locals.User = await this.authService.validateToken(token)
             next()
         } catch (error) {
             errorHandler(res, error)
         }
+    }
+
+    private getTokenFromUrl(req: Request): string | null {
+        const token = req.params.token
+        if (token === undefined) {
+            return null
+        }
+        return token
+    }
+
+    private getTokenFromHeader(req: Request): string | null {
+        const authorizationHeader = req.header('Authorization')
+        if (authorizationHeader === undefined) {
+            return null
+        }
+        const splitedHeader = authorizationHeader.split(' ')
+        if (splitedHeader.length !== 2) {
+            return null
+        }
+        const [, token] = splitedHeader
+        return token
     }
 }
