@@ -4,7 +4,7 @@ import IAuthenticationService from '@src/Application/Services/Authentication/IAu
 import { errorHandler } from '../ResultHandler'
 import UnauthenticatedError from '@src/Domain/Errors/UnauthenticatedError'
 
-const missingTokenError = 'A Bearer token is required for this action.'
+const missingTokenError = 'A token is required for this action.'
 
 @injectable()
 export default class AuthenticationMiddleware {
@@ -33,11 +33,11 @@ export default class AuthenticationMiddleware {
     }
 
     private getTokenFromUrl(req: Request): string | null {
-        const token = req.params.token
-        if (token === undefined) {
-            return null
+        const token = req.query.token?.toString()
+        if (typeof token === 'string' && token.length > 0) {
+            return token
         }
-        return token
+        return null
     }
 
     private getTokenFromHeader(req: Request): string | null {

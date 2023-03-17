@@ -15,6 +15,4 @@ Authorization: Bearer {{token}}
 }
 
 ###
-GET {{host}}/complaint/find-by-phone/+55 9123-4567
-Content-Type: application/json
-Authorization: Bearer {{token}}
+GET {{host}}/complaint/find-by-phone/+55 9123-4567?token={{token}}
