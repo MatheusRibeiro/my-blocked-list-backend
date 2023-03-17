@@ -35,10 +35,10 @@ export default class CreateComplaintCommand {
     ): Promise<null> => {
         const audit = new Audit(new UserId(authorId))
 
-        const existingContact = await this.contactRepository.findByPhone(new PhoneAccount(phone))
+        const foundContact = await this.contactRepository.findByPhone(new PhoneAccount(phone))
 
-        const contact =
-            existingContact === null ? await this.createContact({ firstName, lastName, phone }, audit) : existingContact
+        const contactInfo = { firstName, lastName, phone }
+        const contact = foundContact === null ? await this.createContact(contactInfo, audit) : foundContact
 
         const reportContactUseCase = container.resolve(ReportContact)
         const reportInfo: ReportContactDTO = { contact, description, complaintCategory, complaintSeverity }
