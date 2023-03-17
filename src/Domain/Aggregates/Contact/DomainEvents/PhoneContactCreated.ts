@@ -7,4 +7,5 @@ export interface PhoneAccountCreatedPayload {
 
 export default class PhoneAccountCreated extends DomainEvent<PhoneAccountCreatedPayload> {
     public readonly name = 'PhoneAccountCreated'
+    public readonly version = 1
 }

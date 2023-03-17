@@ -6,6 +6,7 @@ export default abstract class DomainEvent<Payload> {
     abstract name: string
     public readonly payload: Payload
     public readonly audit: Audit
+    abstract readonly version: number
 
     constructor(payload: Payload, audit: Audit) {
         this.eventId = uuidFactory()
