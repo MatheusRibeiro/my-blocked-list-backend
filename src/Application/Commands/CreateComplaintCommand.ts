@@ -34,9 +34,7 @@ export default class CreateComplaintCommand {
 
         const { firstName, lastName, phone } = complaintInfo
         const contactInfo = { firstName, lastName, phone }
-        const foundContact = await this.contactRepository.findByPhone(new PhoneAccount(phone))
-
-        const contact = foundContact !== null ? foundContact : await this.createContact(contactInfo, audit)
+        const contact = await this.getOrCreateContact(contactInfo, audit)
 
         const { description, complaintCategory, complaintSeverity } = complaintInfo
         const reportInfo: ReportContactDTO = { contact, description, complaintCategory, complaintSeverity }
@@ -46,6 +44,15 @@ export default class CreateComplaintCommand {
         this.domainEvents.push(...reportContactEvents)
 
         return null
+    }
+
+    private async getOrCreateContact(contactInfo: CreatePhoneContactDTO, audit: Audit): Promise<Contact> {
+        const { phone } = contactInfo
+        const foundContact = await this.contactRepository.findByPhone(new PhoneAccount(phone))
+        if (foundContact !== null) {
+            return foundContact
+        }
+        return await this.createContact(contactInfo, audit)
     }
 
     private async createContact(contactInfo: CreatePhoneContactDTO, audit: Audit): Promise<Contact> {
