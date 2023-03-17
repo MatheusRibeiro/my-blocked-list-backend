@@ -29,19 +29,19 @@ export default class CreateComplaintCommand {
         this.contactRepository = contactRepository
     }
 
-    public execute = async (
-        { firstName, lastName, description, complaintCategory, complaintSeverity, phone }: CreateComplaintRequest,
-        authorId: string
-    ): Promise<null> => {
+    public execute = async (complaintInfo: CreateComplaintRequest, authorId: string): Promise<null> => {
         const audit = new Audit(new UserId(authorId))
 
+        const { firstName, lastName, phone } = complaintInfo
+        const contactInfo = { firstName, lastName, phone }
         const foundContact = await this.contactRepository.findByPhone(new PhoneAccount(phone))
 
-        const contactInfo = { firstName, lastName, phone }
-        const contact = foundContact === null ? await this.createContact(contactInfo, audit) : foundContact
+        const contact = foundContact !== null ? foundContact : await this.createContact(contactInfo, audit)
+
+        const { description, complaintCategory, complaintSeverity } = complaintInfo
+        const reportInfo: ReportContactDTO = { contact, description, complaintCategory, complaintSeverity }
 
         const reportContactUseCase = container.resolve(ReportContact)
-        const reportInfo: ReportContactDTO = { contact, description, complaintCategory, complaintSeverity }
         const reportContactEvents = await reportContactUseCase.execute(reportInfo, audit)
         this.domainEvents.push(...reportContactEvents)
 
