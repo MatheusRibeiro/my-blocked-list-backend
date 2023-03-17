@@ -1,6 +1,6 @@
 import { injectable, inject, container } from 'tsyringe'
 import IContactRepository from '@src/Domain/Aggregates/Contact/IContactRepository'
-import PhoneAccount from '@src/Domain/Base/ValueObject/Phone'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
 import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
 import CreatePhoneContact, {
@@ -48,7 +48,7 @@ export default class CreateComplaintCommand {
 
     private async getOrCreateContact(contactInfo: CreatePhoneContactDTO, audit: Audit): Promise<Contact> {
         const { phone } = contactInfo
-        const foundContact = await this.contactRepository.findByPhone(new PhoneAccount(phone))
+        const foundContact = await this.contactRepository.findByPhone(new Phone(phone))
         if (foundContact !== null) {
             return foundContact
         }
@@ -60,7 +60,7 @@ export default class CreateComplaintCommand {
         const createContactEvents = await createContactUseCase.execute(contactInfo, audit)
         this.domainEvents.push(...createContactEvents)
 
-        const result = await this.contactRepository.findByPhone(new PhoneAccount(contactInfo.phone))
+        const result = await this.contactRepository.findByPhone(new Phone(contactInfo.phone))
         if (result === null) {
             throw new NotFoundError('Unable to find contact')
         }

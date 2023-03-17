@@ -7,4 +7,8 @@ export default abstract class TextValueObject extends ValueObject<string> {
     public isValid(): boolean {
         return this.value.length >= this.minLength && this.value.length <= this.maxLength
     }
+
+    public toJSON(): string {
+        return this.value
+    }
 }

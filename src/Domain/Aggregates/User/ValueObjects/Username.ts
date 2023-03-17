@@ -12,4 +12,8 @@ export default class Username extends ValueObject<string> {
         const usernameRegex = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/
         return !(this.value.match(usernameRegex) == null)
     }
+
+    public toJSON(): string {
+        return this.value
+    }
 }

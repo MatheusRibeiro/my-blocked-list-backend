@@ -7,6 +7,10 @@ export default class UUID extends ValueObject<string> {
         const match = this.value.match(uuidRegex)
         return !(match == null)
     }
+
+    public toJSON(): string {
+        return this.value
+    }
 }
 
 export function uuidFactory(): UUID {

@@ -12,4 +12,11 @@ export default class PersoName extends ValueObject<IPersonlName> {
         const { firstName } = this.value
         return typeof firstName === 'string' && firstName.length >= MIN_FIRSTNAME_LENGTH
     }
+
+    public toJSON(): object {
+        return {
+            first_name: this.value.firstName,
+            last_name: this.value.lastName,
+        }
+    }
 }

@@ -5,13 +5,13 @@ export default abstract class ValueObject<T> {
         this.value = value
     }
 
-    public abstract isValid(other: ValueObject<T>): boolean
+    public abstract isValid(): boolean
 
     public isEqual(other: ValueObject<T>): boolean {
         return JSON.stringify(this.toJSON()) === JSON.stringify(other.toJSON())
     }
 
-    public toJSON(): T {
-        return this.value
+    public toJSON(): object | number | string | boolean | null {
+        return null
     }
 }

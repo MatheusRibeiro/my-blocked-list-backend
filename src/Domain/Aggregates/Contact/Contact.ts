@@ -1,23 +1,20 @@
 import Entity from '../../Base/AbstractEntity'
-import Email from '../../Base/ValueObject/Email'
 import PersonName from '../../Base/ValueObject/PersonName'
-import Phone from '../../Base/ValueObject/Phone'
+import ContactAccount, { AccountType } from './ValueObjects/ContactAccount'
 import ContactId from './ValueObjects/ContactId'
-
-type ContactAccount = Email | Phone
 
 export interface ContactJson {
     id: string
     name: object
-    account: string
+    account: object
 }
 
 export default class Contact extends Entity {
     public contactId: ContactId
     public personName: PersonName
-    public account: ContactAccount
+    public account: ContactAccount<AccountType>
 
-    constructor(contactId: ContactId, personName: PersonName, account: ContactAccount) {
+    constructor(contactId: ContactId, personName: PersonName, account: ContactAccount<AccountType>) {
         super()
         this.contactId = contactId
         this.personName = personName

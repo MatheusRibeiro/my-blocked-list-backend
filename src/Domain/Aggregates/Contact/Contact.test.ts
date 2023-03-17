@@ -4,9 +4,11 @@ import Phone from '../../Base/ValueObject/Phone'
 import PersonName from '../../Base/ValueObject/PersonName'
 import UUID, { uuidFactory } from '../../Base/ValueObject/UUID'
 import BadRequestError from '../../Errors/BadRequestError'
+import PhoneAccount from './ValueObjects/PhoneAccount'
+import EmailAccount from './ValueObjects/EmailAccount'
 
-const validPhone = new Phone('+55 9876-5432')
-const validEmail = new Email('email1@gmail.com')
+const validPhone = new PhoneAccount(new Phone('+55 9876-5432'))
+const validEmail = new EmailAccount(new Email('email1@gmail.com'))
 const validPersonName = new PersonName({ firstName: 'John', lastName: 'Doe' })
 const validUuid = uuidFactory()
 
@@ -32,14 +34,14 @@ describe('Is Valid', () => {
     })
 
     test('is not valid with invalid phone as contact', () => {
-        const invalidPhone = new Phone('invalid')
+        const invalidPhone = new PhoneAccount(new Phone('invalid'))
         const contact = new Contact(validUuid, validPersonName, invalidPhone)
 
         expect(contact.isValid()).toBeFalsy()
     })
 
     test('is not valid with invalid email as contact', () => {
-        const invalidEmail = new Email('invalid')
+        const invalidEmail = new EmailAccount(new Email('invalid'))
         const contact = new Contact(validUuid, validPersonName, invalidEmail)
 
         expect(contact.isValid()).toBeFalsy()
@@ -60,7 +62,7 @@ describe('validate', () => {
     })
 
     test('throws error when invalid', () => {
-        const invalidPhone = new Phone('invalid')
+        const invalidPhone = new PhoneAccount(new Phone('invalid'))
         const contact = new Contact(validUuid, validPersonName, invalidPhone)
 
         expect(contact.validate).toThrow(BadRequestError)

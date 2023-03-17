@@ -25,4 +25,12 @@ export default class ComplaintType extends ValueObject<IComplaintType> {
         const { complaintCategory, complaintSeverity } = this.value
         return ComplaintCategory[complaintCategory] !== undefined && ComplaintSeverity[complaintSeverity] !== undefined
     }
+
+    public toJSON(): object {
+        const { complaintCategory, complaintSeverity } = this.value
+        return {
+            category: ComplaintCategory[complaintCategory],
+            severity: ComplaintSeverity[complaintSeverity],
+        }
+    }
 }
