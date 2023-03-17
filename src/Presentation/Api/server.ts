@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 
 import express, { json } from 'express'
-import '../../DependencyInjection'
+import '@src/Infrastructure/DependencyInjection'
 import router from './router'
 
 const app = express()
