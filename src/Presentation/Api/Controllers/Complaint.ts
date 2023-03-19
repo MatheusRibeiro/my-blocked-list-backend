@@ -1,12 +1,12 @@
-import { type Request, type Response } from 'express'
 import { container } from 'tsyringe'
-import CreateComplaintCommand from '@src/Application/Commands/CreateComplaintCommand'
-import GetComplaintsFromContactQuery, { ComplaintDTO } from '@src/Application/Queries/GetComplaintsFromContactQuery'
+import type { Request, Response } from 'express'
+import IController from '../Base/BaseController'
 import { Controller } from '../Base/Decorators/Controller'
 import { Get, Post } from '../Base/Decorators/Route'
-import IController from '../Base/BaseController'
-import AuthenticationMiddleware from '../Middlewares/AuthenticationMiddleware'
-import LoggerMiddleware from '../Middlewares/LoggerMiddleware'
+import CreateComplaintCommand from '@src/Application/Commands/CreateComplaintCommand'
+import GetComplaintsFromContactQuery, { ComplaintDTO } from '@src/Application/Queries/GetComplaintsFromContactQuery'
+import AuthenticationMiddleware from '../Middlewares/Authentication'
+import LoggerMiddleware from '../Middlewares/Logger'
 
 @Controller('/complaint')
 export default class ComplaintController extends IController {
@@ -17,8 +17,8 @@ export default class ComplaintController extends IController {
         super()
         this.createComplaintCommand = container.resolve(CreateComplaintCommand)
         this.getComplaintsFromContactQuery = container.resolve(GetComplaintsFromContactQuery)
-        this.middlewares.push(container.resolve(AuthenticationMiddleware))
         this.middlewares.push(container.resolve(LoggerMiddleware))
+        this.middlewares.push(container.resolve(AuthenticationMiddleware))
     }
 
     @Post('/create')
