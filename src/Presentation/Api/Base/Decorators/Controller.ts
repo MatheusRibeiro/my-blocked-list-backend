@@ -18,6 +18,7 @@ export const Controller = (prefix: string): ClassDecorator => {
         const controller: IController = container.resolve(target)
 
         controller.middlewares.forEach(middleware => {
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             router.use(middleware.execute)
         })
 
