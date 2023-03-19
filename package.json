@@ -1,7 +1,8 @@
 {
   "name": "my-blocked-list-backend",
+  "description": "Manages blocked phones and emails",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "dist/Presentation/Api/server.js",
   "author": "Matheus Ribeiro <matheus.salgado@gmail.com>",
   "license": "MIT",
   "scripts": {
