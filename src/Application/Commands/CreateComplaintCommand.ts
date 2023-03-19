@@ -33,15 +33,10 @@ export default class CreateComplaintCommand {
         const audit = new Audit(new UserId(authorId))
 
         const { firstName, lastName, phone } = complaintInfo
-        const contactInfo = { firstName, lastName, phone }
-        const contact = await this.getOrCreateContact(contactInfo, audit)
+        const contact = await this.getOrCreateContact({ firstName, lastName, phone }, audit)
 
         const { description, complaintCategory, complaintSeverity } = complaintInfo
-        const reportInfo: ReportContactDTO = { contact, description, complaintCategory, complaintSeverity }
-
-        const reportContactUseCase = container.resolve(ReportContact)
-        const reportContactEvents = await reportContactUseCase.execute(reportInfo, audit)
-        this.domainEvents.push(...reportContactEvents)
+        await this.createContactReport({ description, complaintCategory, complaintSeverity, contact }, audit)
 
         return null
     }
@@ -65,5 +60,13 @@ export default class CreateComplaintCommand {
             throw new NotFoundError('Unable to find contact')
         }
         return result
+    }
+
+    private async createContactReport(reportInfo: ReportContactDTO, audit: Audit): Promise<null> {
+        const reportContactUseCase = container.resolve(ReportContact)
+        const reportContactEvents = await reportContactUseCase.execute(reportInfo, audit)
+        this.domainEvents.push(...reportContactEvents)
+
+        return null
     }
 }
