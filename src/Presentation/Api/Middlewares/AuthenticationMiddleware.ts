@@ -1,19 +1,21 @@
 import type { Request, Response, NextFunction } from 'express'
 import { inject, injectable } from 'tsyringe'
 import IAuthenticationService from '@src/Application/Services/Authentication/IAuthenticationService'
-import { errorHandler } from '../ResultHandler'
+import { errorHandler } from '../Base/ResultHandler'
 import UnauthenticatedError from '@src/Domain/Errors/UnauthenticatedError'
+import IMiddleware from '../Base/IMiddleware'
 
 const missingTokenError = 'A token is required for this action.'
 
 @injectable()
-export default class AuthenticationMiddleware {
+export default class AuthenticationMiddleware extends IMiddleware {
     private readonly authService: IAuthenticationService
 
     constructor(
         @inject('AuthenticationService')
         authService: IAuthenticationService
     ) {
+        super()
         this.authService = authService
     }
 
