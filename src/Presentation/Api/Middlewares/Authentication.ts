@@ -48,7 +48,7 @@ export default class AuthenticationMiddleware extends IMiddleware {
             return null
         }
         const splitedHeader = authorizationHeader.split(' ')
-        if (splitedHeader.length !== 2) {
+        if (splitedHeader.length !== 2 || splitedHeader[0] !== 'Bearer') {
             return null
         }
         const [, token] = splitedHeader
