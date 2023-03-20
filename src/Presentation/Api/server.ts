@@ -1,8 +1,11 @@
+// Required for Decorators
 import 'reflect-metadata'
-
-import express, { json } from 'express'
+// DI
 import '@src/Infrastructure/DependencyInjection'
+// API and Router
+import express, { json } from 'express'
 import { router } from './Base/Decorators/Controller'
+// Decorated controllers with its routes
 import './Controllers/Authentication'
 import './Controllers/Complaint'
 
