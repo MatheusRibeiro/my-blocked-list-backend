@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { container } from 'tsyringe'
-import IController from '../BaseController'
+import BaseController from '../BaseController'
 import RouteDefinition from './RouteDefiniton'
 import resultHandler from '../ResultHandler'
 
@@ -15,18 +15,20 @@ export const Controller = (prefix: string): ClassDecorator => {
         }
 
         const routes: RouteDefinition[] = Reflect.getMetadata('routes', target)
-        const controller: IController = container.resolve(target)
+        const instance = container.resolve(target)
 
-        controller.middlewares.forEach(middleware => {
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            router.use(middleware.execute)
-        })
+        if (instance instanceof BaseController) {
+            instance.middlewares.forEach(middleware => {
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                router.use(middleware.execute)
+            })
+        }
 
         routes.forEach((route: RouteDefinition) => {
             router[route.method](
                 `${prefix}${route.path}`,
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                resultHandler((controller as typeof target)[route.methodName])
+                resultHandler((instance as typeof target)[route.methodName])
             )
         })
     }
