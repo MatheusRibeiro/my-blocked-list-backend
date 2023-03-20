@@ -6,16 +6,16 @@ import resultHandler from '../ResultHandler'
 
 export const router = Router()
 
-export const Controller = (prefix: string): ClassDecorator => {
+export const Controller = (routePrefix: string): ClassDecorator => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (target: any) => {
-        Reflect.defineMetadata('prefix', prefix, target)
-        if (!Reflect.hasMetadata('routes', target)) {
-            Reflect.defineMetadata('routes', [], target)
+    return (targetDecorated: any) => {
+        Reflect.defineMetadata('prefix', routePrefix, targetDecorated)
+        if (!Reflect.hasMetadata('routes', targetDecorated)) {
+            Reflect.defineMetadata('routes', [], targetDecorated)
         }
 
-        const routes: RouteDefinition[] = Reflect.getMetadata('routes', target)
-        const instance = container.resolve(target)
+        const routes: RouteDefinition[] = Reflect.getMetadata('routes', targetDecorated)
+        const instance = container.resolve(targetDecorated)
 
         if (instance instanceof BaseController) {
             instance.middlewares.forEach(middleware => {
@@ -24,11 +24,11 @@ export const Controller = (prefix: string): ClassDecorator => {
             })
         }
 
-        routes.forEach((route: RouteDefinition) => {
-            router[route.method](
-                `${prefix}${route.path}`,
+        routes.forEach(({ method, methodName, path }: RouteDefinition) => {
+            router[method](
+                `${routePrefix}${path}`,
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                resultHandler((instance as typeof target)[route.methodName])
+                resultHandler((instance as typeof targetDecorated)[methodName])
             )
         })
     }
