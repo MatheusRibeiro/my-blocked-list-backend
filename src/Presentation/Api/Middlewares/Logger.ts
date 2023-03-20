@@ -10,5 +10,6 @@ export default class LoggerMiddleware extends IMiddleware {
         const url = req.url.replace(regexEnd, replace).replace(regexMiddle, `${replace}&`)
 
         console.log(`${req.method}: ${url}`)
+        next()
     }
 }
