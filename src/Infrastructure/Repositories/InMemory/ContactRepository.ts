@@ -6,6 +6,7 @@ import Phone from '@src/Domain/Base/ValueObject/Phone'
 import Email from '@src/Domain/Base/ValueObject/Email'
 import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccount'
 import EmailAccount from '@src/Domain/Aggregates/Contact/ValueObjects/EmailAccount'
+import dbContext from './DbContext'
 
 export default class ContactInMemoryRepository
     extends InMemoryRepository<Contact, ContactId>
@@ -13,9 +14,9 @@ export default class ContactInMemoryRepository
 {
     public async findByPhone(phone: Phone): Promise<Contact | null> {
         const phoneAccount = new PhoneAccount(phone)
-        for (let i = 0; i < this.storage.length; i++) {
-            if (this.storage[i].account.isEqual(phoneAccount)) {
-                return this.storage[i]
+        for (let i = 0; i < dbContext[this.tableName].length; i++) {
+            if ((dbContext[this.tableName][i] as Contact).account.isEqual(phoneAccount)) {
+                return dbContext[this.tableName][i] as Contact
             }
         }
         return null
@@ -23,9 +24,9 @@ export default class ContactInMemoryRepository
 
     public async findByEmail(email: Email): Promise<Contact | null> {
         const emailAccount = new EmailAccount(email)
-        for (let i = 0; i < this.storage.length; i++) {
-            if (this.storage[i].account.isEqual(emailAccount)) {
-                return this.storage[i]
+        for (let i = 0; i < dbContext[this.tableName].length; i++) {
+            if ((dbContext[this.tableName][i] as Contact).account.isEqual(emailAccount)) {
+                return dbContext[this.tableName][i] as Contact
             }
         }
         return null
