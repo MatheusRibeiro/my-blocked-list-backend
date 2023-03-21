@@ -1,12 +1,16 @@
 export type Environment = 'development' | 'qa' | 'rc' | 'production'
 
-export function readEnv(name: string): string {
+export function readEnvAsString(name: string, defaultValue = ''): string {
     const value = process.env[name]
-    return value !== undefined ? value : ''
+    return value !== undefined ? value : defaultValue
 }
 
-export function readNumericEnv(name: string): number {
-    return parseInt(readEnv(name))
+export function readEnvasNumber(name: string, defaultValue?: number): number {
+    const envStr = readEnvAsString(name)
+    const shouldUseDefault = envStr === '' && defaultValue !== undefined
+    const value = shouldUseDefault ? defaultValue : parseInt(envStr)
+
+    return !isNaN(value) ? value : 0
 }
 
 const currentEnvironment = Object.assign({ NODE_ENV: 'development' }, process.env).NODE_ENV
