@@ -6,7 +6,7 @@ export interface IAuthSettings {
 
 const local: IAuthSettings = {
     jwtSecret: 'jwtsecret',
-    jwtExpirationInSeconds: 600,
+    jwtExpirationInSeconds: 3600,
 }
 
 const remote: IAuthSettings = {
