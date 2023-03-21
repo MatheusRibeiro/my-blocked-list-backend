@@ -2,9 +2,9 @@ import { sign, verify } from 'jsonwebtoken'
 import type IJwtTokenGenerator from '@src/Application/Services/Authentication/IJwtTokenGenerator'
 import type { UserTokenDetails } from '@src/Application/Services/Authentication/IAuthenticationService'
 import UnauthenticatedError from '@src/Domain/Errors/UnauthenticatedError'
+import authenticationSettings from '../Config/authentication'
 
-const JWT_SECRET = '?'
-const EXPIRES_IN_SECONDS = 6000
+const { jwtSecret, jwtExpirationInSeconds } = authenticationSettings
 
 export default class JwtTokenGenerator implements IJwtTokenGenerator {
     generateToken(userId: string, username: string): string {
@@ -12,14 +12,14 @@ export default class JwtTokenGenerator implements IJwtTokenGenerator {
             userId,
             username,
         }
-        const options = { expiresIn: EXPIRES_IN_SECONDS }
+        const options = { expiresIn: jwtExpirationInSeconds }
 
-        return sign(payload, JWT_SECRET, options)
+        return sign(payload, jwtSecret, options)
     }
 
     validateToken(token: string): UserTokenDetails {
         try {
-            const result = verify(token, JWT_SECRET)
+            const result = verify(token, jwtSecret)
             return result as UserTokenDetails
         } catch (error) {
             throw new UnauthenticatedError('Invalid Token.')
