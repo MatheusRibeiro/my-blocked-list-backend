@@ -5,7 +5,7 @@ import { errorHandler } from '../Base/ResultHandler'
 import UnauthenticatedError from '@src/Domain/Errors/UnauthenticatedError'
 import IMiddleware from '../Base/IMiddleware'
 
-const missingTokenError = 'A token is required for this action.'
+const missingTokenError = 'Access token is missing or invalid.'
 
 @injectable()
 export default class AuthenticationMiddleware extends IMiddleware {
