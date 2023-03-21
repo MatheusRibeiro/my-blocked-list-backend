@@ -37,6 +37,7 @@ export function errorHandler(response: Response, error: unknown): void {
             code: 500,
             message: 'An unexpected error occured.',
         }
+        console.error(error)
     }
     response.status(result.code).json(result)
 }

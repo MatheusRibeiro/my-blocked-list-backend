@@ -6,7 +6,7 @@ import Phone from '@src/Domain/Base/ValueObject/Phone'
 import Email from '@src/Domain/Base/ValueObject/Email'
 import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccount'
 import EmailAccount from '@src/Domain/Aggregates/Contact/ValueObjects/EmailAccount'
-import dbContext from './DbContext'
+import dbContext from '../DbContext'
 
 export default class ContactInMemoryRepository
     extends InMemoryRepository<Contact, ContactId>

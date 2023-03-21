@@ -1,22 +1,23 @@
-import { container } from 'tsyringe'
+import { container, inject, injectable } from 'tsyringe'
 import type { Request, Response } from 'express'
 import IController from '../Base/BaseController'
 import { Controller } from '../Base/Decorators/Controller'
 import { Get, Post } from '../Base/Decorators/Route'
 import CreateComplaintCommand from '@src/Application/Commands/CreateComplaintCommand'
-import GetComplaintsFromContactQuery, { ComplaintDTO } from '@src/Application/Queries/GetComplaintsFromContactQuery'
 import AuthenticationMiddleware from '../Middlewares/Authentication'
 import LoggerMiddleware from '../Middlewares/Logger'
+import IComplaintQuery, { ComplaintViewModel } from '@src/Application/Queries/IComplaintQuery'
 
 @Controller('/complaint')
+@injectable()
 export default class ComplaintController extends IController {
     private readonly createComplaintCommand: CreateComplaintCommand
-    private readonly getComplaintsFromContactQuery: GetComplaintsFromContactQuery
+    private readonly complaintQuery: IComplaintQuery
 
-    constructor() {
+    constructor(@inject('ComplaintQuery') complaintQuery: IComplaintQuery) {
         super()
         this.createComplaintCommand = container.resolve(CreateComplaintCommand)
-        this.getComplaintsFromContactQuery = container.resolve(GetComplaintsFromContactQuery)
+        this.complaintQuery = complaintQuery
         this.middlewares.push(container.resolve(LoggerMiddleware))
         this.middlewares.push(container.resolve(AuthenticationMiddleware))
     }
@@ -37,7 +38,7 @@ export default class ComplaintController extends IController {
     }
 
     @Get('/find-by-phone/:phone')
-    public findByPhone = async (req: Request): Promise<ComplaintDTO[]> => {
-        return await this.getComplaintsFromContactQuery.execute({ phone: req.params.phone })
+    public findByPhone = async (req: Request): Promise<ComplaintViewModel[]> => {
+        return await this.complaintQuery.getComplaintsFromPhone({ phone: req.params.phone })
     }
 }
