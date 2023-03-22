@@ -24,6 +24,7 @@ export function contactFactoryWithId({ contactId, firstName, lastName, phone, em
     return new Contact(
         new ContactId(contactId),
         new PersonName({ firstName, lastName }),
-        contactAccountFactory({ email, phone })
+        contactAccountFactory({ email, phone }),
+        []
     )
 }

@@ -1,4 +1,4 @@
-import { ComplaintJson } from '../Complaint'
+import { ComplaintJson } from '../Complaint/Complaint'
 import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
 
 export interface ComplaintRemovedPayload {

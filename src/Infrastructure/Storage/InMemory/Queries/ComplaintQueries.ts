@@ -2,7 +2,7 @@ import IComplaintQueries, {
     ComplaintViewModel,
     GetComplaintsFromPhoneQuery,
 } from '@src/Application/Queries/IComplaintQueries'
-import Complaint from '@src/Domain/Aggregates/Complaint/Complaint'
+import Complaint from '@src/Domain/Aggregates/Contact/Complaint/Complaint'
 import InMemoryQuery from './InMemoryQuery'
 import dbContext from '../DbContext'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
@@ -36,11 +36,11 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
     }
 
     private getComplaintsByContactId(contactId: UUID): Complaint[] {
-        const repositoryName = this.repositoryNames.Complaint
+        const repositoryName = this.repositoryNames.Contact
         const result: Complaint[] = []
         for (let i = 0; i < dbContext[repositoryName].length; i++) {
-            if ((dbContext[repositoryName][i] as Complaint).contactId.isEqual(contactId)) {
-                result.push(dbContext[repositoryName][i] as Complaint)
+            if ((dbContext[repositoryName][i] as Contact).contactId.isEqual(contactId)) {
+                return (dbContext[repositoryName][i] as Contact).complaints
             }
         }
         return result

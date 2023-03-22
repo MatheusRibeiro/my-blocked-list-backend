@@ -3,13 +3,11 @@ import ComplaintId from './ValueObjects/ComplaintId'
 import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintType from './ValueObjects/ComplaintType'
-import UserId from '../User/ValueObjects/UserId'
-import ContactId from '../Contact/ValueObjects/ContactId'
+import UserId from '../../User/ValueObjects/UserId'
 
 export interface RawComplaintDataWithoutId {
     description: string
     category: number
-    contactId: string
     severity: number
     authorId: string
 }
@@ -26,7 +24,6 @@ export function complaintFactoryWithoutId(rawData: RawComplaintDataWithoutId): C
 export function complaintFactoryWithId({
     complaintId,
     description,
-    contactId,
     category,
     severity,
     authorId,
@@ -34,7 +31,6 @@ export function complaintFactoryWithId({
     return new Complaint(
         new ComplaintId(complaintId),
         new ComplaintDescription(description),
-        new ContactId(contactId),
         new ComplaintType({ complaintCategory: category, complaintSeverity: severity }),
         new UserId(authorId)
     )

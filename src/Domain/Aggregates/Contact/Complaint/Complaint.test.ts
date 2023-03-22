@@ -1,4 +1,4 @@
-import UUID, { uuidFactory } from '../../Base/ValueObject/UUID'
+import UUID, { uuidFactory } from '../../../Base/ValueObject/UUID'
 import Complaint from './Complaint'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintType, { ComplaintCategory, ComplaintSeverity } from './ValueObjects/ComplaintType'
@@ -8,7 +8,6 @@ const complaintType = new ComplaintType({
     complaintSeverity: ComplaintSeverity.ALERT,
 })
 
-const validContactId = uuidFactory()
 const validAuthorId = uuidFactory()
 const validComplaintId = uuidFactory()
 
@@ -17,7 +16,6 @@ describe('get Id', () => {
         const complaint = new Complaint(
             validComplaintId,
             new ComplaintDescription('12345'),
-            validContactId,
             complaintType,
             validAuthorId
         )
@@ -31,7 +29,6 @@ describe('Is Valid', () => {
         const complaint = new Complaint(
             validComplaintId,
             new ComplaintDescription('12345'),
-            validContactId,
             complaintType,
             validAuthorId
         )
@@ -42,7 +39,6 @@ describe('Is Valid', () => {
         const complaint = new Complaint(
             validComplaintId,
             new ComplaintDescription('1234'),
-            validContactId,
             complaintType,
             validAuthorId
         )
@@ -53,7 +49,6 @@ describe('Is Valid', () => {
         const complaint = new Complaint(
             validComplaintId,
             new ComplaintDescription('a'.repeat(256)),
-            validContactId,
             complaintType,
             validAuthorId
         )
@@ -68,7 +63,6 @@ describe('Is Valid', () => {
         const complaint = new Complaint(
             validComplaintId,
             new ComplaintDescription('description'),
-            validContactId,
             invalidComplaintType,
             validAuthorId
         )
@@ -82,18 +76,11 @@ describe('is Equal', () => {
         const id = uuidFactory()
         const sameId = new UUID(id.value)
 
-        const complaint = new Complaint(
-            id,
-            new ComplaintDescription('first'),
-            uuidFactory(),
-            complaintType,
-            uuidFactory()
-        )
+        const complaint = new Complaint(id, new ComplaintDescription('first'), complaintType, uuidFactory())
 
         const differentComplaint = new Complaint(
             sameId,
             new ComplaintDescription('second'),
-            uuidFactory(),
             complaintType,
             uuidFactory()
         )
@@ -103,21 +90,9 @@ describe('is Equal', () => {
         const id = uuidFactory()
         const anotherId = uuidFactory()
 
-        const complaint = new Complaint(
-            id,
-            new ComplaintDescription('same'),
-            validContactId,
-            complaintType,
-            validAuthorId
-        )
+        const complaint = new Complaint(id, new ComplaintDescription('same'), complaintType, validAuthorId)
 
-        const sameIdComplaint = new Complaint(
-            anotherId,
-            new ComplaintDescription('same'),
-            validContactId,
-            complaintType,
-            validAuthorId
-        )
+        const sameIdComplaint = new Complaint(anotherId, new ComplaintDescription('same'), complaintType, validAuthorId)
         expect(complaint.isEqual(sameIdComplaint)).toBeFalsy()
     })
 })

@@ -3,9 +3,9 @@ import UseCase from '@src/Domain/Base/AbstractUseCase'
 import Audit from '@src/Domain/Base/Audit'
 import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
-import IComplaintRepository from '../IComplaintRepository'
-import { ComplaintCategory, ComplaintSeverity } from '../ValueObjects/ComplaintType'
-import { complaintFactoryWithoutId } from '../ComplaintFactory'
+import IContactRepository from '../IContactRepository'
+import { ComplaintCategory, ComplaintSeverity } from '../Complaint/ValueObjects/ComplaintType'
+import { complaintFactoryWithoutId } from '../Complaint/ComplaintFactory'
 import ContactReported from '../DomainEvents/ContactReported'
 
 export interface ReportContactDTO {
@@ -17,11 +17,11 @@ export interface ReportContactDTO {
 
 @injectable()
 export default class ReportContact extends UseCase<ReportContactDTO> {
-    private readonly complaintRepository: IComplaintRepository
+    private readonly contactRepository: IContactRepository
 
-    constructor(@inject('ComplaintRepository') complaintRepository: IComplaintRepository) {
+    constructor(@inject('ContactRepository') contactRepository: IContactRepository) {
         super()
-        this.complaintRepository = complaintRepository
+        this.contactRepository = contactRepository
     }
 
     public execute = async (
@@ -33,12 +33,12 @@ export default class ReportContact extends UseCase<ReportContactDTO> {
         const complaint = complaintFactoryWithoutId({
             description,
             authorId: audit.who.value,
-            contactId: contact.contactId.value,
             category: complaintCategory,
             severity: complaintSeverity,
         })
         complaint.validate()
-        await this.complaintRepository.create(complaint)
+        contact.complaints.push(complaint)
+        await this.contactRepository.update(contact)
 
         events.push(new ContactReported({ complaint: complaint.toJSON(), contact_reported: contact.toJSON() }, audit))
         return events

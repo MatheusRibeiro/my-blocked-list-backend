@@ -6,7 +6,7 @@ import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
 import CreatePhoneContact, {
     type CreatePhoneContactDTO,
 } from '@src/Domain/Aggregates/Contact/UseCases/CreatePhoneContact'
-import ReportContact, { type ReportContactDTO } from '@src/Domain/Aggregates/Complaint/UseCases/ReportContact'
+import ReportContact, { type ReportContactDTO } from '@src/Domain/Aggregates/Contact/UseCases/ReportContact'
 import Audit from '@src/Domain/Base/Audit'
 import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'

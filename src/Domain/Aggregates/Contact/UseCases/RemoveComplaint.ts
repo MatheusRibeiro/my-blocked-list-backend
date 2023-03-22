@@ -2,16 +2,13 @@ import { injectable, inject } from 'tsyringe'
 import UseCase from '@src/Domain/Base/AbstractUseCase'
 import Audit from '@src/Domain/Base/Audit'
 import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
-import IComplaintRepository from '../IComplaintRepository'
-import ComplaintId from '../ValueObjects/ComplaintId'
+import IComplaintRepository from '../Complaint/IComplaintRepository'
+import Complaint from '../Complaint/Complaint'
 import UserId from '../../User/ValueObjects/UserId'
-import NotFoundError from '@src/Domain/Errors/NotFoundError'
 import ComplaintRemoved from '../DomainEvents/ComplaintRemoved'
 
-const notFoundMessage = 'Complaint not found,'
-
 export interface RemoveComplaintDTO {
-    complaintId: ComplaintId
+    complaint: Complaint
     userId: UserId
 }
 
@@ -25,19 +22,10 @@ export default class RemoveComplaint extends UseCase<RemoveComplaintDTO> {
     }
 
     public execute = async (
-        { complaintId, userId }: RemoveComplaintDTO,
+        { complaint, userId }: RemoveComplaintDTO,
         audit: Audit
     ): Promise<Array<DomainEvent<object>>> => {
         const events: Array<DomainEvent<object>> = []
-
-        const complaint = await this.complaintRepository.findById(complaintId)
-        if (complaint === null) {
-            throw new NotFoundError(notFoundMessage)
-        }
-        if (!complaint.authorId.isEqual(userId)) {
-            throw new NotFoundError(notFoundMessage)
-        }
-
         await this.complaintRepository.delete(complaint)
 
         events.push(new ComplaintRemoved({ complaint: complaint.toJSON() }, audit))
