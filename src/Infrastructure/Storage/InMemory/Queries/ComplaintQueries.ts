@@ -1,7 +1,7 @@
-import IComplaintQuery, {
+import IComplaintQueries, {
     ComplaintViewModel,
     GetComplaintsFromPhoneQuery,
-} from '@src/Application/Queries/IComplaintQuery'
+} from '@src/Application/Queries/IComplaintQueries'
 import Complaint from '@src/Domain/Aggregates/Complaint/Complaint'
 import InMemoryQuery from './InMemoryQuery'
 import dbContext from '../DbContext'
@@ -11,7 +11,7 @@ import NotFoundError from '@src/Domain/Errors/NotFoundError'
 import Phone from '@src/Domain/Base/ValueObject/Phone'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 
-export default class ComplaintInMemoryQuery extends InMemoryQuery implements IComplaintQuery {
+export default class ComplaintInMemoryQueries extends InMemoryQuery implements IComplaintQueries {
     async getComplaintsFromPhone({ phone }: GetComplaintsFromPhoneQuery): Promise<ComplaintViewModel[]> {
         const contact = this.getContactByPhone(new Phone(phone))
         if (contact === null) {

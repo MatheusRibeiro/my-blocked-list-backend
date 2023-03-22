@@ -8,6 +8,6 @@ export interface GetComplaintsFromPhoneQuery {
     phone: string
 }
 
-export default interface IComplaintQuery {
+export default interface IComplaintQueries {
     getComplaintsFromPhone: (params: GetComplaintsFromPhoneQuery) => Promise<ComplaintViewModel[]>
 }

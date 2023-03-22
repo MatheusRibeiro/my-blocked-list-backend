@@ -6,18 +6,18 @@ import { Get, Post } from '../Base/Decorators/Route'
 import CreateComplaintCommand from '@src/Application/Commands/CreateComplaintCommand'
 import AuthenticationMiddleware from '../Middlewares/Authentication'
 import LoggerMiddleware from '../Middlewares/Logger'
-import IComplaintQuery, { ComplaintViewModel } from '@src/Application/Queries/IComplaintQuery'
+import IComplaintQueries, { ComplaintViewModel } from '@src/Application/Queries/IComplaintQueries'
 
 @Controller('/complaint')
 @injectable()
 export default class ComplaintController extends IController {
     private readonly createComplaintCommand: CreateComplaintCommand
-    private readonly complaintQuery: IComplaintQuery
+    private readonly complaintQueries: IComplaintQueries
 
-    constructor(@inject('ComplaintQuery') complaintQuery: IComplaintQuery) {
+    constructor(@inject('ComplaintQueries') complaintQueries: IComplaintQueries) {
         super()
         this.createComplaintCommand = container.resolve(CreateComplaintCommand)
-        this.complaintQuery = complaintQuery
+        this.complaintQueries = complaintQueries
         this.middlewares.push(container.resolve(LoggerMiddleware))
         this.middlewares.push(container.resolve(AuthenticationMiddleware))
     }
@@ -39,6 +39,6 @@ export default class ComplaintController extends IController {
 
     @Get('/find-by-phone/:phone')
     public findByPhone = async (req: Request): Promise<ComplaintViewModel[]> => {
-        return await this.complaintQuery.getComplaintsFromPhone({ phone: req.params.phone })
+        return await this.complaintQueries.getComplaintsFromPhone({ phone: req.params.phone })
     }
 }
