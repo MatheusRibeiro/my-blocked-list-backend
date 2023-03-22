@@ -3,7 +3,7 @@ import Password from '@src/Domain/Aggregates/User/ValueObjects/Password'
 import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 import Username from '@src/Domain/Aggregates/User/ValueObjects/Username'
 import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
-import UserInMemoryRepository from './Repositories/UserRepository'
+import UserInMemoryRepository from './UserRepository'
 
 describe('User In Memory Repository', () => {
     const repo = new UserInMemoryRepository()
