@@ -1,10 +1,10 @@
 import { injectable, inject, container } from 'tsyringe'
-import IComplaintRepository from '@src/Domain/Aggregates/Complaint/IComplaintRepository'
+import IComplaintRepository from '@src/Domain/Aggregates/Contact/Complaint/IComplaintRepository'
 import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
-import RemoveComplaint, { type RemoveComplaintDTO } from '@src/Domain/Aggregates/Complaint/UseCases/RemoveComplaint'
+import RemoveComplaint, { type RemoveComplaintDTO } from '@src/Domain/Aggregates/Contact/UseCases/RemoveComplaint'
 import Audit from '@src/Domain/Base/Audit'
 import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
-import ComplaintId from '@src/Domain/Aggregates/Complaint/ValueObjects/ComplaintId'
+import ComplaintId from '@src/Domain/Aggregates/Contact/Complaint/ValueObjects/ComplaintId'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
 
 const notFoundMessage = 'Complaint not found,'
