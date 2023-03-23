@@ -8,6 +8,5 @@ export interface ContactReportedPayload {
 }
 
 export default class ContactReported extends DomainEvent<ContactReportedPayload> {
-    public readonly name = 'ContactReported'
     public readonly version = 1
 }

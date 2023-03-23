@@ -6,6 +6,5 @@ export interface ComplaintRemovedPayload {
 }
 
 export default class ComplaintRemoved extends DomainEvent<ComplaintRemovedPayload> {
-    public readonly name = 'ContactReported'
     public readonly version = 1
 }

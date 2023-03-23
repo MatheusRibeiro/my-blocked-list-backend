@@ -3,7 +3,6 @@ import UUID, { uuidFactory } from './ValueObject/UUID'
 
 export default abstract class DomainEvent<Payload> {
     public readonly eventId: UUID
-    abstract name: string
     public readonly payload: Payload
     public readonly audit: Audit
     abstract readonly version: number
@@ -17,7 +16,7 @@ export default abstract class DomainEvent<Payload> {
     public toJSON(): object {
         return {
             id: this.eventId.toJSON(),
-            name: this.name,
+            name: this.constructor.name,
             payload: this.payload,
             audit: this.audit.toJSON(),
             version: this.version,
