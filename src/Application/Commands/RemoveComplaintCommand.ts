@@ -19,11 +19,14 @@ export default class RemoveComplaintCommand {
         this.contactRepository = contactRepository
     }
 
-    public execute = async ({ complaintId, contactId }: RemoveComplaintRequest, authorId: string): Promise<null> => {
+    public execute = async (request: RemoveComplaintRequest, authorId: string): Promise<null> => {
         const userId = new UUID(authorId)
+        const contactId = new UUID(request.contactId)
+        const complaintId = new UUID(request.complaintId)
+
         const audit = new Audit(userId)
-        const contactAggregate = await ContactAggregate.factoryById(new UUID(contactId), this.contactRepository)
-        const events = await contactAggregate.removeComplaint({ complaintId: new UUID(complaintId), userId }, audit)
+        const contactAggregate = await ContactAggregate.factoryById(contactId, this.contactRepository)
+        const events = await contactAggregate.removeComplaint({ complaintId, userId }, audit)
 
         this.domainEvents.push(...events)
         return null
