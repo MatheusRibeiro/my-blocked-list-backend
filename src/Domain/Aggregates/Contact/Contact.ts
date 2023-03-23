@@ -1,6 +1,8 @@
 import Entity from '../../Base/AbstractEntity'
 import PersonName from '../../Base/ValueObject/PersonName'
+import UserId from '../User/ValueObjects/UserId'
 import Complaint from './Complaint/Complaint'
+import ComplaintId from './Complaint/ValueObjects/ComplaintId'
 import ContactAccount, { AccountType } from './ValueObjects/ContactAccount'
 import ContactId from './ValueObjects/ContactId'
 
@@ -40,6 +42,19 @@ export default class Contact extends Entity {
 
     public isEqual(entity: Contact): boolean {
         return this.contactId.isEqual(entity.contactId)
+    }
+
+    public removeComplaint(complaintId: ComplaintId, userId: UserId): Complaint | null {
+        for (let i = 0; i < this.complaints.length; i++) {
+            const current = this.complaints[i]
+            const shouldBeRemoved = current.complaintId.isEqual(complaintId)
+            const canBeRemoved = current.canBeRemovedBy(userId)
+            if (shouldBeRemoved && canBeRemoved) {
+                this.complaints.splice(i, 1)
+                return current
+            }
+        }
+        return null
     }
 
     public toJSON(): ContactJson {

@@ -42,6 +42,10 @@ export default class Complaint extends Entity {
         return this.complaintId.isEqual(entity.complaintId)
     }
 
+    public canBeRemovedBy(userId: UserId): boolean {
+        return this.authorId.isEqual(userId)
+    }
+
     public toJSON(): ComplaintJson {
         return {
             id: this.complaintId.toJSON(),
