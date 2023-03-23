@@ -1,8 +1,9 @@
 export interface ComplaintViewModel {
-    complaintId: string
+    id: string
     description: string
     category: number
     severity: number
+    contact: { id: string }
 }
 export interface GetComplaintsFromPhoneQuery {
     phone: string

@@ -21,7 +21,7 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         if (complaints === null) {
             return []
         }
-        return complaints.map(this.toViewModel)
+        return complaints.map(complaint => this.toViewModel(complaint, contact))
     }
 
     private getContactByPhone(phone: Phone): Contact | null {
@@ -46,12 +46,13 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         return result
     }
 
-    private toViewModel(complaint: Complaint): ComplaintViewModel {
+    private toViewModel(complaint: Complaint, contact: Contact): ComplaintViewModel {
         return {
-            complaintId: complaint.complaintId.value,
+            id: complaint.complaintId.value,
             description: complaint.description.value,
             category: complaint.complaintType.value.complaintCategory,
             severity: complaint.complaintType.value.complaintSeverity,
+            contact: { id: contact.contactId.value },
         }
     }
 }

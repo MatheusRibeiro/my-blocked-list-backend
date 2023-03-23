@@ -16,3 +16,10 @@ Authorization: Bearer {{token}}
 
 ###
 GET {{host}}/complaint/find-by-phone/+55 9123-4567?token={{token}}
+
+
+###
+@contactId=
+@complaintId=
+DELETE  {{host}}/complaint/{{contactId}}/{{complaintId}}
+Authorization: Bearer {{token}}
