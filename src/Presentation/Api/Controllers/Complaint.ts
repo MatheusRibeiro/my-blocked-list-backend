@@ -3,22 +3,22 @@ import type { Request, Response } from 'express'
 import IController from '../Base/BaseController'
 import { Controller } from '../Base/Decorators/Controller'
 import { Delete, Get, Post } from '../Base/Decorators/Route'
-import CreateComplaintCommand from '@src/Application/Commands/CreateComplaintCommand'
+import CreatePhoneComplaintCommand from '@src/Application/Commands/CreatePhoneComplaint'
 import AuthenticationMiddleware from '../Middlewares/Authentication'
 import LoggerMiddleware from '../Middlewares/Logger'
 import IComplaintQueries, { ComplaintViewModel } from '@src/Application/Queries/IComplaintQueries'
-import RemoveComplaintCommand from '@src/Application/Commands/RemoveComplaintCommand'
+import RemoveComplaintCommand from '@src/Application/Commands/RemoveComplaint'
 
 @Controller('/complaint')
 @injectable()
 export default class ComplaintController extends IController {
-    private readonly createComplaintCommand: CreateComplaintCommand
+    private readonly createPhoneComplaintCommand: CreatePhoneComplaintCommand
     private readonly removeComplaintCommand: RemoveComplaintCommand
     private readonly complaintQueries: IComplaintQueries
 
     constructor(@inject('ComplaintQueries') complaintQueries: IComplaintQueries) {
         super()
-        this.createComplaintCommand = container.resolve(CreateComplaintCommand)
+        this.createPhoneComplaintCommand = container.resolve(CreatePhoneComplaintCommand)
         this.removeComplaintCommand = container.resolve(RemoveComplaintCommand)
         this.complaintQueries = complaintQueries
         this.middlewares.push(container.resolve(LoggerMiddleware))
@@ -27,7 +27,7 @@ export default class ComplaintController extends IController {
 
     @Post('/create')
     public create = async (req: Request, res: Response): Promise<null> => {
-        return await this.createComplaintCommand.execute(
+        return await this.createPhoneComplaintCommand.execute(
             {
                 firstName: req.body.first_name,
                 lastName: req.body.last_name,
