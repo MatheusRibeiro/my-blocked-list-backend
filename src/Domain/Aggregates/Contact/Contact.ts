@@ -44,6 +44,11 @@ export default class Contact extends Entity {
         return this.contactId.isEqual(entity.contactId)
     }
 
+    public addComplaint(complaint: Complaint): null {
+        this.complaints.push(complaint)
+        return null
+    }
+
     public removeComplaint(complaintId: ComplaintId, userId: UserId): Complaint | null {
         for (let i = 0; i < this.complaints.length; i++) {
             const current = this.complaints[i]
