@@ -14,7 +14,7 @@ export interface CreatePhoneComplaintDTO {
     description: string
     complaintCategory: number
     complaintSeverity: number
-    phone: string
+    phone: Phone
 }
 
 type CreateComplaintEvents = ContactCreated | ContactReported
@@ -33,7 +33,7 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
             severity: complaintSeverity,
             authorId: audit.who.value,
         })
-        const existingContact = await this.repository.findByPhone(new Phone(phone))
+        const existingContact = await this.repository.findByPhone(phone)
         const contact =
             existingContact === null ? contactFactoryWithoutId({ phone, firstName, lastName }) : existingContact
 

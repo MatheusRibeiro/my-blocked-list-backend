@@ -6,8 +6,8 @@ import EmailAccount from './EmailAccount'
 import PhoneAccount from './PhoneAccount'
 
 interface RawContactAccountData {
-    email?: string
-    phone?: string
+    email?: Email
+    phone?: Phone
 }
 
 type ValidAccountType = Email | Phone
@@ -17,8 +17,8 @@ export default function contactAccountFactory({
     email,
 }: RawContactAccountData): ContactAccount<ValidAccountType> {
     const accountsCreated: Array<ContactAccount<ValidAccountType>> = []
-    if (phone !== undefined) accountsCreated.push(new PhoneAccount(new Phone(phone)))
-    if (email !== undefined) accountsCreated.push(new EmailAccount(new Email(email)))
+    if (phone !== undefined) accountsCreated.push(new PhoneAccount(phone))
+    if (email !== undefined) accountsCreated.push(new EmailAccount(email))
 
     if (accountsCreated.length < 1) {
         throw new BadRequestError('Missing phone or email information from contact account')

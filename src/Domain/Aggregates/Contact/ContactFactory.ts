@@ -3,12 +3,14 @@ import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 import ContactId from './ValueObjects/ContactId'
 import contactAccountFactory from './ValueObjects/contactAccountFactory'
 import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
+import Email from '@src/Domain/Base/ValueObject/Email'
 
 export interface RawContactDataWithoutId {
     firstName: string
     lastName: string
-    email?: string
-    phone?: string
+    email?: Email
+    phone?: Phone
 }
 
 export interface RawContactDataWithId extends RawContactDataWithoutId {
