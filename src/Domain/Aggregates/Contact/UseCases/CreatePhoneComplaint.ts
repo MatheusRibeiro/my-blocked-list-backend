@@ -27,6 +27,7 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
 
     public async execute(dto: CreatePhoneComplaintDTO, audit: Audit): Promise<CreateComplaintEvents[]> {
         const { personName, description, complaintCategory, complaintSeverity, phone } = dto
+        const events: CreateComplaintEvents[] = []
         const complaint = complaintFactoryWithoutId({
             description,
             category: complaintCategory,
@@ -34,20 +35,15 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
             authorId: audit.who.value,
         })
         const existingContact = await this.repository.findByPhone(phone)
-        const contact = existingContact === null ? contactFactoryWithoutId({ phone, personName }) : existingContact
+        const isANewContact = existingContact === null
+
+        const contact = isANewContact ? contactFactoryWithoutId({ phone, personName }) : existingContact
+        if (isANewContact) events.push(new ContactCreated({ contact_created: contact.toJSON() }, audit))
 
         contact.addComplaint(complaint)
-        const contactReportedEvent = new ContactReported(
-            { contact_reported: contact.toJSON(), complaint: complaint.toJSON() },
-            audit
-        )
+        events.push(new ContactReported({ contact_reported: contact.toJSON(), complaint: complaint.toJSON() }, audit))
 
-        if (existingContact === null) {
-            await this.repository.create(contact)
-            const contactCreatedEvent = new ContactCreated({ contact_created: contact.toJSON() }, audit)
-            return [contactCreatedEvent, contactReportedEvent]
-        }
-        await this.repository.update(contact)
-        return [contactReportedEvent]
+        isANewContact ? await this.repository.create(contact) : await this.repository.update(contact)
+        return events
     }
 }
