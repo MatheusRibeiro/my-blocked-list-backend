@@ -2,7 +2,7 @@ import { container } from 'tsyringe'
 import RemovePhoneComplaintUseCase, {
     RemoveComplaintDTO,
 } from '@src/Domain/Aggregates/Contact/UseCases/RemovePhoneComplaint'
-import ContactCommand from './AbstractContactCommand'
+import ContactCommand from '../AbstractContactCommand'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 export interface RemoveComplaintRequestData {

@@ -2,7 +2,7 @@ import IComplaintQueries, {
     ComplaintViewModel,
     GetComplaintsFromEmailQuery,
     GetComplaintsFromPhoneQuery,
-} from '@src/Application/Queries/IComplaintQueries'
+} from '@src/Application/Contact/Queries/IComplaintQueries'
 import Complaint from '@src/Domain/Aggregates/Contact/Complaint/Complaint'
 import InMemoryQuery from './InMemoryQuery'
 import dbContext from '../DbContext'

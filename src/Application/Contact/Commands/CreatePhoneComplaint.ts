@@ -2,7 +2,7 @@ import { container } from 'tsyringe'
 import CreatePhoneComplaintUseCase, {
     CreatePhoneComplaintDTO,
 } from '@src/Domain/Aggregates/Contact/UseCases/CreatePhoneComplaint'
-import ContactCommand from './AbstractContactCommand'
+import ContactCommand from '../AbstractContactCommand'
 import Phone from '@src/Domain/Base/ValueObject/Phone'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 

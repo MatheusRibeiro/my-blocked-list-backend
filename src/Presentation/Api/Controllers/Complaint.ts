@@ -3,12 +3,12 @@ import type { Request, Response } from 'express'
 import IController from '../Base/BaseController'
 import { Controller } from '../Base/Decorators/Controller'
 import { Delete, Get, Post } from '../Base/Decorators/Route'
-import CreatePhoneComplaintCommand from '@src/Application/Commands/CreatePhoneComplaint'
-import CreateEmailComplaintCommand from '@src/Application/Commands/CreateEmailComplaint'
+import CreatePhoneComplaintCommand from '@src/Application/Contact/Commands/CreatePhoneComplaint'
+import CreateEmailComplaintCommand from '@src/Application/Contact/Commands/CreateEmailComplaint'
 import AuthenticationMiddleware from '../Middlewares/Authentication'
 import LoggerMiddleware from '../Middlewares/Logger'
-import IComplaintQueries, { ComplaintViewModel } from '@src/Application/Queries/IComplaintQueries'
-import RemoveComplaintCommand from '@src/Application/Commands/RemoveComplaint'
+import IComplaintQueries, { ComplaintViewModel } from '@src/Application/Contact/Queries/IComplaintQueries'
+import RemoveComplaintCommand from '@src/Application/Contact/Commands/RemoveComplaint'
 
 @Controller('/complaint')
 @injectable()
