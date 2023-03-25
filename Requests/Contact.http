@@ -1,0 +1,42 @@
+@host=http://localhost:8080
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYmRlNTg2Yy1hMTMxLTQ1NDktYmE3ZC01NjNlZjFkMjM4NWMiLCJ1c2VybmFtZSI6Im15dXNlciIsImlhdCI6MTY3OTc4MjkxMSwiZXhwIjoxNjc5ODY5MzExfQ.rFmM4BtNd3t5dzhm36OJnv0x4Jg0fIR1Er8FGOmkKlQ
+
+###
+POST {{host}}/contact/complaint/phone
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "phone": "+55 9123-4567",
+    "description": "Any description",
+    "complaintCategory": 1,
+    "complaintSeverity": 3
+}
+
+###
+POST {{host}}/contact/complaint/email
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "firstName": "Mary",
+    "lastName": "Doe",
+    "email": "mytest@gmail.com",
+    "description": "Any description",
+    "complaintCategory": 2,
+    "complaintSeverity": 3
+}
+
+###
+GET {{host}}/contact/complaint/find-by-phone/+55 9123-4567?token={{token}}
+
+###
+GET {{host}}/contact/complaint/find-by-email/mytest@gmail.com?token={{token}}
+
+###
+@contactId=
+@complaintId=
+DELETE  {{host}}/contact/{{contactId}}/complaint/{{complaintId}}
+Authorization: Bearer {{token}}

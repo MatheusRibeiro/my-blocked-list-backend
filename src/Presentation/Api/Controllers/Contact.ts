@@ -10,9 +10,9 @@ import LoggerMiddleware from '../Middlewares/Logger'
 import IComplaintQueries, { ComplaintViewModel } from '@src/Application/Contact/Queries/IComplaintQueries'
 import RemoveComplaintCommand from '@src/Application/Contact/Commands/RemoveComplaint'
 
-@Controller('/complaint')
+@Controller('/contact')
 @injectable()
-export default class ComplaintController extends IController {
+export default class ContactController extends IController {
     private readonly createPhoneComplaintCommand: CreatePhoneComplaintCommand
     private readonly createEmailComplaintCommand: CreateEmailComplaintCommand
     private readonly removeComplaintCommand: RemoveComplaintCommand
@@ -28,47 +28,29 @@ export default class ComplaintController extends IController {
         this.middlewares.push(container.resolve(AuthenticationMiddleware))
     }
 
-    @Post('/phone/create')
+    @Post('/complaint/phone')
     public createByPhone = async (req: Request, res: Response): Promise<null> => {
-        return await this.createPhoneComplaintCommand.execute(
-            {
-                firstName: req.body.first_name,
-                lastName: req.body.last_name,
-                phone: req.body.phone,
-                description: req.body.description,
-                complaintCategory: req.body.category,
-                complaintSeverity: req.body.severity,
-            },
-            res.locals.User.userId
-        )
+        return await this.createPhoneComplaintCommand.execute(req.body, res.locals.User.userId)
     }
 
-    @Post('/email/create')
+    @Post('/complaint/email')
     public createByEmail = async (req: Request, res: Response): Promise<null> => {
-        return await this.createEmailComplaintCommand.execute(
-            {
-                firstName: req.body.first_name,
-                lastName: req.body.last_name,
-                email: req.body.email,
-                description: req.body.description,
-                complaintCategory: req.body.category,
-                complaintSeverity: req.body.severity,
-            },
-            res.locals.User.userId
-        )
+        return await this.createEmailComplaintCommand.execute(req.body, res.locals.User.userId)
     }
 
-    @Get('/find-by-phone/:phone')
+    @Get('/complaint/find-by-phone/:phone')
     public findByPhone = async (req: Request): Promise<ComplaintViewModel[]> => {
-        return await this.complaintQueries.getComplaintsFromPhone({ phone: req.params.phone })
+        const { phone } = req.params
+        return await this.complaintQueries.getComplaintsFromPhone({ phone })
     }
 
-    @Get('/find-by-email/:email')
+    @Get('/complaint/find-by-email/:email')
     public findByEmail = async (req: Request): Promise<ComplaintViewModel[]> => {
-        return await this.complaintQueries.getComplaintsFromEmail({ email: req.params.email })
+        const { email } = req.params
+        return await this.complaintQueries.getComplaintsFromEmail({ email })
     }
 
-    @Delete('/:contactId/:complaintId')
+    @Delete('/:contactId/complaint/:complaintId')
     public deleteComplaint = async (req: Request, res: Response): Promise<null> => {
         const { complaintId, contactId } = req.params
         return await this.removeComplaintCommand.execute({ complaintId, contactId }, res.locals.User.userId)

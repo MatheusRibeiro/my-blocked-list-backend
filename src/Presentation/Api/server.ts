@@ -8,7 +8,7 @@ import { router } from './Base/Decorators/Controller'
 import apiSettings from '@src/Infrastructure/Config/api'
 // Decorated controllers with its routes
 import './Controllers/Authentication'
-import './Controllers/Complaint'
+import './Controllers/Contact'
 
 const app = express()
 
