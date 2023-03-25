@@ -6,7 +6,7 @@ import ContactCommand from '../AbstractContactCommand'
 import Email from '@src/Domain/Base/ValueObject/Email'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 
-interface CreateEmailComplaintRequestData {
+interface CreateEmailComplaintRequest {
     firstName: string
     lastName: string
     description: string
@@ -15,20 +15,18 @@ interface CreateEmailComplaintRequestData {
     email: string
 }
 
-function mapper(requestData: CreateEmailComplaintRequestData): CreateEmailComplaintDTO {
-    const personName = new PersonName({ firstName: requestData.firstName, lastName: requestData.lastName })
-    const email = new Email(requestData.email)
+function mapper(input: CreateEmailComplaintRequest): CreateEmailComplaintDTO {
     return {
-        personName,
-        description: requestData.description,
-        email,
-        complaintCategory: requestData.complaintCategory,
-        complaintSeverity: requestData.complaintSeverity,
+        personName: new PersonName({ firstName: input.firstName, lastName: input.lastName }),
+        description: input.description,
+        email: new Email(input.email),
+        complaintCategory: input.complaintCategory,
+        complaintSeverity: input.complaintSeverity,
     }
 }
 
 export default class CreateEmailComplaintCommand extends ContactCommand<
-    CreateEmailComplaintRequestData,
+    CreateEmailComplaintRequest,
     CreateEmailComplaintDTO
 > {
     constructor() {

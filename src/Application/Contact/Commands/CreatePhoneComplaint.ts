@@ -15,15 +15,13 @@ interface CreatePhoneComplaintRequestData {
     phone: string
 }
 
-function mapper(requestData: CreatePhoneComplaintRequestData): CreatePhoneComplaintDTO {
-    const personName = new PersonName({ firstName: requestData.firstName, lastName: requestData.lastName })
-    const phone = new Phone(requestData.phone)
+function mapper(input: CreatePhoneComplaintRequestData): CreatePhoneComplaintDTO {
     return {
-        personName,
-        description: requestData.description,
-        phone,
-        complaintCategory: requestData.complaintCategory,
-        complaintSeverity: requestData.complaintSeverity,
+        personName: new PersonName({ firstName: input.firstName, lastName: input.lastName }),
+        description: input.description,
+        phone: new Phone(input.phone),
+        complaintCategory: input.complaintCategory,
+        complaintSeverity: input.complaintSeverity,
     }
 }
 

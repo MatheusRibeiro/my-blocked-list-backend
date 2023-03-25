@@ -5,21 +5,18 @@ import RemovePhoneComplaintUseCase, {
 import ContactCommand from '../AbstractContactCommand'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 
-export interface RemoveComplaintRequestData {
+export interface RemoveComplaintRequest {
     contactId: string
     complaintId: string
 }
-function map(requestData: RemoveComplaintRequestData): RemoveComplaintDTO {
+function map(input: RemoveComplaintRequest): RemoveComplaintDTO {
     return {
-        contactId: new UUID(requestData.contactId),
-        complaintId: new UUID(requestData.complaintId),
+        contactId: new UUID(input.contactId),
+        complaintId: new UUID(input.complaintId),
     }
 }
 
-export default class CreatePhoneComplaintCommand extends ContactCommand<
-    RemoveComplaintRequestData,
-    RemoveComplaintDTO
-> {
+export default class CreatePhoneComplaintCommand extends ContactCommand<RemoveComplaintRequest, RemoveComplaintDTO> {
     constructor() {
         super(container.resolve(RemovePhoneComplaintUseCase), map)
     }
