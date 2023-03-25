@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
-import ValueObject from '../AbstractValueObject'
+import ValidValueObject from './AbstractValidValueObject'
 
-export default class UUID extends ValueObject<string> {
+export default class UUID extends ValidValueObject<string> {
     public isValid(): boolean {
         const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
         const match = this.value.match(uuidRegex)

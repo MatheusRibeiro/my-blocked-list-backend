@@ -7,10 +7,10 @@ import ContactCreated from '../DomainEvents/ContactCreated'
 import ContactReported from '../DomainEvents/ContactReported'
 import AbstractContactUseCase from './AbstractContactUseCase'
 import IContactRepository from '../IContactRepository'
+import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 
 export interface CreatePhoneComplaintDTO {
-    firstName: string
-    lastName: string
+    personName: PersonName
     description: string
     complaintCategory: number
     complaintSeverity: number
@@ -26,7 +26,7 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
     }
 
     public async execute(dto: CreatePhoneComplaintDTO, audit: Audit): Promise<CreateComplaintEvents[]> {
-        const { firstName, lastName, description, complaintCategory, complaintSeverity, phone } = dto
+        const { personName, description, complaintCategory, complaintSeverity, phone } = dto
         const complaint = complaintFactoryWithoutId({
             description,
             category: complaintCategory,
@@ -34,8 +34,7 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
             authorId: audit.who.value,
         })
         const existingContact = await this.repository.findByPhone(phone)
-        const contact =
-            existingContact === null ? contactFactoryWithoutId({ phone, firstName, lastName }) : existingContact
+        const contact = existingContact === null ? contactFactoryWithoutId({ phone, personName }) : existingContact
 
         contact.addComplaint(complaint)
         const contactReportedEvent = new ContactReported(

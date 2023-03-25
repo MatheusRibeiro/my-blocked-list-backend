@@ -5,6 +5,7 @@ import CreatePhoneComplaintUseCase, {
 import ContactCommand from './AbstractContactCommand'
 import AbstractMapper from '../Base/AbstractMapper'
 import Phone from '@src/Domain/Base/ValueObject/Phone'
+import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 
 interface CreatePhoneComplaintRequestData {
     firstName: string
@@ -18,8 +19,15 @@ interface CreatePhoneComplaintRequestData {
 type Mapper = AbstractMapper<CreatePhoneComplaintRequestData, CreatePhoneComplaintDTO>
 
 function mapper(requestData: CreatePhoneComplaintRequestData): CreatePhoneComplaintDTO {
+    const personName = new PersonName({ firstName: requestData.firstName, lastName: requestData.lastName })
     const phone = new Phone(requestData.phone)
-    return Object.assign({}, requestData, { phone })
+    return {
+        personName,
+        description: requestData.description,
+        phone,
+        complaintCategory: requestData.complaintCategory,
+        complaintSeverity: requestData.complaintSeverity,
+    }
 }
 
 export default class CreatePhoneComplaintCommand extends ContactCommand<

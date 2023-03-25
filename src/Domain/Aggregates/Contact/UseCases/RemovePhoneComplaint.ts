@@ -4,13 +4,12 @@ import ContactRemoved from '../DomainEvents/ContactRemoved'
 import ComplaintRemoved from '../DomainEvents/ComplaintRemoved'
 import AbstractContactUseCase from './AbstractContactUseCase'
 import IContactRepository from '../IContactRepository'
-import ComplaintId from '../Complaint/ValueObjects/ComplaintId'
-import ContactId from '../ValueObjects/ContactId'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 export interface RemoveComplaintDTO {
-    contactId: string
-    complaintId: string
+    contactId: UUID
+    complaintId: UUID
 }
 
 type RemoveComplaintEvents = ComplaintRemoved | ContactRemoved
@@ -25,12 +24,12 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
 
     public async execute(dto: RemoveComplaintDTO, audit: Audit): Promise<RemoveComplaintEvents[]> {
         const events: RemoveComplaintEvents[] = []
-
-        const contact = await this.repository.findById(new ContactId(dto.contactId))
+        const { contactId, complaintId } = dto
+        const contact = await this.repository.findById(contactId)
         if (contact === null) {
             throw new NotFoundError(notFoundMessage)
         }
-        const complaintRemoved = contact.removeComplaint(new ComplaintId(dto.complaintId), audit.who)
+        const complaintRemoved = contact.removeComplaint(complaintId, audit.who)
         if (complaintRemoved === null) {
             throw new NotFoundError(notFoundMessage)
         }

@@ -1,4 +1,4 @@
-import ValueObject from '../AbstractValueObject'
+import ValidValueObject from './AbstractValidValueObject'
 
 interface IPersonlName {
     firstName: string
@@ -7,10 +7,10 @@ interface IPersonlName {
 
 const MIN_FIRSTNAME_LENGTH = 1
 
-export default class PersoName extends ValueObject<IPersonlName> {
+export default class PersonName extends ValidValueObject<IPersonlName> {
     public isValid(): boolean {
         const { firstName } = this.value
-        return typeof firstName === 'string' && firstName.length >= MIN_FIRSTNAME_LENGTH
+        return firstName.length >= MIN_FIRSTNAME_LENGTH
     }
 
     public toJSON(): object {

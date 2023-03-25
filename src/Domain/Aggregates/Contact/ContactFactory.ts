@@ -7,8 +7,7 @@ import Phone from '@src/Domain/Base/ValueObject/Phone'
 import Email from '@src/Domain/Base/ValueObject/Email'
 
 export interface RawContactDataWithoutId {
-    firstName: string
-    lastName: string
+    personName: PersonName
     email?: Email
     phone?: Phone
 }
@@ -22,11 +21,6 @@ export function contactFactoryWithoutId(rawData: RawContactDataWithoutId): Conta
     return contactFactoryWithId(Object.assign({ contactId }, rawData))
 }
 
-export function contactFactoryWithId({ contactId, firstName, lastName, phone, email }: RawContactDataWithId): Contact {
-    return new Contact(
-        new ContactId(contactId),
-        new PersonName({ firstName, lastName }),
-        contactAccountFactory({ email, phone }),
-        []
-    )
+export function contactFactoryWithId({ contactId, personName, phone, email }: RawContactDataWithId): Contact {
+    return new Contact(new ContactId(contactId), personName, contactAccountFactory({ email, phone }), [])
 }
