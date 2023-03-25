@@ -16,8 +16,6 @@ interface CreatePhoneComplaintRequestData {
     phone: string
 }
 
-type Mapper = AbstractMapper<CreatePhoneComplaintRequestData, CreatePhoneComplaintDTO>
-
 function mapper(requestData: CreatePhoneComplaintRequestData): CreatePhoneComplaintDTO {
     const personName = new PersonName({ firstName: requestData.firstName, lastName: requestData.lastName })
     const phone = new Phone(requestData.phone)
@@ -32,8 +30,7 @@ function mapper(requestData: CreatePhoneComplaintRequestData): CreatePhoneCompla
 
 export default class CreatePhoneComplaintCommand extends ContactCommand<
     CreatePhoneComplaintRequestData,
-    CreatePhoneComplaintDTO,
-    Mapper
+    CreatePhoneComplaintDTO
 > {
     constructor() {
         super(container.resolve(CreatePhoneComplaintUseCase), mapper)

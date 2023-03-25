@@ -3,14 +3,12 @@ import RemovePhoneComplaintUseCase, {
     RemoveComplaintDTO,
 } from '@src/Domain/Aggregates/Contact/UseCases/RemovePhoneComplaint'
 import ContactCommand from './AbstractContactCommand'
-import AbstractMapper from '../Base/AbstractMapper'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 export interface RemoveComplaintRequestData {
     contactId: string
     complaintId: string
 }
-type Mapper = AbstractMapper<RemoveComplaintRequestData, RemoveComplaintDTO>
 function map(requestData: RemoveComplaintRequestData): RemoveComplaintDTO {
     return {
         contactId: new UUID(requestData.contactId),
@@ -20,8 +18,7 @@ function map(requestData: RemoveComplaintRequestData): RemoveComplaintDTO {
 
 export default class CreatePhoneComplaintCommand extends ContactCommand<
     RemoveComplaintRequestData,
-    RemoveComplaintDTO,
-    Mapper
+    RemoveComplaintDTO
 > {
     constructor() {
         super(container.resolve(RemovePhoneComplaintUseCase), map)

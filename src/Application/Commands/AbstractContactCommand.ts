@@ -5,14 +5,10 @@ import AbstractCommand from '../Base/AbstractCommand'
 import AbstractContactUseCase from '@src/Domain/Aggregates/Contact/UseCases/AbstractContactUseCase'
 import AbstractMapper from '../Base/AbstractMapper'
 
-export default abstract class ContactCommand<
+export default abstract class ContactCommand<RequestData, UseCaseInput> extends AbstractCommand<
     RequestData,
     UseCaseInput,
-    InputMapper extends AbstractMapper<RequestData, UseCaseInput>
-> extends AbstractCommand<
-    RequestData,
-    UseCaseInput,
-    InputMapper,
+    AbstractMapper<RequestData, UseCaseInput>,
     Contact,
     ContactId,
     IContactRepository,
