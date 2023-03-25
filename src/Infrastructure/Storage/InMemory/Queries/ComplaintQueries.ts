@@ -1,5 +1,6 @@
 import IComplaintQueries, {
     ComplaintViewModel,
+    GetComplaintsFromEmailQuery,
     GetComplaintsFromPhoneQuery,
 } from '@src/Application/Queries/IComplaintQueries'
 import Complaint from '@src/Domain/Aggregates/Contact/Complaint/Complaint'
@@ -10,6 +11,8 @@ import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccou
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
 import Phone from '@src/Domain/Base/ValueObject/Phone'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
+import EmailAccount from '@src/Domain/Aggregates/Contact/ValueObjects/EmailAccount'
+import Email from '@src/Domain/Base/ValueObject/Email'
 
 export default class ComplaintInMemoryQueries extends InMemoryQuery implements IComplaintQueries {
     async getComplaintsFromPhone({ phone }: GetComplaintsFromPhoneQuery): Promise<ComplaintViewModel[]> {
@@ -29,6 +32,29 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         const phoneAccount = new PhoneAccount(phone)
         for (let i = 0; i < dbContext[repositoryName].length; i++) {
             if ((dbContext[repositoryName][i] as Contact).account.isEqual(phoneAccount)) {
+                return dbContext[repositoryName][i] as Contact
+            }
+        }
+        return null
+    }
+
+    async getComplaintsFromEmail({ email }: GetComplaintsFromEmailQuery): Promise<ComplaintViewModel[]> {
+        const contact = this.getContactByPhone(new Email(email))
+        if (contact === null) {
+            throw new NotFoundError('Contact not found')
+        }
+        const complaints = this.getComplaintsByContactId(contact.contactId)
+        if (complaints === null) {
+            return []
+        }
+        return complaints.map(complaint => this.toViewModel(complaint, contact))
+    }
+
+    private getContactByEmail(email: Email): Contact | null {
+        const repositoryName = this.repositoryNames.Contact
+        const emailAccount = new EmailAccount(email)
+        for (let i = 0; i < dbContext[repositoryName].length; i++) {
+            if ((dbContext[repositoryName][i] as Contact).account.isEqual(emailAccount)) {
                 return dbContext[repositoryName][i] as Contact
             }
         }

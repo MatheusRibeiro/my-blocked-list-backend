@@ -1,37 +1,37 @@
 import { container } from 'tsyringe'
-import CreatePhoneComplaintUseCase, {
-    CreatePhoneComplaintDTO,
-} from '@src/Domain/Aggregates/Contact/UseCases/CreatePhoneComplaint'
+import CreateEmailComplaintUseCase, {
+    CreateEmailComplaintDTO,
+} from '@src/Domain/Aggregates/Contact/UseCases/CreateEmailComplaint'
 import ContactCommand from './AbstractContactCommand'
-import Phone from '@src/Domain/Base/ValueObject/Phone'
+import Email from '@src/Domain/Base/ValueObject/Email'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 
-interface CreatePhoneComplaintRequestData {
+interface CreateEmailComplaintRequestData {
     firstName: string
     lastName: string
     description: string
     complaintCategory: number
     complaintSeverity: number
-    phone: string
+    email: string
 }
 
-function mapper(requestData: CreatePhoneComplaintRequestData): CreatePhoneComplaintDTO {
+function mapper(requestData: CreateEmailComplaintRequestData): CreateEmailComplaintDTO {
     const personName = new PersonName({ firstName: requestData.firstName, lastName: requestData.lastName })
-    const phone = new Phone(requestData.phone)
+    const email = new Email(requestData.email)
     return {
         personName,
         description: requestData.description,
-        phone,
+        email,
         complaintCategory: requestData.complaintCategory,
         complaintSeverity: requestData.complaintSeverity,
     }
 }
 
-export default class CreatePhoneComplaintCommand extends ContactCommand<
-    CreatePhoneComplaintRequestData,
-    CreatePhoneComplaintDTO
+export default class CreateEmailComplaintCommand extends ContactCommand<
+    CreateEmailComplaintRequestData,
+    CreateEmailComplaintDTO
 > {
     constructor() {
-        super(container.resolve(CreatePhoneComplaintUseCase), mapper)
+        super(container.resolve(CreateEmailComplaintUseCase), mapper)
     }
 }

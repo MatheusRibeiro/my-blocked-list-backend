@@ -1,7 +1,8 @@
 @host=http://localhost:8080
 @token=
 
-POST {{host}}/complaint/create
+###
+POST {{host}}/complaint/phone/create
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -15,8 +16,24 @@ Authorization: Bearer {{token}}
 }
 
 ###
+POST {{host}}/complaint/email/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "first_name": "Mary",
+    "last_name": "Doe",
+    "email": "mytest@gmail.com",
+    "description": "Any description",
+    "category": 2,
+    "severity": 3
+}
+
+###
 GET {{host}}/complaint/find-by-phone/+55 9123-4567?token={{token}}
 
+###
+GET {{host}}/complaint/find-by-email/mytest@gmail.com?token={{token}}
 
 ###
 @contactId=
