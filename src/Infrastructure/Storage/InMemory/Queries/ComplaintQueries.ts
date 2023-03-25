@@ -39,7 +39,7 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
     }
 
     async getComplaintsFromEmail({ email }: GetComplaintsFromEmailQuery): Promise<ComplaintViewModel[]> {
-        const contact = this.getContactByPhone(new Email(email))
+        const contact = this.getContactByEmail(new Email(email))
         if (contact === null) {
             throw new NotFoundError('Contact not found')
         }
