@@ -9,6 +9,7 @@ import apiSettings from '@src/Infrastructure/Config/api'
 // Decorated controllers with its routes
 import './Controllers/Authentication'
 import './Controllers/Contact'
+import './Controllers/WatchedContact'
 
 const app = express()
 

@@ -1,0 +1,34 @@
+@host=http://localhost:8080
+@token=
+
+###
+POST {{host}}/watched-contact/phone
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "phone": "+55 9123-4567"
+}
+
+###
+POST {{host}}/watched-contact/email
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "email": "mytest@gmail.com"
+}
+
+###
+GET {{host}}/watched-contact?token={{token}}
+
+###
+GET {{host}}/watched-contact/phone?token={{token}}
+
+###
+GET {{host}}/watched-contact/email?token={{token}}
+
+###
+@watchedContactId=
+DELETE {{host}}/watched-contact/{{watchedContactId}}
+Authorization: Bearer {{token}}
