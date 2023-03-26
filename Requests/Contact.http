@@ -1,5 +1,5 @@
 @host=http://localhost:8080
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYmRlNTg2Yy1hMTMxLTQ1NDktYmE3ZC01NjNlZjFkMjM4NWMiLCJ1c2VybmFtZSI6Im15dXNlciIsImlhdCI6MTY3OTc4MjkxMSwiZXhwIjoxNjc5ODY5MzExfQ.rFmM4BtNd3t5dzhm36OJnv0x4Jg0fIR1Er8FGOmkKlQ
+@token=
 
 ###
 POST {{host}}/contact/complaint/phone
