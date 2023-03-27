@@ -59,7 +59,7 @@ export default class ContactController extends IController {
     }
 
     @Delete('/:watchedContactId')
-    public deleteComplaint = async (req: Request, res: Response): Promise<null> => {
+    public unwatchContact = async (req: Request, res: Response): Promise<null> => {
         const { watchedContactId } = req.params
         return await this.unwatchContactCommand.execute({ watchedContactId }, res.locals.User.userId)
     }
