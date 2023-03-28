@@ -13,6 +13,10 @@ import IWatchedContactRepository from '@src/Domain/Aggregates/WatchedContact/IWa
 import WatchedContactInMemoryRepository from './Storage/InMemory/Repositories/WatchedContactRepository'
 import IWatchedContactQueries from '@src/Application/WatchedContact/Queries/IWatchedContactQueries'
 import WatchedContactInMemoryQueries from './Storage/InMemory/Queries/WatchedContactQueries'
+import IUserNotificationRepository from '@src/Domain/Aggregates/UserNotification/IUserNotificationRepository'
+import UserNotificationInMemoryRepository from './Storage/InMemory/Repositories/UserNotificationRepository'
+import IUserNotificationQueries from '@src/Application/UserNotification/Queries/IUserNotificationQueries'
+import UserNotificationInMemoryQueries from './Storage/InMemory/Queries/UserNotificationQueries'
 
 container.registerSingleton<IJwtTokenGenerator>('JwtTokenGenerator', JwtTokenGenerator)
 container.registerSingleton<IAuthenticationService>('AuthenticationService', AuthenticationService)
@@ -20,6 +24,11 @@ container.registerSingleton<IAuthenticationService>('AuthenticationService', Aut
 container.registerSingleton<IUserRepository>('UserRepository', UserInMemoryRepository)
 container.registerSingleton<IContactRepository>('ContactRepository', ContactInMemoryRepository)
 container.registerSingleton<IWatchedContactRepository>('WatchedContactRepository', WatchedContactInMemoryRepository)
+container.registerSingleton<IUserNotificationRepository>(
+    'UserNotificationRepository',
+    UserNotificationInMemoryRepository
+)
 
 container.registerSingleton<IComplaintQueries>('ComplaintQueries', ComplaintInMemoryQueries)
 container.registerSingleton<IWatchedContactQueries>('WatchedContactQueries', WatchedContactInMemoryQueries)
+container.registerSingleton<IUserNotificationQueries>('UserNotificationQueries', UserNotificationInMemoryQueries)

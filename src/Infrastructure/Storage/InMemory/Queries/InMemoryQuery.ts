@@ -3,5 +3,6 @@ export default class InMemoryQuery {
         Complaint: 'ComplaintInMemoryRepository',
         Contact: 'ContactInMemoryRepository',
         WatchedContact: 'WatchedContactInMemoryRepository',
+        UserNotification: 'UserNotificationInMemoryRepository',
     }
 }

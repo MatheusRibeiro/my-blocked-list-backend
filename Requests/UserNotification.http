@@ -1,0 +1,33 @@
+@host=http://localhost:8080
+@token=
+@userNotificationId=
+@userId=
+
+###
+POST {{host}}/user-notification
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "userId": "{{userId}}",
+    "authorId": "{{userId}}",
+    "payload": { "any": "thing" },
+    "userNotificationType": "ContactReported"
+}
+
+###
+POST {{host}}/user-notification/read
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+   "userNotificationId": "{{userNotificationId}}"
+}
+
+###
+GET {{host}}/user-notification?token={{token}}
+
+
+###
+DELETE {{host}}/user-notification/{{userNotificationId}}
+Authorization: Bearer {{token}}

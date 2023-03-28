@@ -10,6 +10,7 @@ import apiSettings from '@src/Infrastructure/Config/api'
 import './Controllers/Authentication'
 import './Controllers/Contact'
 import './Controllers/WatchedContact'
+import './Controllers/UserNotification'
 
 const app = express()
 
