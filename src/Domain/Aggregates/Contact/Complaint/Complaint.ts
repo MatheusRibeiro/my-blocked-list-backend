@@ -1,4 +1,4 @@
-import Entity from '../../../Base/AbstractEntity'
+import Entity from '../../../Base/Abstractions/Entity'
 import UserId from '../../User/ValueObjects/UserId'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintId from './ValueObjects/ComplaintId'

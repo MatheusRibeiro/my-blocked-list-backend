@@ -1,4 +1,4 @@
-import Entity from '../../Base/AbstractEntity'
+import Entity from '../../Base/Abstractions/Entity'
 import PersonName, { PersonNameJSON } from '../../Base/ValueObject/PersonName'
 import UserId from '../User/ValueObjects/UserId'
 import Complaint, { ComplaintJson } from './Complaint/Complaint'

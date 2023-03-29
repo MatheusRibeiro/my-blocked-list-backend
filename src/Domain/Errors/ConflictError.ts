@@ -1,4 +1,4 @@
-import DomainError from '../Base/AbstractDomainError'
+import DomainError from '../Base/Abstractions/DomainError'
 
 export default class ConflictError extends DomainError {
     public readonly code = 409

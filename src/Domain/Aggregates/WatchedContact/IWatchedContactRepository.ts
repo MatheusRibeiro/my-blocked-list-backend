@@ -1,4 +1,4 @@
-import IRepository from '@src/Domain/Base/AbstractRepository'
+import IRepository from '@src/Domain/Base/Abstractions/Repository'
 import WatchedContact from './WatchedContact'
 import WatchedContactId from './ValueObjects/WatchedContactId'
 import Email from '@src/Domain/Base/ValueObject/Email'

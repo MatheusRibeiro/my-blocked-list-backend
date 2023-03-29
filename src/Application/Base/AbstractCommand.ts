@@ -1,8 +1,8 @@
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 import Audit from '@src/Domain/Base/Audit'
-import AbstractUseCase from '@src/Domain/Base/AbstractUseCase'
-import Entity from '@src/Domain/Base/AbstractEntity'
-import IRepository from '@src/Domain/Base/AbstractRepository'
+import AbstractUseCase from '@src/Domain/Base/Abstractions/UseCase'
+import Entity from '@src/Domain/Base/Abstractions/Entity'
+import IRepository from '@src/Domain/Base/Abstractions/Repository'
 import AbstractMapper from './AbstractMapper'
 import IEventDispatcher from './EventDispatcher/IEventDispatcher'
 

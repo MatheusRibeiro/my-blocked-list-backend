@@ -1,4 +1,4 @@
-import Entity from '@src/Domain/Base/AbstractEntity'
+import Entity from '@src/Domain/Base/Abstractions/Entity'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 import dbContext from '../DbContext'
 

@@ -1,4 +1,4 @@
-import ValueObject from '../AbstractValueObject'
+import ValueObject from '../Abstractions/ValueObject'
 
 export default abstract class TextValueObject extends ValueObject<string> {
     abstract minLength: number

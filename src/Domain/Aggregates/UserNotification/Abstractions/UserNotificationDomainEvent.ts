@@ -1,4 +1,4 @@
-import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
+import DomainEvent from '@src/Domain/Base/Abstractions/DomainEvent'
 import Audit from '@src/Domain/Base/Audit'
 import { UserNotificationJson } from '../UserNotification'
 

@@ -1,4 +1,4 @@
-import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
+import DomainEvent from '@src/Domain/Base/Abstractions/DomainEvent'
 import IEventDispatcher from './IEventDispatcher'
 import IEventHandler from './IEventHandler'
 

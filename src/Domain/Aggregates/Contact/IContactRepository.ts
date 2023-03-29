@@ -1,4 +1,4 @@
-import IRepository from '@src/Domain/Base/AbstractRepository'
+import IRepository from '@src/Domain/Base/Abstractions/Repository'
 import Contact from './Contact'
 import ContactId from './ValueObjects/ContactId'
 import Email from '@src/Domain/Base/ValueObject/Email'

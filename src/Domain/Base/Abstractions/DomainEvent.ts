@@ -1,5 +1,5 @@
-import Audit from './Audit'
-import UUID, { uuidFactory } from './ValueObject/UUID'
+import Audit from '../Audit'
+import UUID, { uuidFactory } from '../ValueObject/UUID'
 
 export default abstract class DomainEvent {
     public readonly eventId: UUID

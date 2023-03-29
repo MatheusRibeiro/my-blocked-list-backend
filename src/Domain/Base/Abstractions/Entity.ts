@@ -1,5 +1,5 @@
-import BadRequestError from '../Errors/BadRequestError'
-import UUID from './ValueObject/UUID'
+import BadRequestError from '../../Errors/BadRequestError'
+import UUID from '../ValueObject/UUID'
 
 export default abstract class Entity {
     public abstract getId(): UUID

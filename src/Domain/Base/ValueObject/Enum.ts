@@ -1,5 +1,5 @@
 import BadRequestError from '@src/Domain/Errors/BadRequestError'
-import ValueObject from '../AbstractValueObject'
+import ValueObject from '../Abstractions/ValueObject'
 
 export default abstract class Enum extends ValueObject<string> {
     protected readonly validValues: string[]

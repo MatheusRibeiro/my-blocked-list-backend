@@ -1,4 +1,4 @@
-import Entity from '../../Base/AbstractEntity'
+import Entity from '../../Base/Abstractions/Entity'
 import UserId from '../User/ValueObjects/UserId'
 import UserNotificationId from './ValueObjects/UserNotificationId'
 import UserNotificationType from './ValueObjects/UserNotificationType'

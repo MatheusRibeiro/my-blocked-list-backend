@@ -1,4 +1,4 @@
-import IRepository from '@src/Domain/Base/AbstractRepository'
+import IRepository from '@src/Domain/Base/Abstractions/Repository'
 import UserNotification from './UserNotification'
 import UserNotificationId from './ValueObjects/UserNotificationId'
 

@@ -1,4 +1,4 @@
-import ValueObject from '@src/Domain/Base/AbstractValueObject'
+import ValueObject from '@src/Domain/Base/Abstractions/ValueObject'
 import Email from '@src/Domain/Base/ValueObject/Email'
 import Phone from '@src/Domain/Base/ValueObject/Phone'
 

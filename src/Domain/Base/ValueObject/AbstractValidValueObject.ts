@@ -1,5 +1,5 @@
 import BadRequestError from '@src/Domain/Errors/BadRequestError'
-import AbstractValueObject from '../AbstractValueObject'
+import AbstractValueObject from '../Abstractions/ValueObject'
 
 export default abstract class AbstractValidValueObject<T> extends AbstractValueObject<T> {
     constructor(value: T) {

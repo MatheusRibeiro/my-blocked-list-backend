@@ -1,9 +1,9 @@
-import AbstractUseCase from '@src/Domain/Base/AbstractUseCase'
+import AbstractUseCase from '@src/Domain/Base/Abstractions/UseCase'
 import Contact from '../Contact'
 import IContactRepository from '../IContactRepository'
 import ContactId from '../ValueObjects/ContactId'
 
-export default abstract class AbstractContactUseCase<DTO> extends AbstractUseCase<
+export default abstract class ContactUseCase<DTO> extends AbstractUseCase<
     DTO,
     Contact,
     ContactId,

@@ -3,7 +3,7 @@ import WatchedContact from '@src/Domain/Aggregates/WatchedContact/WatchedContact
 import WatchedContactId from '@src/Domain/Aggregates/WatchedContact/ValueObjects/WatchedContactId'
 import IWatchedContactRepository from '@src/Domain/Aggregates/WatchedContact/IWatchedContactRepository'
 import AbstractCommand from '../Base/AbstractCommand'
-import AbstractWatchedContactUseCase from '@src/Domain/Aggregates/WatchedContact/Abstractions/WatchedContactUseCase'
+import WatchedContactUseCase from '@src/Domain/Aggregates/WatchedContact/Abstractions/WatchedContactUseCase'
 import AbstractMapper from '../Base/AbstractMapper'
 import WatchedContactEventDispatcher from './Events/WatchedContactEventsDispatcher'
 
@@ -14,7 +14,7 @@ export default abstract class WatchedContactCommand<RequestData, UseCaseInput> e
     WatchedContact,
     WatchedContactId,
     IWatchedContactRepository,
-    AbstractWatchedContactUseCase<UseCaseInput>
+    WatchedContactUseCase<UseCaseInput>
 > {
     protected readonly eventDispatcher = container.resolve(WatchedContactEventDispatcher)
 }
