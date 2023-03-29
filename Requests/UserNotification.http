@@ -3,17 +3,6 @@
 @userNotificationId=
 @userId=
 
-###
-POST {{host}}/user-notification
-Content-Type: application/json
-Authorization: Bearer {{token}}
-
-{
-    "userId": "{{userId}}",
-    "authorId": "{{userId}}",
-    "payload": { "any": "thing" },
-    "userNotificationType": "ContactReported"
-}
 
 ###
 POST {{host}}/user-notification/read

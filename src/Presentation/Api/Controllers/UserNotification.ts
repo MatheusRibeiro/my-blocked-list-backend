@@ -10,19 +10,16 @@ import IUserNotificationQueries, {
 } from '@src/Application/UserNotification/Queries/IUserNotificationQueries'
 import DeleteUserNotificationCommand from '@src/Application/UserNotification/Commands/DeleteUserNotification'
 import MarkUserNotificationAsReadCommand from '@src/Application/UserNotification/Commands/MarkUserNotificationAsRead'
-import CreateUserNotificationCommand from '@src/Application/UserNotification/Commands/CreateUserNotification'
 
 @Controller('/user-notification')
 @injectable()
 export default class ContactController extends IController {
-    private readonly createUserNotificationCommand: CreateUserNotificationCommand
     private readonly markUserNotificationAsReadCommand: MarkUserNotificationAsReadCommand
     private readonly deleteUserNotificationCommand: DeleteUserNotificationCommand
     private readonly userNotificationQueries: IUserNotificationQueries
 
     constructor(@inject('UserNotificationQueries') userNotificationQueries: IUserNotificationQueries) {
         super()
-        this.createUserNotificationCommand = container.resolve(CreateUserNotificationCommand)
         this.markUserNotificationAsReadCommand = container.resolve(MarkUserNotificationAsReadCommand)
         this.deleteUserNotificationCommand = container.resolve(DeleteUserNotificationCommand)
         this.userNotificationQueries = userNotificationQueries
@@ -34,11 +31,6 @@ export default class ContactController extends IController {
     public getUserNotifications = async (req: Request, res: Response): Promise<UserNotificationViewModel[]> => {
         const { userId } = res.locals.User
         return await this.userNotificationQueries.getUserNotifications({ userId })
-    }
-
-    @Post('/')
-    public createUserNotification = async (req: Request, res: Response): Promise<null> => {
-        return await this.createUserNotificationCommand.execute(req.body, res.locals.User.userId)
     }
 
     @Post('/read')
