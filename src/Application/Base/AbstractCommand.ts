@@ -4,7 +4,7 @@ import AbstractUseCase from '@src/Domain/Base/AbstractUseCase'
 import Entity from '@src/Domain/Base/AbstractEntity'
 import IRepository from '@src/Domain/Base/AbstractRepository'
 import AbstractMapper from './AbstractMapper'
-import eventEmmiter from './EventEmmiter'
+import IEventDispatcher from './EventDispatcher/IEventDispatcher'
 
 export default abstract class AbstractCommand<
     RequestData,
@@ -17,6 +17,7 @@ export default abstract class AbstractCommand<
 > {
     protected readonly useCase: UseCase
     protected readonly inputMapper: InputMapper
+    protected readonly eventDispatcher: IEventDispatcher | undefined
 
     constructor(useCase: UseCase, inputMapper: InputMapper) {
         this.useCase = useCase
@@ -26,7 +27,10 @@ export default abstract class AbstractCommand<
     public execute = async (request: RequestData, authorId: string): Promise<null> => {
         const audit = new Audit(new UUID(authorId))
         const events = await this.useCase.execute(this.inputMapper(request), audit)
-        await eventEmmiter(events)
+        if (this.eventDispatcher !== undefined) {
+            const promises = events.map(this.eventDispatcher.notify)
+            await Promise.all(promises)
+        }
         return null
     }
 }
