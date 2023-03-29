@@ -31,7 +31,7 @@ export default class DeleteUserNotificationUseCase extends AbstractUserNotificat
             throw new NotFoundError(notFoundMessage)
         }
         await this.repository.delete(notification)
-        events.push(new UserNotificationDeleted({ user_notification_deleted: notification.toJSON() }, audit))
+        events.push(new UserNotificationDeleted(notification.toJSON(), audit))
 
         return events
     }

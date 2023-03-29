@@ -29,7 +29,7 @@ export default class CreateUserNotificationUseCase extends AbstractUserNotificat
         const notification = new UserNotification(uuidFactory(), userId, authorId, notificationType, payload)
 
         await this.repository.create(notification)
-        events.push(new UserNotificationCreated({ user_notification_created: notification.toJSON() }, audit))
+        events.push(new UserNotificationCreated(notification.toJSON(), audit))
 
         return events
     }

@@ -15,5 +15,5 @@ export default abstract class AbstractUseCase<
     constructor(repository: Repository) {
         this.repository = repository
     }
-    abstract execute(dto: DTO, audit: Audit): Promise<Array<DomainEvent<object>>>
+    abstract execute(dto: DTO, audit: Audit): Promise<DomainEvent[]>
 }

@@ -33,11 +33,11 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
         if (complaintRemoved === null) {
             throw new NotFoundError(notFoundMessage)
         }
-        events.push(new ComplaintRemoved({ complaint: complaintRemoved.toJSON() }, audit))
+        events.push(new ComplaintRemoved(complaintRemoved.toJSON(), contact.toJSON(), audit))
 
         if (contact.complaints.length === 0) {
             await this.repository.delete(contact)
-            events.push(new ContactRemoved({ contact: contact.toJSON() }, audit))
+            events.push(new ContactRemoved(contact.toJSON(), audit))
         } else {
             await this.repository.update(contact)
         }

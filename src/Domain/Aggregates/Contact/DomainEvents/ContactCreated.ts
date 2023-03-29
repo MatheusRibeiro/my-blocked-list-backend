@@ -1,10 +1,5 @@
-import { ContactJson } from '../Contact'
-import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
+import ContactDomainEvent from './AbstractContactDomainEvent'
 
-export interface ContactCreatedPayload {
-    contact_created: ContactJson
-}
-
-export default class ContactCreated extends DomainEvent<ContactCreatedPayload> {
+export default class ContactCreated extends ContactDomainEvent {
     public readonly version = 1
 }

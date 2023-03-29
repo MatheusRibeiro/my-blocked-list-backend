@@ -1,10 +1,5 @@
-import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
-import { ContactJson } from '../Contact'
+import ContactDomainEvent from './AbstractContactDomainEvent'
 
-export interface ComplaintRemovedPayload {
-    contact: ContactJson
-}
-
-export default class ContactRemoved extends DomainEvent<ComplaintRemovedPayload> {
+export default class ContactRemoved extends ContactDomainEvent {
     public readonly version = 1
 }

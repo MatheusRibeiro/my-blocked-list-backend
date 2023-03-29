@@ -1,10 +1,5 @@
-import { ComplaintJson } from '../Complaint/Complaint'
-import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
+import ComplaintDomainEvent from './AbstractComplaintDomainEvent'
 
-export interface ComplaintRemovedPayload {
-    complaint: ComplaintJson
-}
-
-export default class ComplaintRemoved extends DomainEvent<ComplaintRemovedPayload> {
+export default class ComplaintRemoved extends ComplaintDomainEvent {
     public readonly version = 1
 }

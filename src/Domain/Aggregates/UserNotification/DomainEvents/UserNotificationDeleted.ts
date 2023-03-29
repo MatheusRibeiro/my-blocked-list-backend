@@ -1,10 +1,5 @@
-import { UserNotificationJson } from '../UserNotification'
-import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
+import UserNotificationDomainEvent from './AbstractUserNotificationDomainEvent'
 
-export interface UserNotificationDeletedPayload {
-    user_notification_deleted: UserNotificationJson
-}
-
-export default class UserNotificationDeleted extends DomainEvent<UserNotificationDeletedPayload> {
+export default class UserNotificationDeleted extends UserNotificationDomainEvent {
     public readonly version = 1
 }

@@ -32,16 +32,10 @@ export default class WatchPhoneContactUseCase extends AbstractWatchedContactUseC
             ? new WatchedContact(uuidFactory(), new PhoneAccount(phone))
             : existingWatchedContact
 
-        if (isANewWatchedContact)
-            events.push(new WatchedContactCreated({ watched_contact: watchedContact.toJSON() }, audit))
+        if (isANewWatchedContact) events.push(new WatchedContactCreated(watchedContact.toJSON(), audit))
 
         watchedContact.addUser(audit.who)
-        events.push(
-            new UserWatchedContact(
-                { watched_contact: watchedContact.toJSON(), user: { id: audit.who.toJSON() } },
-                audit
-            )
-        )
+        events.push(new UserWatchedContact(audit.who.toJSON(), watchedContact.toJSON(), audit))
 
         isANewWatchedContact
             ? await this.repository.create(watchedContact)

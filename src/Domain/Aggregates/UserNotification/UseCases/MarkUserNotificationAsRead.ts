@@ -35,7 +35,7 @@ export default class MarkUserNotificationAsReadUseCase extends AbstractUserNotif
         }
         notification.markAsRead()
         await this.repository.update(notification)
-        events.push(new UserNotificationRead({ user_notification_read: notification.toJSON() }, audit))
+        events.push(new UserNotificationRead(notification.toJSON(), audit))
 
         return events
     }

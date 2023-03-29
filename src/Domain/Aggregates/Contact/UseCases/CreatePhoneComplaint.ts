@@ -38,10 +38,10 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
         const isANewContact = existingContact === null
 
         const contact = isANewContact ? contactFactoryWithoutId({ phone, personName }) : existingContact
-        if (isANewContact) events.push(new ContactCreated({ contact_created: contact.toJSON() }, audit))
+        if (isANewContact) events.push(new ContactCreated(contact.toJSON(), audit))
 
         contact.addComplaint(complaint)
-        events.push(new ContactReported({ contact_reported: contact.toJSON(), complaint: complaint.toJSON() }, audit))
+        events.push(new ContactReported(complaint.toJSON(), contact.toJSON(), audit))
 
         isANewContact ? await this.repository.create(contact) : await this.repository.update(contact)
         return events

@@ -1,10 +1,5 @@
-import { WatchedContactJson } from '../WatchedContact'
-import DomainEvent from '@src/Domain/Base/AbstractDomainEvent'
+import { WatchedContactDomainEvent } from './AbstractWatchedContactDomainEvent'
 
-export interface WatchedContactCreatedPayload {
-    watched_contact: WatchedContactJson
-}
-
-export default class WatchedContactCreated extends DomainEvent<WatchedContactCreatedPayload> {
+export default class WatchedContactCreated extends WatchedContactDomainEvent {
     public readonly version = 1
 }
