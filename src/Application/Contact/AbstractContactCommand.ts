@@ -3,7 +3,7 @@ import Contact from '@src/Domain/Aggregates/Contact/Contact'
 import ContactId from '@src/Domain/Aggregates/Contact/ValueObjects/ContactId'
 import IContactRepository from '@src/Domain/Aggregates/Contact/IContactRepository'
 import AbstractCommand from '../Base/AbstractCommand'
-import AbstractContactUseCase from '@src/Domain/Aggregates/Contact/UseCases/AbstractContactUseCase'
+import AbstractContactUseCase from '@src/Domain/Aggregates/Contact/Abstractions/ContactUseCase'
 import AbstractMapper from '../Base/AbstractMapper'
 import ContactEventsDispatcher from './Events/ContactEventsDispatcher'
 

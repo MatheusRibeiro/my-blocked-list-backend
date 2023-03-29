@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import Audit from '@src/Domain/Base/Audit'
 import Phone from '@src/Domain/Base/ValueObject/Phone'
-import AbstractWatchedContactUseCase from './AbstractWatchedContactUseCase'
+import AbstractWatchedContactUseCase from '../Abstractions/WatchedContactUseCase'
 import IWatchedContactRepository from '../IWatchedContactRepository'
 import WatchedContact from '../WatchedContact'
 import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'

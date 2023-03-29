@@ -3,7 +3,7 @@ import WatchedContact from '@src/Domain/Aggregates/WatchedContact/WatchedContact
 import WatchedContactId from '@src/Domain/Aggregates/WatchedContact/ValueObjects/WatchedContactId'
 import IWatchedContactRepository from '@src/Domain/Aggregates/WatchedContact/IWatchedContactRepository'
 import AbstractCommand from '../Base/AbstractCommand'
-import AbstractWatchedContactUseCase from '@src/Domain/Aggregates/WatchedContact/UseCases/AbstractWatchedContactUseCase'
+import AbstractWatchedContactUseCase from '@src/Domain/Aggregates/WatchedContact/Abstractions/WatchedContactUseCase'
 import AbstractMapper from '../Base/AbstractMapper'
 import WatchedContactEventDispatcher from './Events/WatchedContactEventsDispatcher'
 

@@ -1,6 +1,6 @@
 import Audit from '@src/Domain/Base/Audit'
 import { WatchedContactJson } from '../WatchedContact'
-import { WatchedContactDomainEvent, WatchedContactDomainEventPayload } from './AbstractWatchedContactDomainEvent'
+import { WatchedContactDomainEvent, WatchedContactDomainEventPayload } from './WatchedContactDomainEvent'
 
 export interface UserWatchedContactDomainEventPayload extends WatchedContactDomainEventPayload {
     user: { id: string }

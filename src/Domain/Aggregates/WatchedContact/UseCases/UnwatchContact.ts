@@ -5,7 +5,7 @@ import UserUnwatchedContact from '../DomainEvents/UserUnwatchedContact'
 import IWatchedContactRepository from '../IWatchedContactRepository'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
-import AbstractWatchedContactUseCase from './AbstractWatchedContactUseCase'
+import AbstractWatchedContactUseCase from '../Abstractions/WatchedContactUseCase'
 
 export interface UnwatchContactDTO {
     watchedContactId: UUID

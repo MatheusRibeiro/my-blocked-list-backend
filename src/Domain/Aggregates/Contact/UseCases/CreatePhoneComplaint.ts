@@ -5,7 +5,7 @@ import { complaintFactoryWithoutId } from '../Complaint/ComplaintFactory'
 import { contactFactoryWithoutId } from '../ContactFactory'
 import ContactCreated from '../DomainEvents/ContactCreated'
 import ContactReported from '../DomainEvents/ContactReported'
-import AbstractContactUseCase from './AbstractContactUseCase'
+import AbstractContactUseCase from '../Abstractions/ContactUseCase'
 import IContactRepository from '../IContactRepository'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 

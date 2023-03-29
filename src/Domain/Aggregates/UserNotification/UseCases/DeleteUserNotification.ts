@@ -3,7 +3,7 @@ import Audit from '@src/Domain/Base/Audit'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 import UserNotificationDeleted from '../DomainEvents/UserNotificationDeleted'
-import AbstractUserNotificationUseCase from './AbstractUserNotificationUseCase'
+import AbstractUserNotificationUseCase from '../Abstractions/UserNotificationUseCase'
 import IUserNotificationRepository from '../IUserNotificationRepository'
 
 export interface DeleteUserNotificationDTO {

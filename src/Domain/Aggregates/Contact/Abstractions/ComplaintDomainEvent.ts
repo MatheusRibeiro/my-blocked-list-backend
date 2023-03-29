@@ -1,7 +1,7 @@
 import Audit from '@src/Domain/Base/Audit'
 import { ComplaintJson } from '../Complaint/Complaint'
 import { ContactJson } from '../Contact'
-import ContactDomainEvent, { ContactDomainEventPayload } from './AbstractContactDomainEvent'
+import ContactDomainEvent, { ContactDomainEventPayload } from './ContactDomainEvent'
 
 export interface ComplaintDomainEventPayload extends ContactDomainEventPayload {
     complaint: ComplaintJson
