@@ -1,16 +1,21 @@
 import ValueObject from '@src/Domain/Base/AbstractValueObject'
+import Email from '@src/Domain/Base/ValueObject/Email'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 
-export type AccountType = ValueObject<string> | ValueObject<number> | ValueObject<object>
+export type AccountType = Phone | Email
+export interface ContactAccountJSON {
+    contact_type: string
+    value: string
+}
 
 export default abstract class ContactAccount<T extends AccountType> extends ValueObject<T> {
-    abstract contactType: string
     public isValid(): boolean {
-        return this.value.isValid() && this.contactType.length > 0
+        return this.value.isValid()
     }
 
-    public toJSON(): object {
+    public toJSON(): ContactAccountJSON {
         return {
-            contact_type: this.contactType,
+            contact_type: this.constructor.name,
             value: this.value.toJSON(),
         }
     }

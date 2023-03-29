@@ -1,16 +1,16 @@
 import Entity from '../../Base/AbstractEntity'
-import PersonName from '../../Base/ValueObject/PersonName'
+import PersonName, { PersonNameJSON } from '../../Base/ValueObject/PersonName'
 import UserId from '../User/ValueObjects/UserId'
-import Complaint from './Complaint/Complaint'
+import Complaint, { ComplaintJson } from './Complaint/Complaint'
 import ComplaintId from './Complaint/ValueObjects/ComplaintId'
-import ContactAccount, { AccountType } from './ValueObjects/ContactAccount'
+import ContactAccount, { AccountType, ContactAccountJSON } from './ValueObjects/ContactAccount'
 import ContactId from './ValueObjects/ContactId'
 
 export interface ContactJson {
     id: string
-    name: object
-    account: object
-    complaints: object[]
+    name: PersonNameJSON
+    account: ContactAccountJSON
+    complaints: ComplaintJson[]
 }
 
 export default class Contact extends Entity {
