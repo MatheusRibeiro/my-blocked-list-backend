@@ -3,13 +3,23 @@ import IMiddleware from '../Base/IMiddleware'
 
 export default class LoggerMiddleware extends IMiddleware {
     public execute = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        // ?param1={param1}&param2={param2}
-        const regexMiddle = /=.*&/
-        const regexEnd = /=[^=]*$/
-        const replace = '=*****'
-        const url = req.url.replace(regexEnd, replace).replace(regexMiddle, `${replace}&`)
-
+        const url = this.hideUrlParams(req.url)
         console.log(`${req.method}: ${url}`)
         next()
+    }
+
+    private hideUrlParams(url: string): string {
+        const [baseUrl, paramsString] = url.split('?')
+        if (paramsString === undefined) {
+            return url
+        }
+        const params = paramsString.split('&').map(this.hideValue).join('&')
+
+        return `${baseUrl}?${params}`
+    }
+
+    private hideValue(paramString: string): string {
+        const [name] = paramString.split('=')
+        return `${name}={${name}}`
     }
 }
