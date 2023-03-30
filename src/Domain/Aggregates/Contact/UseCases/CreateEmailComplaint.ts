@@ -8,6 +8,7 @@ import ContactReported from '../DomainEvents/ContactReported'
 import AbstractContactUseCase from '../Abstractions/ContactUseCase'
 import IContactRepository from '../IContactRepository'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 export interface CreateEmailComplaintDTO {
     personName: PersonName
@@ -15,6 +16,7 @@ export interface CreateEmailComplaintDTO {
     complaintCategory: number
     complaintSeverity: number
     email: Email
+    authorId: UUID
 }
 
 type CreateComplaintEvents = ContactCreated | ContactReported
@@ -26,13 +28,13 @@ export default class CreateEmailComplaintUseCase extends AbstractContactUseCase<
     }
 
     public async execute(dto: CreateEmailComplaintDTO, audit: Audit): Promise<CreateComplaintEvents[]> {
-        const { personName, description, complaintCategory, complaintSeverity, email } = dto
+        const { personName, description, complaintCategory, complaintSeverity, email, authorId } = dto
         const events: CreateComplaintEvents[] = []
         const complaint = complaintFactoryWithoutId({
             description,
             category: complaintCategory,
             severity: complaintSeverity,
-            authorId: audit.who.value,
+            authorId,
         })
         const existingContact = await this.repository.findByEmail(email)
         const isANewContact = existingContact === null

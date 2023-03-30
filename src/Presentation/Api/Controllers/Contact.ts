@@ -32,7 +32,7 @@ export default class ContactController extends IController {
     public createByPhone = async (req: Request, res: Response): Promise<null> => {
         const { userId } = res.locals.User
         return await this.createPhoneComplaintCommand.execute(
-            Object.assign({}, req.body, { userId }),
+            Object.assign({}, req.body, { authorId: userId }),
             res.locals.User.userId
         )
     }
@@ -41,7 +41,7 @@ export default class ContactController extends IController {
     public createByEmail = async (req: Request, res: Response): Promise<null> => {
         const { userId } = res.locals.User
         return await this.createEmailComplaintCommand.execute(
-            Object.assign({}, req.body, { userId }),
+            Object.assign({}, req.body, { authorId: userId }),
             res.locals.User.userId
         )
     }
