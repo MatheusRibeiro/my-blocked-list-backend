@@ -9,17 +9,16 @@ import IEventDispatcher from './EventDispatcher/IEventDispatcher'
 export default abstract class AbstractCommand<
     RequestData,
     UseCaseInput,
-    InputMapper extends AbstractMapper<RequestData, UseCaseInput>,
     TEntity extends Entity,
     TId extends UUID,
     TRepository extends IRepository<TEntity, TId>,
     UseCase extends AbstractUseCase<UseCaseInput, TEntity, TId, TRepository>
 > {
     protected readonly useCase: UseCase
-    protected readonly inputMapper: InputMapper
+    protected readonly inputMapper: AbstractMapper<RequestData, UseCaseInput>
     protected readonly eventDispatcher: IEventDispatcher | undefined
 
-    constructor(useCase: UseCase, inputMapper: InputMapper) {
+    constructor(useCase: UseCase, inputMapper: AbstractMapper<RequestData, UseCaseInput>) {
         this.useCase = useCase
         this.inputMapper = inputMapper
     }
