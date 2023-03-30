@@ -5,6 +5,7 @@ import CreateEmailComplaintUseCase, {
 import ContactCommand from '../AbstractContactCommand'
 import Email from '@src/Domain/Base/ValueObject/Email'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 interface CreateEmailComplaintRequest {
     firstName: string
@@ -13,6 +14,7 @@ interface CreateEmailComplaintRequest {
     complaintCategory: number
     complaintSeverity: number
     email: string
+    authorId: string
 }
 
 function mapper(input: CreateEmailComplaintRequest): CreateEmailComplaintDTO {
@@ -22,6 +24,7 @@ function mapper(input: CreateEmailComplaintRequest): CreateEmailComplaintDTO {
         email: new Email(input.email),
         complaintCategory: input.complaintCategory,
         complaintSeverity: input.complaintSeverity,
+        authorId: new UUID(input.authorId),
     }
 }
 

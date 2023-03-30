@@ -10,6 +10,7 @@ import UUID from '@src/Domain/Base/ValueObject/UUID'
 export interface RemoveComplaintDTO {
     contactId: UUID
     complaintId: UUID
+    userId: UUID
 }
 
 type RemoveComplaintEvents = ComplaintRemoved | ContactRemoved
@@ -24,12 +25,12 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
 
     public async execute(dto: RemoveComplaintDTO, audit: Audit): Promise<RemoveComplaintEvents[]> {
         const events: RemoveComplaintEvents[] = []
-        const { contactId, complaintId } = dto
+        const { contactId, complaintId, userId } = dto
         const contact = await this.repository.findById(contactId)
         if (contact === null) {
             throw new NotFoundError(notFoundMessage)
         }
-        const complaintRemoved = contact.removeComplaint(complaintId, audit.who)
+        const complaintRemoved = contact.removeComplaint(complaintId, userId)
         if (complaintRemoved === null) {
             throw new NotFoundError(notFoundMessage)
         }

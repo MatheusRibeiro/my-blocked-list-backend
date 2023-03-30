@@ -8,11 +8,13 @@ import UUID from '@src/Domain/Base/ValueObject/UUID'
 export interface RemoveComplaintRequest {
     contactId: string
     complaintId: string
+    userId: string
 }
 function map(input: RemoveComplaintRequest): RemoveComplaintDTO {
     return {
         contactId: new UUID(input.contactId),
         complaintId: new UUID(input.complaintId),
+        userId: new UUID(input.userId),
     }
 }
 

@@ -1,6 +1,6 @@
 import Complaint from './Complaint'
 import ComplaintId from './ValueObjects/ComplaintId'
-import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintType from './ValueObjects/ComplaintType'
 import UserId from '../../User/ValueObjects/UserId'
@@ -9,15 +9,15 @@ export interface RawComplaintDataWithoutId {
     description: string
     category: number
     severity: number
-    authorId: string
+    authorId: UserId
 }
 
 export interface RawComplaintDataWithId extends RawComplaintDataWithoutId {
-    complaintId: string
+    complaintId: UUID
 }
 
 export function complaintFactoryWithoutId(rawData: RawComplaintDataWithoutId): Complaint {
-    const complaintId = uuidFactory().value
+    const complaintId = uuidFactory() as ComplaintId
     return complaintFactoryWithId(Object.assign({ complaintId }, rawData))
 }
 
@@ -29,9 +29,9 @@ export function complaintFactoryWithId({
     authorId,
 }: RawComplaintDataWithId): Complaint {
     return new Complaint(
-        new ComplaintId(complaintId),
+        complaintId,
         new ComplaintDescription(description),
         new ComplaintType({ complaintCategory: category, complaintSeverity: severity }),
-        new UserId(authorId)
+        authorId
     )
 }

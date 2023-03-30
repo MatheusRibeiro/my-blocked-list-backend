@@ -30,12 +30,20 @@ export default class ContactController extends IController {
 
     @Post('/complaint/phone')
     public createByPhone = async (req: Request, res: Response): Promise<null> => {
-        return await this.createPhoneComplaintCommand.execute(req.body, res.locals.User.userId)
+        const { userId } = res.locals.User
+        return await this.createPhoneComplaintCommand.execute(
+            Object.assign({}, req.body, { userId }),
+            res.locals.User.userId
+        )
     }
 
     @Post('/complaint/email')
     public createByEmail = async (req: Request, res: Response): Promise<null> => {
-        return await this.createEmailComplaintCommand.execute(req.body, res.locals.User.userId)
+        const { userId } = res.locals.User
+        return await this.createEmailComplaintCommand.execute(
+            Object.assign({}, req.body, { userId }),
+            res.locals.User.userId
+        )
     }
 
     @Get('/complaint/find-by-phone/:phone')
@@ -53,6 +61,7 @@ export default class ContactController extends IController {
     @Delete('/:contactId/complaint/:complaintId')
     public deleteComplaint = async (req: Request, res: Response): Promise<null> => {
         const { complaintId, contactId } = req.params
-        return await this.removeComplaintCommand.execute({ complaintId, contactId }, res.locals.User.userId)
+        const { userId } = res.locals.User
+        return await this.removeComplaintCommand.execute({ complaintId, contactId, userId }, userId)
     }
 }

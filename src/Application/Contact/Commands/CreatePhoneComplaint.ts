@@ -5,6 +5,7 @@ import CreatePhoneComplaintUseCase, {
 import ContactCommand from '../AbstractContactCommand'
 import Phone from '@src/Domain/Base/ValueObject/Phone'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 interface CreatePhoneComplaintRequestData {
     firstName: string
@@ -13,6 +14,7 @@ interface CreatePhoneComplaintRequestData {
     complaintCategory: number
     complaintSeverity: number
     phone: string
+    authorId: string
 }
 
 function mapper(input: CreatePhoneComplaintRequestData): CreatePhoneComplaintDTO {
@@ -22,6 +24,7 @@ function mapper(input: CreatePhoneComplaintRequestData): CreatePhoneComplaintDTO
         phone: new Phone(input.phone),
         complaintCategory: input.complaintCategory,
         complaintSeverity: input.complaintSeverity,
+        authorId: new UUID(input.authorId),
     }
 }
 
