@@ -1,3 +1,3 @@
-import UUID from '../../../../Base/ValueObject/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 export default class ComplaintId extends UUID {}

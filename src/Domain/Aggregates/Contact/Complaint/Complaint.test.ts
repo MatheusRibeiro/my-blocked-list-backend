@@ -1,4 +1,4 @@
-import UUID, { uuidFactory } from '../../../Base/ValueObject/UUID'
+import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
 import Complaint from './Complaint'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintType, { ComplaintCategory, ComplaintSeverity } from './ValueObjects/ComplaintType'

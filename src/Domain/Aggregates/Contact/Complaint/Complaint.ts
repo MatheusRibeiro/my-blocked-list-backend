@@ -1,5 +1,5 @@
-import Entity from '../../../Base/Abstractions/Entity'
-import UserId from '../../User/ValueObjects/UserId'
+import Entity from '@src/Domain/Base/Abstractions/Entity'
+import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintId from './ValueObjects/ComplaintId'
 import ComplaintType from './ValueObjects/ComplaintType'

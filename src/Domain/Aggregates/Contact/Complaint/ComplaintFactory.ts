@@ -2,7 +2,7 @@ import Complaint from './Complaint'
 import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintType from './ValueObjects/ComplaintType'
-import UserId from '../../User/ValueObjects/UserId'
+import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 
 export interface RawComplaintDataWithoutId {
     description: string

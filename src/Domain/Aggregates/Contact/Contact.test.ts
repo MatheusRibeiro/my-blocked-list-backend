@@ -1,14 +1,14 @@
 import Contact from './Contact'
 import Complaint from './Complaint/Complaint'
-import Email from '../../Base/ValueObject/Email'
-import Phone from '../../Base/ValueObject/Phone'
-import PersonName from '../../Base/ValueObject/PersonName'
-import UUID, { uuidFactory } from '../../Base/ValueObject/UUID'
-import BadRequestError from '../../Errors/BadRequestError'
 import PhoneAccount from './ValueObjects/PhoneAccount'
 import EmailAccount from './ValueObjects/EmailAccount'
 import ComplaintDescription from './Complaint/ValueObjects/ComplaintDescription'
 import ComplaintType from './Complaint/ValueObjects/ComplaintType'
+import Email from '@src/Domain/Base/ValueObject/Email'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
+import PersonName from '@src/Domain/Base/ValueObject/PersonName'
+import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import BadRequestError from '@src/Domain/Errors/BadRequestError'
 
 const validPhone = new PhoneAccount(new Phone('+55 9876-5432'))
 const validEmail = new EmailAccount(new Email('email1@gmail.com'))
