@@ -15,7 +15,7 @@ function mapper(input: WatchEmailContactRequestData): WatchEmailContactDTO {
     }
 }
 
-export default class WatchEmailWatchedContactCommand extends WatchedContactCommand<
+export default class WatchEmailContactCommand extends WatchedContactCommand<
     WatchEmailContactRequestData,
     WatchEmailContactDTO
 > {

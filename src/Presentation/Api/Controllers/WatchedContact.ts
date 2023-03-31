@@ -3,8 +3,8 @@ import type { Request, Response } from 'express'
 import IController from '../Base/BaseController'
 import { Controller } from '../Base/Decorators/Controller'
 import { Get, Post, Delete } from '../Base/Decorators/Route'
-import WatchPhoneContactCommand from '@src/Application/WatchedContact/Commands/WatchPhoneContact'
-import WatchEmailContactCommand from '@src/Application/WatchedContact/Commands/WatchEmailContact'
+import WatchPhoneCommand from '@src/Application/WatchedContact/Commands/WatchPhoneContact'
+import WatchEmailCommand from '@src/Application/WatchedContact/Commands/WatchEmailContact'
 import AuthenticationMiddleware from '../Middlewares/Authentication'
 import LoggerMiddleware from '../Middlewares/Logger'
 import IWatchedContactQueries, {
@@ -15,15 +15,15 @@ import UnwatchContactCommand from '@src/Application/WatchedContact/Commands/Unwa
 @Controller('/watched-contact')
 @injectable()
 export default class ContactController extends IController {
-    private readonly watchPhoneContactCommand: WatchPhoneContactCommand
-    private readonly watchEmailContactCommand: WatchEmailContactCommand
+    private readonly watchPhoneContactCommand: WatchPhoneCommand
+    private readonly watchEmailContactCommand: WatchEmailCommand
     private readonly unwatchContactCommand: UnwatchContactCommand
     private readonly watchedContactQueries: IWatchedContactQueries
 
     constructor(@inject('WatchedContactQueries') watchedContactQueries: IWatchedContactQueries) {
         super()
-        this.watchPhoneContactCommand = container.resolve(WatchPhoneContactCommand)
-        this.watchEmailContactCommand = container.resolve(WatchEmailContactCommand)
+        this.watchPhoneContactCommand = container.resolve(WatchPhoneCommand)
+        this.watchEmailContactCommand = container.resolve(WatchEmailCommand)
         this.unwatchContactCommand = container.resolve(UnwatchContactCommand)
         this.watchedContactQueries = watchedContactQueries
         this.middlewares.push(container.resolve(LoggerMiddleware))

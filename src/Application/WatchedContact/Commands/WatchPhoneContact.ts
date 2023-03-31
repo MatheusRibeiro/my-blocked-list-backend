@@ -15,7 +15,7 @@ function mapper(input: WatchPhoneContactRequestData): WatchPhoneContactDTO {
     }
 }
 
-export default class WatchPhoneWatchedContactCommand extends WatchedContactCommand<
+export default class WatchPhoneContactCommand extends WatchedContactCommand<
     WatchPhoneContactRequestData,
     WatchPhoneContactDTO
 > {
