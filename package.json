@@ -12,6 +12,9 @@
     "test:coverage": "jest --coverage",
     "integration:app": "TZ=utc NODE_ENV=test NODE_PATH=./ cucumber-js --require-module ts-node/register --require-module tsconfig-paths/register --require 'features/support/**/*.ts'",
     "integration": "yarn integration:app features",
+    "integration:coverage": "nyc --report-dir integration-coverage --all --include \"src/**/*.ts\" yarn integration",
+    "test:full": "yarn test && yarn integration",
+    "coverage": "nyc yarn test:full --include \"src/**/*.ts\" --all",
     "validate": "eslint . && jest --coverage",
     "build": "tsc -p tsconfig.prod.json"
   },
@@ -33,6 +36,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "jest": "^29.4.3",
     "nodemon": "^2.0.21",
+    "nyc": "^15.1.0",
     "prettier": "^2.8.4",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
