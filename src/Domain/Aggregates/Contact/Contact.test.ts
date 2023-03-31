@@ -8,7 +8,6 @@ import Email from '@src/Domain/Base/ValueObject/Email'
 import Phone from '@src/Domain/Base/ValueObject/Phone'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
-import BadRequestError from '@src/Domain/Errors/BadRequestError'
 
 const validPhone = new PhoneAccount(new Phone('+55 9876-5432'))
 const validEmail = new EmailAccount(new Email('email1@gmail.com'))
@@ -42,26 +41,6 @@ describe('Is Valid', () => {
 
         expect(contact.isValid()).toBeTruthy()
     })
-
-    test('is not valid with invalid phone as contact', () => {
-        const invalidPhone = new PhoneAccount(new Phone('invalid'))
-        const contact = new Contact(validUuid, validPersonName, invalidPhone, [validComplaint])
-
-        expect(contact.isValid()).toBeFalsy()
-    })
-
-    test('is not valid with invalid email as contact', () => {
-        const invalidEmail = new EmailAccount(new Email('invalid'))
-        const contact = new Contact(validUuid, validPersonName, invalidEmail, [validComplaint])
-
-        expect(contact.isValid()).toBeFalsy()
-    })
-    test('is not valid with invalid person name', () => {
-        const invalidPersonName = new PersonName({ firstName: '', lastName: 'Doe' })
-        const contact = new Contact(validUuid, invalidPersonName, validPhone, [validComplaint])
-
-        expect(contact.isValid()).toBeFalsy()
-    })
 })
 
 describe('validate', () => {
@@ -69,13 +48,6 @@ describe('validate', () => {
         const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
 
         expect(contact.validate()).toBeNull()
-    })
-
-    test('throws error when invalid', () => {
-        const invalidPhone = new PhoneAccount(new Phone('invalid'))
-        const contact = new Contact(validUuid, validPersonName, invalidPhone, [validComplaint])
-
-        expect(contact.validate).toThrow(BadRequestError)
     })
 })
 

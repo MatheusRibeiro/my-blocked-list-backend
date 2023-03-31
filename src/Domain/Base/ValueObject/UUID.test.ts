@@ -1,3 +1,4 @@
+import BadRequestError from '@src/Domain/Errors/BadRequestError'
 import UUID, { uuidFactory } from './UUID'
 
 const validUuid1 = 'f22d6b94-bc16-4766-80c7-23063106fb2e'
@@ -9,8 +10,8 @@ describe('UUID Value Object', () => {
         expect(uuid.isValid()).toBeTruthy()
     })
     test('uuid is invalid', () => {
-        const uuid = new UUID('invalid')
-        expect(uuid.isValid()).toBeFalsy()
+        const newUuid = (): UUID => new UUID('invalid')
+        expect(newUuid).toThrow(BadRequestError)
     })
     test('uuid is equal', () => {
         const uuid1 = new UUID(validUuid1)

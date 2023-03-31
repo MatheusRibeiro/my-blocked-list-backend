@@ -1,3 +1,4 @@
+import BadRequestError from '@src/Domain/Errors/BadRequestError'
 import Phone from './Phone'
 
 const validPhone1 = '+55 9876-5432'
@@ -9,15 +10,14 @@ describe('Phone Value Object', () => {
         expect(phone.isValid()).toBeTruthy()
     })
     test('phone is invalid', () => {
-        const phone = new Phone('invalid')
-        expect(phone.isValid()).toBeFalsy()
+        const newPhone = (): Phone => new Phone('invalid')
+        expect(newPhone).toThrow(BadRequestError)
     })
     test('phone is equal', () => {
         const phone1 = new Phone(validPhone1)
         const phone2 = new Phone(validPhone1)
         expect(phone1.isEqual(phone2)).toBeTruthy()
     })
-
     test('phone is not equal', () => {
         const phone1 = new Phone(validPhone1)
         const phone2 = new Phone(validPhone2)

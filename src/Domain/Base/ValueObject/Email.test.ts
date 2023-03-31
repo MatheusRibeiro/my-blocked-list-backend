@@ -1,3 +1,4 @@
+import BadRequestError from '@src/Domain/Errors/BadRequestError'
 import Email from './Email'
 
 const validEmail1 = 'email1@gmail.com'
@@ -9,8 +10,8 @@ describe('Email Value Object', () => {
         expect(email.isValid()).toBeTruthy()
     })
     test('email is invalid', () => {
-        const email = new Email('invalid')
-        expect(email.isValid()).toBeFalsy()
+        const newEmail = (): Email => new Email('invalid')
+        expect(newEmail).toThrow(BadRequestError)
     })
     test('email is equal', () => {
         const email1 = new Email(validEmail1)
