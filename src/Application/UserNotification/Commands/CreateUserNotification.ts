@@ -4,11 +4,12 @@ import UUID from '@src/Domain/Base/ValueObject/UUID'
 import CreateUserNotificationUseCase, {
     CreateUserNotificationDTO,
 } from '@src/Domain/Aggregates/UserNotification/UseCases/CreateUserNotification'
+import { UserNotificatonPayload } from '@src/Domain/Aggregates/UserNotification/UserNotification'
 
 interface CreateUserNotificationRequestData {
     userId: string
     authorId: string
-    payload: object
+    payload: UserNotificatonPayload
     userNotificationType: string
 }
 

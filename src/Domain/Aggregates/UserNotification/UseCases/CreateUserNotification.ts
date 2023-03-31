@@ -4,14 +4,14 @@ import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
 import UserNotificationCreated from '../DomainEvents/UserNotificationCreated'
 import AbstractUserNotificationUseCase from '../Abstractions/UserNotificationUseCase'
 import IUserNotificationRepository from '../IUserNotificationRepository'
-import UserNotification from '../UserNotification'
+import UserNotification, { UserNotificatonPayload } from '../UserNotification'
 import UserNotificationType from '../ValueObjects/UserNotificationType'
 
 export interface CreateUserNotificationDTO {
     userNotificationType: string
     userId: UUID
     authorId: UUID
-    payload: object
+    payload: UserNotificatonPayload
 }
 
 type CreateUserNotificationEvents = UserNotificationCreated

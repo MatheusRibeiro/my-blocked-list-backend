@@ -1,14 +1,23 @@
 import Entity from '../../Base/Abstractions/Entity'
+import { ComplaintJson } from '../Contact/Complaint/Complaint'
+import { ContactJson } from '../Contact/Contact'
 import UserId from '../User/ValueObjects/UserId'
 import UserNotificationId from './ValueObjects/UserNotificationId'
 import UserNotificationType from './ValueObjects/UserNotificationType'
+interface ComplaintPayload extends ComplaintJson {}
+interface ContactPayload extends ContactJson {}
+
+export interface UserNotificatonPayload {
+    complaint: ComplaintPayload
+    contact: ContactPayload
+}
 
 export interface UserNotificationJson {
     id: string
     user: { id: string }
     author: { id: string }
     type: string
-    payload: object
+    payload: UserNotificatonPayload
     isRead: boolean
 }
 
@@ -17,7 +26,7 @@ export default class UserNotification extends Entity {
     public userId: UserId
     public authorId: UserId
     public userNotificationType: UserNotificationType
-    public payload: object
+    public payload: UserNotificatonPayload
     public readAt: Date | undefined
 
     constructor(
@@ -25,7 +34,7 @@ export default class UserNotification extends Entity {
         userId: UserId,
         authorId: UserId,
         userNotificationType: UserNotificationType,
-        payload: object
+        payload: UserNotificatonPayload
     ) {
         super()
         this.userNotificationId = userNotificationId
