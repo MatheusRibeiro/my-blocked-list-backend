@@ -4,11 +4,11 @@ Feature: Report Contact
   So other users can find out about it
 
   Scenario: Reporting phone contact
-    Given I report a phone contact
+    Given Someone reports a phone contact
     When I search for the phone contact
-    Then The reported contact is found
+    Then The reported phone contact is found
 
   Scenario: Reporting email contact
-    Given I report an email contact
+    Given Someone reports an email contact
     When I search for the email contact
-    Then The reported contact is found
+    Then The reported email contact is found

@@ -3,12 +3,12 @@ Feature: Receive notification about watched contact
   I want to receive notifications about contacts that I watched
   So I can be proactively warned about them
 
-  Scenario: Reporting phone contact
-    Given Someone reports a phone contact
-    When I search for the phone contact
-    Then The reported contact is found
+  Scenario: Subscribe for phone contact
+    Given I subscribe for notifications about a phone contact
+    When Someone reports the phone contact
+    Then I receive a notification about the phone complaint
 
-  Scenario: Reporting email contact
-    Given Someone reports an email contact
-    When I search for the email contact
-    Then The reported contact is found
+  Scenario: Subscribe for email contact
+    Given I subscribe for notifications about a email contact
+    When Someone reports the email contact
+    Then I receive a notification about the email complaint
