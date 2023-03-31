@@ -12,7 +12,7 @@
     "test:coverage": "jest --coverage",
     "integration:app": "TZ=utc NODE_ENV=test NODE_PATH=./ cucumber-js --require-module ts-node/register --require-module tsconfig-paths/register --require 'features/support/**/*.ts'",
     "integration": "yarn integration:app features",
-    "integration:coverage": "nyc --report-dir integration-coverage --all --include \"src/**/*.ts\" yarn integration",
+    "integration:coverage": "nyc --report-dir integration-coverage --all --include \"src/Domain/**/*.ts\" --exclude \"src/Domain/Errors/*.ts\" --include \"src/Application/**/*.ts\" yarn integration",
     "test:full": "yarn test && yarn integration",
     "coverage": "nyc yarn test:full --include \"src/**/*.ts\" --all",
     "validate": "eslint . && jest --coverage",
