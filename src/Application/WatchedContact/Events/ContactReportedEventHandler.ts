@@ -36,7 +36,6 @@ export default class ContactReportedEventHandler implements IEventHandler {
             payload: event.getPayload(),
             userNotificationType: event.constructor.name,
         }
-        console.log({ notification })
         const promises = watchedContact.userIds.map(async userId => {
             return await this.createUserNotification.execute(
                 Object.assign({ userId: userId.toJSON() }, notification),
