@@ -17,6 +17,7 @@ const remote: IAuthSettings = {
 }
 
 const envs = {
+    test: local,
     development: local,
     qa: remote,
     rc: remote,

@@ -10,10 +10,13 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "integration:app": "TZ=utc NODE_ENV=test NODE_PATH=./ cucumber-js --require-module ts-node/register --require-module tsconfig-paths/register --require 'features/support/**/*.ts'",
+    "integration": "yarn integration:app features",
     "validate": "eslint . && jest --coverage",
     "build": "tsc -p tsconfig.prod.json"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^9.1.0",
     "@types/express": "^4.17.14",
     "@types/jest": "^29.4.0",
     "@types/jsonwebtoken": "^9.0.1",

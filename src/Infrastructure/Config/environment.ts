@@ -1,4 +1,4 @@
-export type Environment = 'development' | 'qa' | 'rc' | 'production'
+export type Environment = 'test' | 'development' | 'qa' | 'rc' | 'production'
 
 export function readEnvAsString(name: string, defaultValue = ''): string {
     const value = process.env[name]

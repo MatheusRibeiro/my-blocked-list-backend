@@ -13,6 +13,7 @@ const remote: IApiSettings = {
 }
 
 const envs = {
+    test: local,
     development: local,
     qa: remote,
     rc: remote,
