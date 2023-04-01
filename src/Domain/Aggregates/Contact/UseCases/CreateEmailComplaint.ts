@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import Audit from '@src/Domain/Base/Audit'
-import Email from '@src/Domain/Base/ValueObject/Email'
+import Email from '@src/Domain/Base/Types/Email'
 import { complaintFactoryWithoutId } from '../Complaint/ComplaintFactory'
 import { contactFactoryWithoutId } from '../ContactFactory'
 import ContactCreated from '../DomainEvents/ContactCreated'

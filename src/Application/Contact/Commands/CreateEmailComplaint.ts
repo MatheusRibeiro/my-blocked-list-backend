@@ -3,7 +3,7 @@ import CreateEmailComplaintUseCase, {
     CreateEmailComplaintDTO,
 } from '@src/Domain/Aggregates/Contact/UseCases/CreateEmailComplaint'
 import ContactCommand from '../AbstractContactCommand'
-import Email from '@src/Domain/Base/ValueObject/Email'
+import { assertIsEmail } from '@src/Domain/Base/Types/Email'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 
@@ -18,10 +18,12 @@ interface CreateEmailComplaintRequest {
 }
 
 function mapper(input: CreateEmailComplaintRequest): CreateEmailComplaintDTO {
+    assertIsEmail(input.email)
+
     return {
         personName: new PersonName({ firstName: input.firstName, lastName: input.lastName }),
         description: input.description,
-        email: new Email(input.email),
+        email: input.email,
         complaintCategory: input.complaintCategory,
         complaintSeverity: input.complaintSeverity,
         authorId: new UUID(input.authorId),

@@ -2,9 +2,9 @@ import { container, inject, injectable } from 'tsyringe'
 import IEventHandler from '@src/Application/Base/EventDispatcher/IEventHandler'
 import ContactReported from '@src/Domain/Aggregates/Contact/DomainEvents/ContactReported'
 import IWatchedContactRepository from '@src/Domain/Aggregates/WatchedContact/IWatchedContactRepository'
-import Email from '@src/Domain/Base/ValueObject/Email'
+import { assertIsEmail } from '@src/Domain/Base/Types/Email'
 import CreateUserNotificationCommand from '@src/Application/UserNotification/Commands/CreateUserNotification'
-import Phone from '@src/Domain/Base/ValueObject/Phone'
+import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
 import WatchedContact from '@src/Domain/Aggregates/WatchedContact/WatchedContact'
 
 interface GetWatchedContactParams {
@@ -51,10 +51,12 @@ export default class ContactReportedEventHandler implements IEventHandler {
         contactValue,
     }: GetWatchedContactParams): Promise<WatchedContact | null> {
         if (contactType === 'PhoneAccount') {
-            return await this.repository.findByPhone(new Phone(contactValue))
+            assertIsPhone(contactValue)
+            return await this.repository.findByPhone(contactValue)
         }
         if (contactType === 'EmailAccount') {
-            return await this.repository.findByEmail(new Email(contactValue))
+            assertIsEmail(contactValue)
+            return await this.repository.findByEmail(contactValue)
         }
 
         return null

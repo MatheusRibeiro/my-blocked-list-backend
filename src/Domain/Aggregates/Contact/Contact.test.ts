@@ -4,13 +4,18 @@ import PhoneAccount from './ValueObjects/PhoneAccount'
 import EmailAccount from './ValueObjects/EmailAccount'
 import ComplaintDescription from './Complaint/ValueObjects/ComplaintDescription'
 import ComplaintType from './Complaint/ValueObjects/ComplaintType'
-import Email from '@src/Domain/Base/ValueObject/Email'
-import Phone from '@src/Domain/Base/ValueObject/Phone'
+import { assertIsEmail } from '@src/Domain/Base/Types/Email'
+import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
 
-const validPhone = new PhoneAccount(new Phone('+55 9876-5432'))
-const validEmail = new EmailAccount(new Email('email1@gmail.com'))
+const phone = '+55 9876-5432'
+assertIsPhone(phone)
+const validPhone = new PhoneAccount(phone)
+
+const email = 'email1@gmail.com'
+assertIsEmail(email)
+const validEmail = new EmailAccount(email)
 const validPersonName = new PersonName({ firstName: 'John', lastName: 'Doe' })
 const validUuid = uuidFactory()
 

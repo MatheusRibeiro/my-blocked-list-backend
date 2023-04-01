@@ -3,15 +3,16 @@ import WatchPhoneContactUseCase, {
     WatchPhoneContactDTO,
 } from '@src/Domain/Aggregates/WatchedContact/UseCases/WatchPhoneContact'
 import WatchedContactCommand from '../AbstractWatchedContactCommand'
-import Phone from '@src/Domain/Base/ValueObject/Phone'
+import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
 
 interface WatchPhoneContactRequestData {
     phone: string
 }
 
 function mapper(input: WatchPhoneContactRequestData): WatchPhoneContactDTO {
+    assertIsPhone(input.phone)
     return {
-        phone: new Phone(input.phone),
+        phone: input.phone,
     }
 }
 

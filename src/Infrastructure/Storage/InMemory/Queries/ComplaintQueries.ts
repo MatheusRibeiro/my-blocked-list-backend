@@ -9,14 +9,15 @@ import dbContext from '../DbContext'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
 import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccount'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
-import Phone from '@src/Domain/Base/ValueObject/Phone'
+import Phone, { assertIsPhone } from '@src/Domain/Base/Types/Phone'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 import EmailAccount from '@src/Domain/Aggregates/Contact/ValueObjects/EmailAccount'
-import Email from '@src/Domain/Base/ValueObject/Email'
+import Email, { assertIsEmail } from '@src/Domain/Base/Types/Email'
 
 export default class ComplaintInMemoryQueries extends InMemoryQuery implements IComplaintQueries {
     async getComplaintsFromPhone({ phone }: GetComplaintsFromPhoneQuery): Promise<ComplaintViewModel[]> {
-        const contact = this.getContactByPhone(new Phone(phone))
+        assertIsPhone(phone)
+        const contact = this.getContactByPhone(phone)
         if (contact === null) {
             throw new NotFoundError('Contact not found')
         }
@@ -39,7 +40,8 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
     }
 
     async getComplaintsFromEmail({ email }: GetComplaintsFromEmailQuery): Promise<ComplaintViewModel[]> {
-        const contact = this.getContactByEmail(new Email(email))
+        assertIsEmail(email)
+        const contact = this.getContactByEmail(email)
         if (contact === null) {
             throw new NotFoundError('Contact not found')
         }
