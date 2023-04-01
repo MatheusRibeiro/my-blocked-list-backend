@@ -1,5 +1,5 @@
 import Audit from '../Audit'
-import UUID, { uuidFactory } from '../ValueObject/UUID'
+import UUID, { uuidFactory } from '../Types/UUID'
 
 export default abstract class DomainEvent {
     public readonly eventId: UUID
@@ -15,7 +15,7 @@ export default abstract class DomainEvent {
 
     public toJSON(): object {
         return {
-            id: this.eventId.toJSON(),
+            id: this.eventId,
             name: this.constructor.name,
             payload: this.getPayload(),
             audit: this.audit.toJSON(),

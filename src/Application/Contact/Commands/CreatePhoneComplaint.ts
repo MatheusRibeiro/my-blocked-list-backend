@@ -3,9 +3,9 @@ import CreatePhoneComplaintUseCase, {
     CreatePhoneComplaintDTO,
 } from '@src/Domain/Aggregates/Contact/UseCases/CreatePhoneComplaint'
 import ContactCommand from '../AbstractContactCommand'
+import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
-import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 interface CreatePhoneComplaintRequestData {
     firstName: string
@@ -18,6 +18,7 @@ interface CreatePhoneComplaintRequestData {
 }
 
 function mapper(input: CreatePhoneComplaintRequestData): CreatePhoneComplaintDTO {
+    assertIsUUID(input.authorId)
     assertIsPhone(input.phone)
     return {
         personName: new PersonName({ firstName: input.firstName, lastName: input.lastName }),
@@ -25,7 +26,7 @@ function mapper(input: CreatePhoneComplaintRequestData): CreatePhoneComplaintDTO
         phone: input.phone,
         complaintCategory: input.complaintCategory,
         complaintSeverity: input.complaintSeverity,
-        authorId: new UUID(input.authorId),
+        authorId: input.authorId,
     }
 }
 

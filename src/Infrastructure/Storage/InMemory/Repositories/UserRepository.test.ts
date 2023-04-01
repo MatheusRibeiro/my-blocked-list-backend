@@ -1,15 +1,14 @@
 import User from '@src/Domain/Aggregates/User/User'
 import Password from '@src/Domain/Aggregates/User/ValueObjects/Password'
-import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 import Username from '@src/Domain/Aggregates/User/ValueObjects/Username'
-import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import UserInMemoryRepository from './UserRepository'
 
 describe('User In Memory Repository', () => {
     const repo = new UserInMemoryRepository()
 
-    const firstUser = new User(new UserId(uuidFactory().value), new Username('username'), new Password('1234'))
-    const anotherUser = new User(new UserId(uuidFactory().value), new Username('username2'), new Password('4321'))
+    const firstUser = new User(uuidFactory(), new Username('username'), new Password('1234'))
+    const anotherUser = new User(uuidFactory(), new Username('username2'), new Password('4321'))
 
     test('create', async () => {
         await repo.create(firstUser)

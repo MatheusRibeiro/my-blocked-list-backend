@@ -5,10 +5,9 @@ import type IAuthenticationService from './IAuthenticationService'
 import type { RegisterRequest, LoginRequest, UserTokenDetails } from './IAuthenticationService'
 import type AuthenticationResponse from './IAuthenticationResponse'
 import User from '@src/Domain/Aggregates/User/User'
-import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 import Username from '@src/Domain/Aggregates/User/ValueObjects/Username'
 import Password from '@src/Domain/Aggregates/User/ValueObjects/Password'
-import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import ConflictError from '@src/Domain/Errors/ConflictError'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
 
@@ -36,13 +35,13 @@ export default class AuthenticationService implements IAuthenticationService {
             throw new ConflictError(usernameAlreadyTakenMessage)
         }
 
-        const userId = new UserId(uuidFactory().value)
+        const userId = uuidFactory()
         const user = new User(userId, newUsername, new Password(password))
         await this.userRepository.create(user)
 
-        const token = this.jwtTokenGenerator.generateToken(userId?.value, username)
+        const token = this.jwtTokenGenerator.generateToken(userId, username)
 
-        return { id: userId.value, username, token }
+        return { id: userId, username, token }
     }
 
     public async login(loginRequest: LoginRequest): Promise<AuthenticationResponse> {
@@ -56,7 +55,7 @@ export default class AuthenticationService implements IAuthenticationService {
         if (!user.password.isEqual(new Password(password))) {
             throw new NotFoundError(invalidCredentialsMessage)
         }
-        const id = user.userId.value
+        const id = user.userId
         const token = this.jwtTokenGenerator.generateToken(id, username)
 
         return { id, username, token }

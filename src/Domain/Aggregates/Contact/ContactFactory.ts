@@ -1,7 +1,7 @@
 import Contact from './Contact'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 import contactAccountFactory from './ValueObjects/contactAccountFactory'
-import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import UUID, { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import Phone from '@src/Domain/Base/Types/Phone'
 import Email from '@src/Domain/Base/Types/Email'
 

@@ -3,15 +3,17 @@ import UserNotificationCommand from '../AbstrctUserNotificationCommand'
 import DeleteUserNotificationUseCase, {
     DeleteUserNotificationDTO,
 } from '@src/Domain/Aggregates/UserNotification/UseCases/DeleteUserNotification'
-import UUID from '@src/Domain/Base/ValueObject/UUID'
+import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 
 interface DeleteUserNotificationRequestData {
     userNotificationId: string
 }
 
 function mapper(input: DeleteUserNotificationRequestData): DeleteUserNotificationDTO {
+    assertIsUUID(input.userNotificationId)
+
     return {
-        userNotificationId: new UUID(input.userNotificationId),
+        userNotificationId: input.userNotificationId,
     }
 }
 

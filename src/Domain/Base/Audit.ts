@@ -11,7 +11,7 @@ export default class Audit {
 
     public toJSON(): object {
         return {
-            who: this.who.toJSON(),
+            who: this.who,
             when: this.when.getTime(),
         }
     }

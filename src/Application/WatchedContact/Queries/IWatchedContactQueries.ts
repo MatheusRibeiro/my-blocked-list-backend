@@ -1,5 +1,7 @@
+import UUID from '@src/Domain/Base/Types/UUID'
+
 export interface WatchedContactViewModel {
-    watched_contact_id: string
+    watched_contact_id: UUID
     contact: object
 }
 export interface GetWatchedAccountsQuery {

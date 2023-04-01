@@ -32,15 +32,12 @@ export default class ContactReportedEventHandler implements IEventHandler {
             return null
         }
         const notification = {
-            authorId: event.audit.who.toJSON(),
+            authorId: event.audit.who,
             payload: event.getPayload(),
             userNotificationType: event.constructor.name,
         }
         const promises = watchedContact.userIds.map(async userId => {
-            return await this.createUserNotification.execute(
-                Object.assign({ userId: userId.toJSON() }, notification),
-                event.audit.who.toJSON()
-            )
+            return await this.createUserNotification.execute(Object.assign({ userId }, notification), event.audit.who)
         })
         await Promise.all(promises)
         return null

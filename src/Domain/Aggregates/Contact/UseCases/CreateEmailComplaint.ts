@@ -8,7 +8,7 @@ import ContactReported from '../DomainEvents/ContactReported'
 import AbstractContactUseCase from '../Abstractions/ContactUseCase'
 import IContactRepository from '../IContactRepository'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
-import UUID from '@src/Domain/Base/ValueObject/UUID'
+import UUID from '@src/Domain/Base/Types/UUID'
 
 export interface CreateEmailComplaintDTO {
     personName: PersonName

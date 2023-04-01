@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import BadRequestError from '@src/Domain/Errors/BadRequestError'
 
 type UUID = string & { __type: 'UUID' }
@@ -12,6 +13,12 @@ export function assertIsUUID(uuid: string): asserts uuid is UUID {
     if (!isUUID(uuid)) {
         throw new BadRequestError(`${uuid} is not a valid uuid value`)
     }
+}
+
+export function uuidFactory(): UUID {
+    const uuid = uuidv4()
+    assertIsUUID(uuid)
+    return uuid
 }
 
 export default UUID

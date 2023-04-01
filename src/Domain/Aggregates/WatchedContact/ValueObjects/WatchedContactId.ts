@@ -1,3 +1,4 @@
-import UUID from '../../../Base/ValueObject/UUID'
+import UUID from '@src/Domain/Base/Types/UUID'
 
-export default class WatchedContactId extends UUID {}
+type WatchedContactId = UUID
+export default WatchedContactId

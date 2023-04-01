@@ -5,7 +5,7 @@ import { Given, When, Then } from '@cucumber/cucumber'
 import { expect } from 'expect'
 import CreatePhoneComplaintCommand from '@src/Application/Contact/Commands/CreatePhoneComplaint'
 import CreateEmailComplaintCommand from '@src/Application/Contact/Commands/CreateEmailComplaint'
-import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import ComplaintInMemoryQueries from '@src/Infrastructure/Storage/InMemory/Queries/ComplaintQueries'
 import { ComplaintViewModel } from '@src/Application/Contact/Queries/IComplaintQueries'
 
@@ -24,8 +24,8 @@ const createEmailComplaintCommand = container.resolve(CreateEmailComplaintComman
 const createPhoneComplaintCommand = container.resolve(CreatePhoneComplaintCommand)
 
 const world: World = {
-    myUserId: uuidFactory().value,
-    otherUserId: uuidFactory().value,
+    myUserId: uuidFactory(),
+    otherUserId: uuidFactory(),
     phone: '+55 9123-7654',
     phoneDescription: 'any phone complaint description',
     email: 'myothertest@gmail.com',

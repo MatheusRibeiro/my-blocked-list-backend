@@ -3,7 +3,7 @@ import RemovePhoneComplaintUseCase, {
     RemoveComplaintDTO,
 } from '@src/Domain/Aggregates/Contact/UseCases/RemovePhoneComplaint'
 import ContactCommand from '../AbstractContactCommand'
-import UUID from '@src/Domain/Base/ValueObject/UUID'
+import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 
 export interface RemoveComplaintRequest {
     contactId: string
@@ -11,10 +11,14 @@ export interface RemoveComplaintRequest {
     userId: string
 }
 function map(input: RemoveComplaintRequest): RemoveComplaintDTO {
+    assertIsUUID(input.contactId)
+    assertIsUUID(input.complaintId)
+    assertIsUUID(input.userId)
+
     return {
-        contactId: new UUID(input.contactId),
-        complaintId: new UUID(input.complaintId),
-        userId: new UUID(input.userId),
+        contactId: input.contactId,
+        complaintId: input.complaintId,
+        userId: input.userId,
     }
 }
 

@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import Audit from '@src/Domain/Base/Audit'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
-import UUID from '@src/Domain/Base/ValueObject/UUID'
+import UUID from '@src/Domain/Base/Types/UUID'
 import UserNotificationDeleted from '../DomainEvents/UserNotificationDeleted'
 import AbstractUserNotificationUseCase from '../Abstractions/UserNotificationUseCase'
 import IUserNotificationRepository from '../IUserNotificationRepository'
@@ -27,7 +27,7 @@ export default class DeleteUserNotificationUseCase extends AbstractUserNotificat
         if (notification === null) {
             throw new NotFoundError(notFoundMessage)
         }
-        if (!notification.userId.isEqual(audit.who)) {
+        if (notification.userId !== audit.who) {
             throw new NotFoundError(notFoundMessage)
         }
         await this.repository.delete(notification)

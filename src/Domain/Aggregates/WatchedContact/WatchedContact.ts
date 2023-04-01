@@ -1,12 +1,13 @@
+import UUID from '@src/Domain/Base/Types/UUID'
 import Entity from '../../Base/Abstractions/Entity'
 import UserId from '../User/ValueObjects/UserId'
 import ContactAccount from './ValueObjects/ContactAccount'
 import WatchedContactId from './ValueObjects/WatchedContactId'
 
 export interface WatchedContactJson {
-    id: string
+    id: UUID
     contact: object
-    users: Array<{ id: string }>
+    users: Array<{ id: UUID }>
 }
 
 export default class WatchedContact extends Entity {
@@ -30,12 +31,12 @@ export default class WatchedContact extends Entity {
     }
 
     public isEqual(entity: WatchedContact): boolean {
-        return this.watchedContactId.isEqual(entity.watchedContactId)
+        return this.watchedContactId === entity.watchedContactId
     }
 
     public addUser(userId: UserId): void {
         for (const addedUserId of this.userIds) {
-            if (addedUserId.isEqual(userId)) return
+            if (addedUserId === userId) return
         }
         this.userIds.push(userId)
     }
@@ -43,7 +44,7 @@ export default class WatchedContact extends Entity {
     public removeUser(userId: UserId): UserId | null {
         for (let i = 0; i < this.userIds.length; i++) {
             const current = this.userIds[i]
-            const shouldBeRemoved = current.isEqual(userId)
+            const shouldBeRemoved = current === userId
             if (shouldBeRemoved) {
                 this.userIds.splice(i, 1)
                 return current
@@ -54,10 +55,10 @@ export default class WatchedContact extends Entity {
 
     public toJSON(): WatchedContactJson {
         return {
-            id: this.watchedContactId.toJSON(),
+            id: this.watchedContactId,
             contact: this.contactAccount.toJSON(),
             users: this.userIds.map(userId => {
-                return { id: userId.toJSON() }
+                return { id: userId }
             }),
         }
     }

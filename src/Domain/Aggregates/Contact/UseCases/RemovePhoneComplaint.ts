@@ -5,7 +5,7 @@ import ComplaintRemoved from '../DomainEvents/ComplaintRemoved'
 import AbstractContactUseCase from '../Abstractions/ContactUseCase'
 import IContactRepository from '../IContactRepository'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
-import UUID from '@src/Domain/Base/ValueObject/UUID'
+import UUID from '@src/Domain/Base/Types/UUID'
 
 export interface RemoveComplaintDTO {
     contactId: UUID

@@ -7,7 +7,7 @@ import ComplaintType from './Complaint/ValueObjects/ComplaintType'
 import { assertIsEmail } from '@src/Domain/Base/Types/Email'
 import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
-import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import { uuidFactory } from '@src/Domain/Base/Types/UUID'
 
 const phone = '+55 9876-5432'
 assertIsPhone(phone)
@@ -30,7 +30,7 @@ describe('get Id', () => {
     test('should return the contact id', () => {
         const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
 
-        expect(contact.getId().isEqual(validUuid)).toBeTruthy()
+        expect(contact.getId()).toBe(validUuid)
     })
 })
 
@@ -59,7 +59,7 @@ describe('validate', () => {
 describe('is Equal', () => {
     test('should be equal when have the same id', () => {
         const initId = uuidFactory()
-        const copyId = new UUID(initId.value)
+        const copyId = initId
 
         const contact1 = new Contact(initId, new PersonName({ firstName: 'John', lastName: '' }), validPhone, [
             validComplaint,

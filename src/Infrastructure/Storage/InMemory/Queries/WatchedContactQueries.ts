@@ -5,7 +5,7 @@ import IWatchedContactQueries, {
 import WatchedContact from '@src/Domain/Aggregates/WatchedContact/WatchedContact'
 import InMemoryQuery from './InMemoryQuery'
 import dbContext from '../DbContext'
-import UUID from '@src/Domain/Base/ValueObject/UUID'
+import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 
 export default class WatchedContactInMemoryQueries extends InMemoryQuery implements IWatchedContactQueries {
     async getWatchedAccounts({ userId }: GetWatchedAccountsQuery): Promise<WatchedContactViewModel[]> {
@@ -24,13 +24,13 @@ export default class WatchedContactInMemoryQueries extends InMemoryQuery impleme
     }
 
     private getWatchedContactAccountsByUser(userId: string): WatchedContact[] {
+        assertIsUUID(userId)
         const repositoryName = this.repositoryNames.WatchedContact
-        const userUuid = new UUID(userId)
         const accountsBeenWatchedByUser: WatchedContact[] = []
         for (let i = 0; i < dbContext[repositoryName].length; i++) {
             const watching = (dbContext[repositoryName][i] as WatchedContact).userIds
             for (let j = 0; j < watching.length; j++) {
-                if (watching[j].isEqual(userUuid)) {
+                if (watching[j] === userId) {
                     accountsBeenWatchedByUser.push(dbContext[repositoryName][i] as WatchedContact)
                 }
             }
@@ -48,7 +48,7 @@ export default class WatchedContactInMemoryQueries extends InMemoryQuery impleme
 
     private toViewModel(watchedContact: WatchedContact): WatchedContactViewModel {
         return {
-            watched_contact_id: watchedContact.watchedContactId.toJSON(),
+            watched_contact_id: watchedContact.watchedContactId,
             contact: watchedContact.contactAccount.toJSON(),
         }
     }

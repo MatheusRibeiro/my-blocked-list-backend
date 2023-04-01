@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import Audit from '@src/Domain/Base/Audit'
-import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import UUID, { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import UserNotificationCreated from '../DomainEvents/UserNotificationCreated'
 import AbstractUserNotificationUseCase from '../Abstractions/UserNotificationUseCase'
 import IUserNotificationRepository from '../IUserNotificationRepository'

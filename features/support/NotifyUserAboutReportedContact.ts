@@ -7,7 +7,7 @@ import WatchEmaiContactCommand from '@src/Application/WatchedContact/Commands/Wa
 import WatchPhoneContactCommand from '@src/Application/WatchedContact/Commands/WatchPhoneContact'
 import CreatePhoneComplaintCommand from '@src/Application/Contact/Commands/CreatePhoneComplaint'
 import CreateEmailComplaintCommand from '@src/Application/Contact/Commands/CreateEmailComplaint'
-import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import UserNotificationInMemoryQueries from '@src/Infrastructure/Storage/InMemory/Queries/UserNotificationQueries'
 import { UserNotificationViewModel } from '@src/Application/UserNotification/Queries/IUserNotificationQueries'
 interface World {
@@ -30,8 +30,8 @@ const world: World = {
     phoneDescription: 'Phone complaint for behaviour test',
     email: 'mytest@gmail.com',
     emailDescription: 'Email complaint for behaviour test',
-    myUserId: uuidFactory().value,
-    otherUserId: uuidFactory().value,
+    myUserId: uuidFactory(),
+    otherUserId: uuidFactory(),
 }
 
 Given('I subscribe for notifications about a phone contact', async () => {

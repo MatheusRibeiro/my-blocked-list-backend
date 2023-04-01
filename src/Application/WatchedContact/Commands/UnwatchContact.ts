@@ -1,15 +1,17 @@
 import { container } from 'tsyringe'
 import WatchedContactCommand from '../AbstractWatchedContactCommand'
 import UnwatchContactUseCase, { UnwatchContactDTO } from '@src/Domain/Aggregates/WatchedContact/UseCases/UnwatchContact'
-import UUID from '@src/Domain/Base/ValueObject/UUID'
+import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 
 interface UnwatchContactRequestData {
     watchedContactId: string
 }
 
 function mapper(input: UnwatchContactRequestData): UnwatchContactDTO {
+    assertIsUUID(input.watchedContactId)
+
     return {
-        watchedContactId: new UUID(input.watchedContactId),
+        watchedContactId: input.watchedContactId,
     }
 }
 

@@ -1,4 +1,4 @@
-import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import Complaint from './Complaint'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintType, { ComplaintCategory, ComplaintSeverity } from './ValueObjects/ComplaintType'
@@ -20,7 +20,7 @@ describe('get Id', () => {
             validAuthorId
         )
 
-        expect(complaint.getId().isEqual(validComplaintId)).toBeTruthy()
+        expect(complaint.getId()).toBe(validComplaintId)
     })
 })
 
@@ -74,7 +74,7 @@ describe('Is Valid', () => {
 describe('is Equal', () => {
     test('should be equal when have the same id', () => {
         const id = uuidFactory()
-        const sameId = new UUID(id.value)
+        const sameId = id
 
         const complaint = new Complaint(id, new ComplaintDescription('first'), complaintType, uuidFactory())
 

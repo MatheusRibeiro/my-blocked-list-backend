@@ -4,7 +4,7 @@ import Phone from '@src/Domain/Base/Types/Phone'
 import AbstractWatchedContactUseCase from '../Abstractions/WatchedContactUseCase'
 import IWatchedContactRepository from '../IWatchedContactRepository'
 import WatchedContact from '../WatchedContact'
-import { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import PhoneAccount from '../../Contact/ValueObjects/PhoneAccount'
 import UserWatchedContact from '../DomainEvents/UserWatchedContact'
 import WatchedContactCreated from '../DomainEvents/WatchedContactCreated'
@@ -35,7 +35,7 @@ export default class WatchPhoneContactUseCase extends AbstractWatchedContactUseC
         if (isANewWatchedContact) events.push(new WatchedContactCreated(watchedContact.toJSON(), audit))
 
         watchedContact.addUser(audit.who)
-        events.push(new UserWatchedContact(audit.who.toJSON(), watchedContact.toJSON(), audit))
+        events.push(new UserWatchedContact(audit.who, watchedContact.toJSON(), audit))
 
         isANewWatchedContact
             ? await this.repository.create(watchedContact)

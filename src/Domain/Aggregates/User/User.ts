@@ -24,12 +24,12 @@ export default class User extends Entity {
     }
 
     public isEqual(entity: User): boolean {
-        return this.userId.isEqual(entity.userId)
+        return this.userId === entity.userId
     }
 
     public toJSON(): object {
         return {
-            id: this.userId.toJSON(),
+            id: this.userId,
             username: this.username.toJSON(),
         }
     }

@@ -1,9 +1,10 @@
 import { UserNotificatonPayload } from '@src/Domain/Aggregates/UserNotification/UserNotification'
+import UUID from '@src/Domain/Base/Types/UUID'
 
 export interface UserNotificationViewModel {
-    id: string
+    id: UUID
     type: string
-    author: { id: string }
+    author: { id: UUID }
     payload: UserNotificatonPayload
     isRead: boolean
 }

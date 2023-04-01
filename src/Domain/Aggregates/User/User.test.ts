@@ -1,4 +1,4 @@
-import UUID, { uuidFactory } from '../../Base/ValueObject/UUID'
+import { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import User from './User'
 import Password from './ValueObjects/Password'
 import Username from './ValueObjects/Username'
@@ -10,8 +10,7 @@ const validPassword = new Password('123456')
 describe('get Id', () => {
     test('should return the userId', () => {
         const user = new User(validUuid, validUsername, validPassword)
-
-        expect(user.getId().isEqual(validUuid)).toBeTruthy()
+        expect(user.getId()).toBe(validUuid)
     })
 })
 
@@ -36,7 +35,7 @@ describe('is valid', () => {
 describe('is Equal', () => {
     test('should be equal when have the same id', () => {
         const id = uuidFactory()
-        const sameId = new UUID(id.value)
+        const sameId = id
 
         const user = new User(id, new Username('first_one'), new Password('1234'))
         const sameIdUser = new User(sameId, new Username('second_one'), new Password('5678'))

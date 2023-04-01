@@ -10,7 +10,7 @@ import Contact from '@src/Domain/Aggregates/Contact/Contact'
 import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccount'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
 import Phone, { assertIsPhone } from '@src/Domain/Base/Types/Phone'
-import UUID from '@src/Domain/Base/ValueObject/UUID'
+import UUID from '@src/Domain/Base/Types/UUID'
 import EmailAccount from '@src/Domain/Aggregates/Contact/ValueObjects/EmailAccount'
 import Email, { assertIsEmail } from '@src/Domain/Base/Types/Email'
 
@@ -67,7 +67,7 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         const repositoryName = this.repositoryNames.Contact
         const result: Complaint[] = []
         for (let i = 0; i < dbContext[repositoryName].length; i++) {
-            if ((dbContext[repositoryName][i] as Contact).contactId.isEqual(contactId)) {
+            if ((dbContext[repositoryName][i] as Contact).contactId === contactId) {
                 return (dbContext[repositoryName][i] as Contact).complaints
             }
         }
@@ -76,11 +76,11 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
 
     private toViewModel(complaint: Complaint, contact: Contact): ComplaintViewModel {
         return {
-            id: complaint.complaintId.value,
+            id: complaint.complaintId,
             description: complaint.description.value,
             category: complaint.complaintType.value.complaintCategory,
             severity: complaint.complaintType.value.complaintSeverity,
-            contact: { id: contact.contactId.value },
+            contact: { id: contact.contactId },
         }
     }
 }

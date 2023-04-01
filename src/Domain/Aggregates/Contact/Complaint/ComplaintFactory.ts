@@ -1,5 +1,5 @@
 import Complaint from './Complaint'
-import UUID, { uuidFactory } from '@src/Domain/Base/ValueObject/UUID'
+import UUID, { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
 import ComplaintType from './ValueObjects/ComplaintType'
 import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
