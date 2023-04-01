@@ -30,7 +30,7 @@ export default class MarkUserNotificationAsReadUseCase extends AbstractUserNotif
         if (notification === null) {
             throw new NotFoundError(notFoundMessage)
         }
-        if (notification.userId === audit.who) {
+        if (notification.userId !== audit.who) {
             throw new NotFoundError(notFoundMessage)
         }
         notification.markAsRead()
