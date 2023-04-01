@@ -15,7 +15,7 @@ export default class ContactInMemoryRepository
     public async findByPhone(phone: Phone): Promise<Contact | null> {
         const phoneAccount = new PhoneAccount(phone)
         for (let i = 0; i < dbContext[this.tableName].length; i++) {
-            if ((dbContext[this.tableName][i] as Contact).account.isEqual(phoneAccount)) {
+            if ((dbContext[this.tableName][i] as Contact).getAccount().isEqual(phoneAccount)) {
                 return dbContext[this.tableName][i] as Contact
             }
         }
@@ -25,7 +25,7 @@ export default class ContactInMemoryRepository
     public async findByEmail(email: Email): Promise<Contact | null> {
         const emailAccount = new EmailAccount(email)
         for (let i = 0; i < dbContext[this.tableName].length; i++) {
-            if ((dbContext[this.tableName][i] as Contact).account.isEqual(emailAccount)) {
+            if ((dbContext[this.tableName][i] as Contact).getAccount().isEqual(emailAccount)) {
                 return dbContext[this.tableName][i] as Contact
             }
         }

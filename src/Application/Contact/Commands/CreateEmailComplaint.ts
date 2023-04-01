@@ -11,8 +11,8 @@ interface CreateEmailComplaintRequest {
     firstName: string
     lastName: string
     description: string
-    complaintCategory: number
-    complaintSeverity: number
+    complaintCategory: string
+    complaintSeverity: string
     email: string
     authorId: string
 }

@@ -7,15 +7,18 @@ import ComplaintType from './ValueObjects/ComplaintType'
 export interface ComplaintJson {
     id: string
     description: string
-    complaint_type: object
+    type: {
+        category: string
+        severity: string
+    }
     author: { id: string }
 }
 
 export default class Complaint extends Entity {
-    public complaintId: ComplaintId
-    public description: ComplaintDescription
-    public complaintType: ComplaintType
-    public authorId: UserId
+    protected readonly complaintId: ComplaintId
+    protected description: ComplaintDescription
+    protected complaintType: ComplaintType
+    protected readonly authorId: UserId
 
     constructor(
         complaintId: ComplaintId,
@@ -34,6 +37,14 @@ export default class Complaint extends Entity {
         return this.complaintId
     }
 
+    public getDescription(): string {
+        return this.description.value
+    }
+
+    public getType(): ComplaintType {
+        return this.complaintType
+    }
+
     public isValid(): boolean {
         return this.description.isValid() && this.complaintType.isValid()
     }
@@ -50,7 +61,7 @@ export default class Complaint extends Entity {
         return {
             id: this.complaintId,
             description: this.description.toJSON(),
-            complaint_type: this.complaintType.toJSON(),
+            type: this.complaintType.toJSON(),
             author: { id: this.authorId },
         }
     }

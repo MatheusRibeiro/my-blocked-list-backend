@@ -21,7 +21,7 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         if (contact === null) {
             throw new NotFoundError('Contact not found')
         }
-        const complaints = this.getComplaintsByContactId(contact.contactId)
+        const complaints = this.getComplaintsByContactId(contact.getId())
         if (complaints === null) {
             return []
         }
@@ -32,7 +32,7 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         const repositoryName = this.repositoryNames.Contact
         const phoneAccount = new PhoneAccount(phone)
         for (let i = 0; i < dbContext[repositoryName].length; i++) {
-            if ((dbContext[repositoryName][i] as Contact).account.isEqual(phoneAccount)) {
+            if ((dbContext[repositoryName][i] as Contact).getAccount().isEqual(phoneAccount)) {
                 return dbContext[repositoryName][i] as Contact
             }
         }
@@ -45,7 +45,7 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         if (contact === null) {
             throw new NotFoundError('Contact not found')
         }
-        const complaints = this.getComplaintsByContactId(contact.contactId)
+        const complaints = this.getComplaintsByContactId(contact.getId())
         if (complaints === null) {
             return []
         }
@@ -56,7 +56,7 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         const repositoryName = this.repositoryNames.Contact
         const emailAccount = new EmailAccount(email)
         for (let i = 0; i < dbContext[repositoryName].length; i++) {
-            if ((dbContext[repositoryName][i] as Contact).account.isEqual(emailAccount)) {
+            if ((dbContext[repositoryName][i] as Contact).getAccount().isEqual(emailAccount)) {
                 return dbContext[repositoryName][i] as Contact
             }
         }
@@ -67,8 +67,8 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         const repositoryName = this.repositoryNames.Contact
         const result: Complaint[] = []
         for (let i = 0; i < dbContext[repositoryName].length; i++) {
-            if ((dbContext[repositoryName][i] as Contact).contactId === contactId) {
-                return (dbContext[repositoryName][i] as Contact).complaints
+            if ((dbContext[repositoryName][i] as Contact).getId() === contactId) {
+                return (dbContext[repositoryName][i] as Contact).getComplaints()
             }
         }
         return result
@@ -76,11 +76,10 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
 
     private toViewModel(complaint: Complaint, contact: Contact): ComplaintViewModel {
         return {
-            id: complaint.complaintId,
-            description: complaint.description.value,
-            category: complaint.complaintType.value.complaintCategory,
-            severity: complaint.complaintType.value.complaintSeverity,
-            contact: { id: contact.contactId },
+            id: complaint.getId(),
+            description: complaint.getDescription(),
+            type: complaint.getType().toJSON(),
+            contact: { id: contact.getId() },
         }
     }
 }

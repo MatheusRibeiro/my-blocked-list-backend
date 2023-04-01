@@ -34,7 +34,10 @@ const payload: UserNotificatonPayload = {
     complaint: {
         id: uuidFactory(),
         description: 'Any complaint for behaviour test',
-        complaint_type: {},
+        type: {
+            category: 'HOAX',
+            severity: 'WARNING',
+        },
         author: { id: world.otherUserId },
     },
     contact: {

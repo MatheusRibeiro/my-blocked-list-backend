@@ -11,8 +11,8 @@ Authorization: Bearer {{token}}
     "lastName": "Doe",
     "phone": "+55 9123-4567",
     "description": "Any description",
-    "complaintCategory": 1,
-    "complaintSeverity": 3
+    "complaintCategory": "SCAM",
+    "complaintSeverity": "ALERT"
 }
 
 ###
@@ -25,8 +25,8 @@ Authorization: Bearer {{token}}
     "lastName": "Doe",
     "email": "mytest@gmail.com",
     "description": "Any description",
-    "complaintCategory": 2,
-    "complaintSeverity": 3
+    "complaintCategory": "SPAM",
+    "complaintSeverity": "NOTICE"
 }
 
 ###

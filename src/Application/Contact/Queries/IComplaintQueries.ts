@@ -3,8 +3,10 @@ import UUID from '@src/Domain/Base/Types/UUID'
 export interface ComplaintViewModel {
     id: UUID
     description: string
-    category: number
-    severity: number
+    type: {
+        category: string
+        severity: string
+    }
     contact: { id: UUID }
 }
 export interface GetComplaintsFromPhoneQuery {

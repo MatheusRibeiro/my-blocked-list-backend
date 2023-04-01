@@ -14,10 +14,10 @@ export interface ContactJson {
 }
 
 export default class Contact extends Entity {
-    public contactId: ContactId
-    public personName: PersonName
-    public account: ContactAccount<AccountType>
-    public complaints: Complaint[]
+    protected readonly contactId: ContactId
+    protected personName: PersonName
+    protected readonly account: ContactAccount<AccountType>
+    protected readonly complaints: Complaint[]
 
     constructor(
         contactId: ContactId,
@@ -52,7 +52,7 @@ export default class Contact extends Entity {
     public removeComplaint(complaintId: ComplaintId, userId: UserId): Complaint | null {
         for (let i = 0; i < this.complaints.length; i++) {
             const current = this.complaints[i]
-            const shouldBeRemoved = current.complaintId === complaintId
+            const shouldBeRemoved = current.getId() === complaintId
             const canBeRemoved = current.canBeRemovedBy(userId)
             if (shouldBeRemoved && canBeRemoved) {
                 this.complaints.splice(i, 1)
@@ -60,6 +60,14 @@ export default class Contact extends Entity {
             }
         }
         return null
+    }
+
+    public getAccount(): ContactAccount<AccountType> {
+        return this.account
+    }
+
+    public getComplaints(): Complaint[] {
+        return this.complaints
     }
 
     public toJSON(): ContactJson {

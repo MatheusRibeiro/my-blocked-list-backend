@@ -32,7 +32,7 @@ export default class UnwatchContactUseCase extends AbstractWatchedContactUseCase
         if (userIdRemoved === null) {
             throw new NotFoundError(notFoundMessage)
         }
-        events.push(new UserUnwatchedContact(userIdRemoved.toJSON(), watchedContact.toJSON(), audit))
+        events.push(new UserUnwatchedContact(userIdRemoved, watchedContact.toJSON(), audit))
 
         if (watchedContact.userIds.length === 0) {
             await this.repository.delete(watchedContact)

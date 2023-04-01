@@ -13,8 +13,8 @@ import UUID from '@src/Domain/Base/Types/UUID'
 export interface CreatePhoneComplaintDTO {
     personName: PersonName
     description: string
-    complaintCategory: number
-    complaintSeverity: number
+    complaintCategory: string
+    complaintSeverity: string
     phone: Phone
     authorId: UUID
 }

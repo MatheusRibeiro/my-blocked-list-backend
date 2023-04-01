@@ -36,7 +36,7 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
         }
         events.push(new ComplaintRemoved(complaintRemoved.toJSON(), contact.toJSON(), audit))
 
-        if (contact.complaints.length === 0) {
+        if (contact.getComplaints().length === 0) {
             await this.repository.delete(contact)
             events.push(new ContactRemoved(contact.toJSON(), audit))
         } else {
