@@ -1,4 +1,4 @@
-import Entity from '../../Base/Abstractions/Entity'
+import Entity from '@src/Domain/Base/Abstractions/Entity'
 import Password from './ValueObjects/Password'
 import UserId from './ValueObjects/UserId'
 import Username from './ValueObjects/Username'

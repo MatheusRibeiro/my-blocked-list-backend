@@ -1,4 +1,4 @@
-import BadRequestError from '../../Errors/BadRequestError'
+import BadRequestError from '@src/Domain/Errors/BadRequestError'
 import UUID from '../Types/UUID'
 
 export default abstract class Entity {

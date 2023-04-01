@@ -5,7 +5,7 @@ import AbstractWatchedContactUseCase from '../Abstractions/WatchedContactUseCase
 import IWatchedContactRepository from '../IWatchedContactRepository'
 import WatchedContact from '../WatchedContact'
 import { uuidFactory } from '@src/Domain/Base/Types/UUID'
-import PhoneAccount from '../../Contact/ValueObjects/PhoneAccount'
+import PhoneAccount from '../ValueObjects/PhoneAccount'
 import UserWatchedContact from '../DomainEvents/UserWatchedContact'
 import WatchedContactCreated from '../DomainEvents/WatchedContactCreated'
 

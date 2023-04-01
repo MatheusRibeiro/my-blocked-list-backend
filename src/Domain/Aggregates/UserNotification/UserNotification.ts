@@ -1,4 +1,4 @@
-import Entity from '../../Base/Abstractions/Entity'
+import Entity from '@src/Domain/Base/Abstractions/Entity'
 import { ComplaintJson } from '../Contact/Complaint/Complaint'
 import { ContactJson } from '../Contact/Contact'
 import UserId from '../User/ValueObjects/UserId'
