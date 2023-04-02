@@ -9,7 +9,6 @@ import AbstractContactUseCase from '../Abstractions/ContactUseCase'
 import IContactRepository from '../IContactRepository'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 import UUID from '@src/Domain/Base/Types/UUID'
-import BadRequestError from '@src/Domain/Errors/BadRequestError'
 
 export interface CreateEmailComplaintDTO {
     personName: PersonName
@@ -46,10 +45,7 @@ export default class CreateEmailComplaintUseCase extends AbstractContactUseCase<
         contact.addComplaint(complaint)
         events.push(new ContactReported(complaint.toJSON(), contact.toJSON(), audit))
 
-        if (!contact.isValid()) {
-            throw new BadRequestError('Invalid contact')
-        }
-
+        contact.validate()
         isANewContact ? await this.repository.create(contact) : await this.repository.update(contact)
         return events
     }
