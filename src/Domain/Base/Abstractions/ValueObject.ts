@@ -11,7 +11,5 @@ export default abstract class ValueObject<T> {
         return JSON.stringify(this.toJSON()) === JSON.stringify(other.toJSON())
     }
 
-    public toJSON(): object | number | string | boolean | null {
-        return null
-    }
+    abstract toJSON(): object | number | string | boolean
 }

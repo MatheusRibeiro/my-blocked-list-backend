@@ -6,4 +6,8 @@ export default class Password extends ValueObject<string> {
     public isValid(): boolean {
         return typeof this.value === 'string' && this.value.length >= MIN_LENGTH
     }
+
+    public toJSON(): string {
+        return '********'
+    }
 }
