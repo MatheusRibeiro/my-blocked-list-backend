@@ -22,7 +22,7 @@ const validUuid = uuidFactory()
 const validComplaint = new Complaint(
     uuidFactory(),
     new ComplaintDescription('valid description'),
-    new ComplaintType({ complaintCategory: 2, complaintSeverity: 3 }),
+    new ComplaintType({ complaintCategory: 'OTHER', complaintSeverity: 'CRITICAL' }),
     uuidFactory()
 )
 

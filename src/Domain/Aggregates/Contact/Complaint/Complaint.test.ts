@@ -1,11 +1,11 @@
 import { uuidFactory } from '@src/Domain/Base/Types/UUID'
 import Complaint from './Complaint'
 import ComplaintDescription from './ValueObjects/ComplaintDescription'
-import ComplaintType, { ComplaintCategory, ComplaintSeverity } from './ValueObjects/ComplaintType'
+import ComplaintType from './ValueObjects/ComplaintType'
 
 const complaintType = new ComplaintType({
-    complaintCategory: ComplaintCategory.SPAM,
-    complaintSeverity: ComplaintSeverity.ALERT,
+    complaintCategory: 'SPAM',
+    complaintSeverity: 'ALERT',
 })
 
 const validAuthorId = uuidFactory()
@@ -50,20 +50,6 @@ describe('Is Valid', () => {
             validComplaintId,
             new ComplaintDescription('a'.repeat(256)),
             complaintType,
-            validAuthorId
-        )
-
-        expect(complaint.isValid()).toBeFalsy()
-    })
-    test('is not valid with invalid Complaint Type', () => {
-        const invalidComplaintType = new ComplaintType({
-            complaintCategory: ComplaintCategory.HOAX,
-            complaintSeverity: 6,
-        })
-        const complaint = new Complaint(
-            validComplaintId,
-            new ComplaintDescription('description'),
-            invalidComplaintType,
             validAuthorId
         )
 
