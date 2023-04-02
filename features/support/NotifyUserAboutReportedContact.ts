@@ -55,6 +55,18 @@ When('Someone reports the phone contact', async () => {
         },
         world.otherUserId
     )
+    await createPhoneComplaintCommand.execute(
+        {
+            phone: world.phone,
+            firstName: 'John',
+            lastName: 'Doe',
+            complaintCategory: 'SCAM',
+            complaintSeverity: 'WARNING',
+            authorId: world.otherUserId,
+            description: `Another ${world.phoneDescription}`,
+        },
+        world.otherUserId
+    )
 })
 
 When('Someone reports the email contact', async () => {
@@ -70,32 +82,52 @@ When('Someone reports the email contact', async () => {
         },
         world.otherUserId
     )
+    await createEmailComplaintCommand.execute(
+        {
+            email: world.email,
+            firstName: 'Mary',
+            lastName: 'Doe',
+            complaintCategory: 'HOAX',
+            complaintSeverity: 'CRITICAL',
+            authorId: world.otherUserId,
+            description: `Another ${world.emailDescription}`,
+        },
+        world.otherUserId
+    )
 })
 
-Then('I receive a notification about the phone complaint', async () => {
+Then('I receive the notifications about the phone complaint', async () => {
     const userNotificationQueries = new UserNotificationInMemoryQueries()
     const notifications = await userNotificationQueries.getUserNotifications({ userId: world.myUserId })
     const accountNotifications = notifications.filter(notification =>
         isNotificationFromAccount(notification, 'PhoneAccount', world.phone)
     )
 
-    expect(accountNotifications.length).toBe(1)
-    const [notification] = accountNotifications
-    expect(notification.payload.complaint.author.id).toBe(world.otherUserId)
-    expect(notification.payload.complaint.description).toBe(world.phoneDescription)
+    expect(accountNotifications.length).toBe(2)
+    const [first, second] = accountNotifications
+
+    expect(first.payload.complaint.author.id).toBe(world.otherUserId)
+    expect(first.payload.complaint.description).toBe(world.phoneDescription)
+
+    expect(second.payload.complaint.author.id).toBe(world.otherUserId)
+    expect(second.payload.complaint.description).toBe(`Another ${world.phoneDescription}`)
 })
 
-Then('I receive a notification about the email complaint', async () => {
+Then('I receive the notifications about the email complaint', async () => {
     const userNotificationQueries = new UserNotificationInMemoryQueries()
     const notifications = await userNotificationQueries.getUserNotifications({ userId: world.myUserId })
     const accountNotifications = notifications.filter(notification =>
         isNotificationFromAccount(notification, 'EmailAccount', world.email)
     )
 
-    expect(accountNotifications.length).toBe(1)
-    const [notification] = accountNotifications
-    expect(notification.payload.complaint.author.id).toBe(world.otherUserId)
-    expect(notification.payload.complaint.description).toBe(world.emailDescription)
+    expect(accountNotifications.length).toBe(2)
+    const [first, second] = accountNotifications
+
+    expect(first.payload.complaint.author.id).toBe(world.otherUserId)
+    expect(first.payload.complaint.description).toBe(world.emailDescription)
+
+    expect(second.payload.complaint.author.id).toBe(world.otherUserId)
+    expect(second.payload.complaint.description).toBe(`Another ${world.emailDescription}`)
 })
 
 function isNotificationFromAccount(
