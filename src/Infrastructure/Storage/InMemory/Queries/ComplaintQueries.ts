@@ -8,7 +8,6 @@ import InMemoryQuery from './InMemoryQuery'
 import dbContext from '../DbContext'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
 import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccount'
-import NotFoundError from '@src/Domain/Errors/NotFoundError'
 import Phone, { assertIsPhone } from '@src/Domain/Base/Types/Phone'
 import UUID from '@src/Domain/Base/Types/UUID'
 import EmailAccount from '@src/Domain/Aggregates/Contact/ValueObjects/EmailAccount'
@@ -19,7 +18,7 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         assertIsPhone(phone)
         const contact = this.getContactByPhone(phone)
         if (contact === null) {
-            throw new NotFoundError('Contact not found')
+            return []
         }
         const complaints = this.getComplaintsByContactId(contact.getId())
         if (complaints === null) {
@@ -43,7 +42,7 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         assertIsEmail(email)
         const contact = this.getContactByEmail(email)
         if (contact === null) {
-            throw new NotFoundError('Contact not found')
+            return []
         }
         const complaints = this.getComplaintsByContactId(contact.getId())
         if (complaints === null) {

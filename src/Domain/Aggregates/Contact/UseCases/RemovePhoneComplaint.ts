@@ -4,7 +4,6 @@ import ContactRemoved from '../DomainEvents/ContactRemoved'
 import ComplaintRemoved from '../DomainEvents/ComplaintRemoved'
 import AbstractContactUseCase from '../Abstractions/ContactUseCase'
 import IContactRepository from '../IContactRepository'
-import NotFoundError from '@src/Domain/Errors/NotFoundError'
 import UUID from '@src/Domain/Base/Types/UUID'
 
 export interface RemoveComplaintDTO {
@@ -14,8 +13,6 @@ export interface RemoveComplaintDTO {
 }
 
 type RemoveComplaintEvents = ComplaintRemoved | ContactRemoved
-
-const notFoundMessage = 'Complaint was not found.'
 
 @injectable()
 export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<RemoveComplaintDTO> {
@@ -28,11 +25,11 @@ export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<
         const { contactId, complaintId, userId } = dto
         const contact = await this.repository.findById(contactId)
         if (contact === null) {
-            throw new NotFoundError(notFoundMessage)
+            return []
         }
         const complaintRemoved = contact.removeComplaint(complaintId, userId)
         if (complaintRemoved === null) {
-            throw new NotFoundError(notFoundMessage)
+            return []
         }
         events.push(new ComplaintRemoved(complaintRemoved.toJSON(), contact.toJSON(), audit))
 
