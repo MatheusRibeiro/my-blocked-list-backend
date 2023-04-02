@@ -19,11 +19,12 @@ const validEmail = new EmailAccount(email)
 const validPersonName = new PersonName({ firstName: 'John', lastName: 'Doe' })
 const validUuid = uuidFactory()
 
+const complaintAuthorId = uuidFactory()
 const validComplaint = new Complaint(
     uuidFactory(),
     new ComplaintDescription('valid description'),
     new ComplaintType({ complaintCategory: 'OTHER', complaintSeverity: 'CRITICAL' }),
-    uuidFactory()
+    complaintAuthorId
 )
 
 describe('get Id', () => {
@@ -83,5 +84,27 @@ describe('is Equal', () => {
         ])
 
         expect(contact1.isEqual(contact2)).toBeFalsy()
+    })
+})
+
+describe('Remove complaint', () => {
+    it('should return the removed complaint', () => {
+        const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
+        const removedComplaint = contact.removeComplaint(validComplaint.getId(), complaintAuthorId)
+        expect(removedComplaint === null).toBeFalsy()
+        expect(validComplaint.isEqual(removedComplaint as Complaint))
+        expect(contact.getComplaints().length).toBe(0)
+    })
+    it('should return null if the complaint was not found complaint', () => {
+        const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
+        const removedComplaint = contact.removeComplaint(uuidFactory(), complaintAuthorId)
+        expect(removedComplaint).toBeNull()
+        expect(contact.getComplaints().length).toBe(1)
+    })
+    it('should return null if the complaint was not from who is trying to remove it', () => {
+        const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
+        const removedComplaint = contact.removeComplaint(validComplaint.getId(), uuidFactory())
+        expect(removedComplaint).toBeNull()
+        expect(contact.getComplaints().length).toBe(1)
     })
 })
