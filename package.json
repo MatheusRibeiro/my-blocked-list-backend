@@ -38,6 +38,8 @@
       "src/Infrastructure/**/*",
       "src/Presentation/**/*",
       "src/Domain/Errors/**/*",
+      "src/Application/Services/Authentication/**/*",
+      "src/Domain/Aggregates/User/**/*",
       "features/**/*.ts"
     ]
   },
