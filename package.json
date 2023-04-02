@@ -10,13 +10,36 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "integration:app": "TZ=utc NODE_ENV=test NODE_PATH=./ cucumber-js --require-module ts-node/register --require-module tsconfig-paths/register --require 'features/support/**/*.ts'",
-    "integration": "yarn integration:app features",
-    "integration:coverage": "nyc --report-dir integration-coverage --all --include \"src/Domain/**/*.ts\" --exclude \"src/Domain/Errors/*.ts\" --include \"src/Application/**/*.ts\" --exclude \"src/**/*.test.ts\" yarn integration",
-    "test:full": "yarn test && yarn integration",
-    "coverage": "nyc yarn test:full --include \"src/**/*.ts\" --all",
-    "validate": "eslint . && jest --coverage",
+    "integration": "TZ=utc NODE_ENV=test NODE_PATH=./ cucumber-js --require-module ts-node/register --require-module tsconfig-paths/register --require 'features/support/**/*.ts'",
+    "integration:coverage": "nyc yarn integration",
+    "test:full": "yarn test:coverage && yarn integration",
+    "coverage": "nyc --all yarn test:full",
+    "validate": "eslint . && yarn coverage",
     "build": "tsc -p tsconfig.prod.json"
+  },
+  "nyc": {
+    "statements": 90,
+    "branches": 90,
+    "functions": 90,
+    "lines": 90,
+    "check-coverage": true,
+    "tempDirectory": "./coverage",
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "include": [
+      "src/"
+    ],
+    "exclude": [
+      "node_modules/**/*",
+      "src/**/*.test.ts",
+      "src/Infrastructure/**/*",
+      "src/Presentation/**/*",
+      "src/Domain/Errors/**/*",
+      "features/**/*.ts"
+    ]
   },
   "devDependencies": {
     "@cucumber/cucumber": "^9.1.0",
