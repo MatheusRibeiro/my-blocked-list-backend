@@ -1,7 +1,5 @@
 import { container } from 'tsyringe'
-import RemovePhoneComplaintUseCase, {
-    RemoveComplaintDTO,
-} from '@src/Domain/Aggregates/Contact/UseCases/RemovePhoneComplaint'
+import RemoveComplaintUseCase, { RemoveComplaintDTO } from '@src/Domain/Aggregates/Contact/UseCases/RemoveComplaint'
 import ContactCommand from '../AbstractContactCommand'
 import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 
@@ -24,6 +22,6 @@ function map(input: RemoveComplaintRequest): RemoveComplaintDTO {
 
 export default class RemoveComplaintCommand extends ContactCommand<RemoveComplaintRequest, RemoveComplaintDTO> {
     constructor() {
-        super(container.resolve(RemovePhoneComplaintUseCase), map)
+        super(container.resolve(RemoveComplaintUseCase), map)
     }
 }

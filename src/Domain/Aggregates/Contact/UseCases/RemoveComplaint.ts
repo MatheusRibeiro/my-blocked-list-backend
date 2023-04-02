@@ -15,7 +15,7 @@ export interface RemoveComplaintDTO {
 type RemoveComplaintEvents = ComplaintRemoved | ContactRemoved
 
 @injectable()
-export default class CreatePhoneComplaintUseCase extends AbstractContactUseCase<RemoveComplaintDTO> {
+export default class RemoveComplaintUseCase extends AbstractContactUseCase<RemoveComplaintDTO> {
     constructor(@inject('ContactRepository') contactRepository: IContactRepository) {
         super(contactRepository)
     }
