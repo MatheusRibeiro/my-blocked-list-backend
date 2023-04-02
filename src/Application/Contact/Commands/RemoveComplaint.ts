@@ -22,7 +22,7 @@ function map(input: RemoveComplaintRequest): RemoveComplaintDTO {
     }
 }
 
-export default class CreatePhoneComplaintCommand extends ContactCommand<RemoveComplaintRequest, RemoveComplaintDTO> {
+export default class RemoveComplaintCommand extends ContactCommand<RemoveComplaintRequest, RemoveComplaintDTO> {
     constructor() {
         super(container.resolve(RemovePhoneComplaintUseCase), map)
     }
