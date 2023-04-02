@@ -1,6 +1,6 @@
 import { container, singleton } from 'tsyringe'
 import EventDispatcher from '@src/Application/Base/EventDispatcher/EventDispatcher'
-import ContactReportedEventHandler from '@src/Application/WatchedContact/Events/ContactReportedEventHandler'
+import ContactReportedEventHandler from '@src/Application/WatchedContact/Events/Handlers/ContactReportedEventHandler'
 
 @singleton()
 export default class ContactEventDispatcher extends EventDispatcher {
