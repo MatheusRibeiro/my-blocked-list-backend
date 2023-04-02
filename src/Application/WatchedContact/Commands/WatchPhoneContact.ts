@@ -4,6 +4,7 @@ import WatchPhoneContactUseCase, {
 } from '@src/Domain/Aggregates/WatchedContact/UseCases/WatchPhoneContact'
 import WatchedContactCommand from '../AbstractWatchedContactCommand'
 import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
+import WatchedContactEventDispatcher from '../Events/WatchedContactEventsDispatcher'
 
 interface WatchPhoneContactRequestData {
     phone: string
@@ -21,6 +22,6 @@ export default class WatchPhoneContactCommand extends WatchedContactCommand<
     WatchPhoneContactDTO
 > {
     constructor() {
-        super(container.resolve(WatchPhoneContactUseCase), mapper)
+        super(container.resolve(WatchPhoneContactUseCase), mapper, container.resolve(WatchedContactEventDispatcher))
     }
 }

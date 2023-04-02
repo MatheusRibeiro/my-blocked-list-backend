@@ -5,7 +5,7 @@ import IEventHandler from './IEventHandler'
 export default class EventDispatcher implements IEventDispatcher {
     protected eventHandlers: { [eventName: string]: IEventHandler[] } = {}
 
-    get getEventHandlers(): { [eventName: string]: IEventHandler[] } {
+    getEventHandlers(): { [eventName: string]: IEventHandler[] } {
         return this.eventHandlers
     }
 
@@ -18,7 +18,7 @@ export default class EventDispatcher implements IEventDispatcher {
 
     notify = async (event: DomainEvent): Promise<void> => {
         const eventName = event.constructor.name
-        if (this.eventHandlers[eventName] !== undefined) {
+        if (this.getEventHandlers()[eventName] !== undefined) {
             const promises = this.eventHandlers[eventName].map(async handler => await handler.handle(event))
             await Promise.all(promises)
         }

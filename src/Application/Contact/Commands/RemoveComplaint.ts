@@ -2,6 +2,7 @@ import { container } from 'tsyringe'
 import RemoveComplaintUseCase, { RemoveComplaintDTO } from '@src/Domain/Aggregates/Contact/UseCases/RemoveComplaint'
 import ContactCommand from '../AbstractContactCommand'
 import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
+import ContactEventDispatcher from '../Events/ContactEventsDispatcher'
 
 export interface RemoveComplaintRequest {
     contactId: string
@@ -22,6 +23,6 @@ function map(input: RemoveComplaintRequest): RemoveComplaintDTO {
 
 export default class RemoveComplaintCommand extends ContactCommand<RemoveComplaintRequest, RemoveComplaintDTO> {
     constructor() {
-        super(container.resolve(RemoveComplaintUseCase), map)
+        super(container.resolve(RemoveComplaintUseCase), map, container.resolve(ContactEventDispatcher))
     }
 }

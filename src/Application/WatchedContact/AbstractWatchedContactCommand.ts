@@ -1,4 +1,3 @@
-import { container } from 'tsyringe'
 import WatchedContact from '@src/Domain/Aggregates/WatchedContact/WatchedContact'
 import WatchedContactId from '@src/Domain/Aggregates/WatchedContact/ValueObjects/WatchedContactId'
 import IWatchedContactRepository from '@src/Domain/Aggregates/WatchedContact/IWatchedContactRepository'
@@ -12,7 +11,6 @@ export default abstract class WatchedContactCommand<RequestData, UseCaseInput> e
     WatchedContact,
     WatchedContactId,
     IWatchedContactRepository,
-    WatchedContactUseCase<UseCaseInput>
-> {
-    protected readonly eventDispatcher = container.resolve(WatchedContactEventDispatcher)
-}
+    WatchedContactUseCase<UseCaseInput>,
+    WatchedContactEventDispatcher
+> {}

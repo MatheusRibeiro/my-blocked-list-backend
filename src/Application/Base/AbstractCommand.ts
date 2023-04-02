@@ -12,25 +12,29 @@ export default abstract class AbstractCommand<
     TEntity extends Entity,
     TId extends UUID,
     TRepository extends IRepository<TEntity, TId>,
-    UseCase extends AbstractUseCase<UseCaseInput, TEntity, TId, TRepository>
+    UseCase extends AbstractUseCase<UseCaseInput, TEntity, TId, TRepository>,
+    TEventDispatcher extends IEventDispatcher
 > {
     protected readonly useCase: UseCase
     protected readonly inputMapper: AbstractMapper<RequestData, UseCaseInput>
-    protected readonly eventDispatcher: IEventDispatcher | undefined
+    protected readonly eventDispatcher: TEventDispatcher
 
-    constructor(useCase: UseCase, inputMapper: AbstractMapper<RequestData, UseCaseInput>) {
+    constructor(
+        useCase: UseCase,
+        inputMapper: AbstractMapper<RequestData, UseCaseInput>,
+        eventDispatcher: TEventDispatcher
+    ) {
         this.useCase = useCase
         this.inputMapper = inputMapper
+        this.eventDispatcher = eventDispatcher
     }
 
     public execute = async (request: RequestData, authorId: string): Promise<null> => {
         assertIsUUID(authorId)
         const audit = new Audit(authorId)
         const events = await this.useCase.execute(this.inputMapper(request), audit)
-        if (this.eventDispatcher !== undefined) {
-            const promises = events.map(this.eventDispatcher.notify)
-            await Promise.all(promises)
-        }
+        const promises = events.map(this.eventDispatcher.notify)
+        await Promise.all(promises)
         return null
     }
 }

@@ -4,6 +4,7 @@ import { assertIsEmail } from '@src/Domain/Base/Types/Email'
 import WatchEmailContactUseCase, {
     WatchEmailContactDTO,
 } from '@src/Domain/Aggregates/WatchedContact/UseCases/WatchEmailContact'
+import WatchedContactEventDispatcher from '../Events/WatchedContactEventsDispatcher'
 
 interface WatchEmailContactRequestData {
     email: string
@@ -21,6 +22,6 @@ export default class WatchEmailContactCommand extends WatchedContactCommand<
     WatchEmailContactDTO
 > {
     constructor() {
-        super(container.resolve(WatchEmailContactUseCase), mapper)
+        super(container.resolve(WatchEmailContactUseCase), mapper, container.resolve(WatchedContactEventDispatcher))
     }
 }

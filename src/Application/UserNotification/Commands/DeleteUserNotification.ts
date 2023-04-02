@@ -4,6 +4,7 @@ import DeleteUserNotificationUseCase, {
     DeleteUserNotificationDTO,
 } from '@src/Domain/Aggregates/UserNotification/UseCases/DeleteUserNotification'
 import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
+import UserNotificationEventDispatcher from '../Events/UserNotificationEventsDispatcher'
 
 interface DeleteUserNotificationRequestData {
     userNotificationId: string
@@ -22,6 +23,10 @@ export default class DeleteUserNotificationCommand extends UserNotificationComma
     DeleteUserNotificationDTO
 > {
     constructor() {
-        super(container.resolve(DeleteUserNotificationUseCase), mapper)
+        super(
+            container.resolve(DeleteUserNotificationUseCase),
+            mapper,
+            container.resolve(UserNotificationEventDispatcher)
+        )
     }
 }

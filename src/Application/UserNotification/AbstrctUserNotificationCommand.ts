@@ -1,4 +1,3 @@
-import { container } from 'tsyringe'
 import UserNotification from '@src/Domain/Aggregates/UserNotification/UserNotification'
 import UserNotificationId from '@src/Domain/Aggregates/UserNotification/ValueObjects/UserNotificationId'
 import AbstractCommand from '../Base/AbstractCommand'
@@ -12,7 +11,6 @@ export default abstract class UserNotificationCommand<RequestData, UseCaseInput>
     UserNotification,
     UserNotificationId,
     IUserNotificationRepository,
-    UserNotificationUseCase<UseCaseInput>
-> {
-    protected readonly eventDispatcher = container.resolve(UserNotificationEventDispatcher)
-}
+    UserNotificationUseCase<UseCaseInput>,
+    UserNotificationEventDispatcher
+> {}

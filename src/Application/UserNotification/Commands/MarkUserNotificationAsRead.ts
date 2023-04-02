@@ -4,6 +4,7 @@ import MarkUserNotificationAsReadUseCase, {
     MarkUserNotificationAsReadDTO,
 } from '@src/Domain/Aggregates/UserNotification/UseCases/MarkUserNotificationAsRead'
 import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
+import UserNotificationEventDispatcher from '../Events/UserNotificationEventsDispatcher'
 
 interface MarkUserNotificationAsReadRequestData {
     userNotificationId: string
@@ -21,6 +22,10 @@ export default class MarkUserNotificationAsReadCommand extends UserNotificationC
     MarkUserNotificationAsReadDTO
 > {
     constructor() {
-        super(container.resolve(MarkUserNotificationAsReadUseCase), mapper)
+        super(
+            container.resolve(MarkUserNotificationAsReadUseCase),
+            mapper,
+            container.resolve(UserNotificationEventDispatcher)
+        )
     }
 }

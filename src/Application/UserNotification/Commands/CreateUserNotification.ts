@@ -5,6 +5,7 @@ import CreateUserNotificationUseCase, {
     CreateUserNotificationDTO,
 } from '@src/Domain/Aggregates/UserNotification/UseCases/CreateUserNotification'
 import { UserNotificatonPayload } from '@src/Domain/Aggregates/UserNotification/UserNotification'
+import UserNotificationEventDispatcher from '../Events/UserNotificationEventsDispatcher'
 
 interface CreateUserNotificationRequestData {
     userId: string
@@ -30,6 +31,10 @@ export default class CreateUserNotificationCommand extends UserNotificationComma
     CreateUserNotificationDTO
 > {
     constructor() {
-        super(container.resolve(CreateUserNotificationUseCase), mapper)
+        super(
+            container.resolve(CreateUserNotificationUseCase),
+            mapper,
+            container.resolve(UserNotificationEventDispatcher)
+        )
     }
 }

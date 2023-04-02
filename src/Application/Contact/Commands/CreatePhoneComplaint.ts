@@ -6,6 +6,7 @@ import ContactCommand from '../AbstractContactCommand'
 import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
+import ContactEventDispatcher from '../Events/ContactEventsDispatcher'
 
 interface CreatePhoneComplaintRequestData {
     firstName: string
@@ -35,6 +36,6 @@ export default class CreatePhoneComplaintCommand extends ContactCommand<
     CreatePhoneComplaintDTO
 > {
     constructor() {
-        super(container.resolve(CreatePhoneComplaintUseCase), mapper)
+        super(container.resolve(CreatePhoneComplaintUseCase), mapper, container.resolve(ContactEventDispatcher))
     }
 }
