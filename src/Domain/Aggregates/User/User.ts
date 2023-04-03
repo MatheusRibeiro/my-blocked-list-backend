@@ -26,6 +26,10 @@ export default class User extends Entity {
         return this.username
     }
 
+    public setUsername(username: Username): void {
+        this.username = username
+    }
+
     public getRole(): UserRole {
         return this.role
     }
