@@ -5,7 +5,7 @@ import UserNotificationCreated from '../DomainEvents/UserNotificationCreated'
 import AbstractUserNotificationUseCase from '../Abstractions/UserNotificationUseCase'
 import IUserNotificationRepository from '../IUserNotificationRepository'
 import UserNotification, { UserNotificatonPayload } from '../UserNotification'
-import UserNotificationType from '../ValueObjects/UserNotificationType'
+import { assertIsUserNotificationType } from '../ValueObjects/UserNotificationType'
 
 export interface CreateUserNotificationDTO {
     userNotificationType: string
@@ -25,8 +25,9 @@ export default class CreateUserNotificationUseCase extends AbstractUserNotificat
     public async execute(dto: CreateUserNotificationDTO, audit: Audit): Promise<CreateUserNotificationEvents[]> {
         const events: CreateUserNotificationEvents[] = []
         const { userId, authorId, payload, userNotificationType } = dto
-        const notificationType = new UserNotificationType(userNotificationType)
-        const notification = new UserNotification(uuidFactory(), userId, authorId, notificationType, payload)
+
+        assertIsUserNotificationType(userNotificationType)
+        const notification = new UserNotification(uuidFactory(), userId, authorId, userNotificationType, payload)
 
         await this.repository.create(notification)
         events.push(new UserNotificationCreated(notification.toJSON(), audit))

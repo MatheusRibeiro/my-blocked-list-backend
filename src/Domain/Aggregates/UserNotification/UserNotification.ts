@@ -69,7 +69,7 @@ export default class UserNotification extends Entity {
             id: this.userNotificationId,
             user: { id: this.userId },
             author: { id: this.authorId },
-            type: this.userNotificationType.toJSON(),
+            type: this.userNotificationType,
             payload: this.payload,
             isRead: this.isRead(),
         }

@@ -27,7 +27,7 @@ export default class UserNotificationInMemoryQueries extends InMemoryQuery imple
     private toViewModel(userNotification: UserNotification): UserNotificationViewModel {
         return {
             id: userNotification.userNotificationId,
-            type: userNotification.userNotificationType.toJSON(),
+            type: userNotification.userNotificationType,
             author: { id: userNotification.authorId },
             payload: userNotification.payload,
             isRead: userNotification.isRead(),
