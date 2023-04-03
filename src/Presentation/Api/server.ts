@@ -19,4 +19,4 @@ app.use(router)
 
 const { port } = apiSettings
 app.listen(port)
-console.log('Application is running on port 8080')
+console.log(`Application is running on port ${port}`)
