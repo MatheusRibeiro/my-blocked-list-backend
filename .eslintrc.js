@@ -27,7 +27,7 @@ module.exports = {
     rules: {
         'prettier/prettier': 'error',
         'import/extensions': 'off',
-        // 'no-console': 'off',
+        'no-console': 1,
         'import/order': [
             'error',
             {
