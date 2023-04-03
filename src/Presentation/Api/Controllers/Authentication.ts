@@ -22,14 +22,18 @@ export default class AuthenticationController extends IController {
     @Post('/login')
     public login = async (req: Request): Promise<AuthenticationResponse | Error> => {
         const { username, password } = req.body
-
         return await this.authService.login({ username, password })
     }
 
     @Post('/register')
     public register = async (req: Request): Promise<AuthenticationResponse | Error> => {
         const { username, password } = req.body
-
         return await this.authService.register({ username, password })
+    }
+
+    @Post('/refresh-login')
+    public refeshLogin = async (req: Request): Promise<AuthenticationResponse | Error> => {
+        const { refresh_token: refeshToken } = req.body
+        return await this.authService.refreshLogin(refeshToken)
     }
 }

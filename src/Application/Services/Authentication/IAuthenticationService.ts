@@ -19,4 +19,5 @@ export default abstract class IAuthenticationService {
     abstract login(loginRequest: LoginRequest): Promise<AuthenticationResponse>
     abstract register(registerRequest: RegisterRequest): Promise<AuthenticationResponse>
     abstract validateToken(token: string): Promise<UserTokenDetails>
+    abstract refreshLogin(refreshToken: string): Promise<AuthenticationResponse>
 }

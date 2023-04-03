@@ -4,7 +4,7 @@ import type { UserTokenDetails } from '@src/Application/Services/Authentication/
 import UnauthenticatedError from '@src/Domain/Errors/UnauthenticatedError'
 import authenticationSettings from '../Config/authentication'
 
-const { jwtSecret, jwtExpirationInSeconds } = authenticationSettings
+const { jwtSecret, jwtExpirationInSeconds, jwtRefreshExpirationInSeconds } = authenticationSettings
 
 export default class JwtTokenGenerator implements IJwtTokenGenerator {
     generateToken(userId: string, username: string): string {
@@ -13,6 +13,16 @@ export default class JwtTokenGenerator implements IJwtTokenGenerator {
             username,
         }
         const options = { expiresIn: jwtExpirationInSeconds }
+
+        return sign(payload, jwtSecret, options)
+    }
+
+    generateRefreshToken(userId: string, username: string): string {
+        const payload = {
+            userId,
+            username,
+        }
+        const options = { expiresIn: jwtRefreshExpirationInSeconds }
 
         return sign(payload, jwtSecret, options)
     }

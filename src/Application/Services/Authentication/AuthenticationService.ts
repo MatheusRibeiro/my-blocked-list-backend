@@ -39,9 +39,7 @@ export default class AuthenticationService implements IAuthenticationService {
         const user = new User(userId, newUsername, new Password(password))
         await this.userRepository.create(user)
 
-        const token = this.jwtTokenGenerator.generateToken(userId, username)
-
-        return { id: userId, username, token }
+        return this.generateLoginResponse(userId, username)
     }
 
     public async login(loginRequest: LoginRequest): Promise<AuthenticationResponse> {
@@ -55,13 +53,23 @@ export default class AuthenticationService implements IAuthenticationService {
         if (!user.password.isEqual(new Password(password))) {
             throw new NotFoundError(invalidCredentialsMessage)
         }
-        const id = user.userId
-        const token = this.jwtTokenGenerator.generateToken(id, username)
 
-        return { id, username, token }
+        return this.generateLoginResponse(user.getId(), username)
     }
 
     public async validateToken(token: string): Promise<UserTokenDetails> {
         return this.jwtTokenGenerator.validateToken(token)
+    }
+
+    public async refreshLogin(refreshToken: string): Promise<AuthenticationResponse> {
+        const { userId, username } = this.jwtTokenGenerator.validateToken(refreshToken)
+        return this.generateLoginResponse(userId, username)
+    }
+
+    private generateLoginResponse(userId: string, username: string): AuthenticationResponse {
+        const token = this.jwtTokenGenerator.generateToken(userId, username)
+        const refreshToken = this.jwtTokenGenerator.generateRefreshToken(userId, username)
+
+        return { id: userId, username, token, refresh_token: refreshToken }
     }
 }
