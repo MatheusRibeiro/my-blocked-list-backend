@@ -1,6 +1,6 @@
 import { Request } from 'express'
 import { inject, injectable } from 'tsyringe'
-import IAuthenticationService from '@src/Application/Services/Authentication/IAuthenticationService'
+import IAuthenticationService from '@src/Application/Services/Authentication/AbstractAuthenticationService'
 import AuthenticationResponse from '@src/Application/Services/Authentication/IAuthenticationResponse'
 import { Controller } from '../Base/Decorators/Controller'
 import { Post } from '../Base/Decorators/Route'

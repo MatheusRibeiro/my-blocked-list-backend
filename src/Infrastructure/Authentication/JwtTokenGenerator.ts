@@ -1,16 +1,17 @@
 import { sign, verify } from 'jsonwebtoken'
 import type IJwtTokenGenerator from '@src/Application/Services/Authentication/IJwtTokenGenerator'
-import type { UserTokenDetails } from '@src/Application/Services/Authentication/IAuthenticationService'
+import type { UserTokenDetails } from '@src/Application/Services/Authentication/AbstractAuthenticationService'
 import UnauthenticatedError from '@src/Domain/Errors/UnauthenticatedError'
 import authenticationSettings from '../Config/authentication'
 
 const { jwtSecret, jwtExpirationInSeconds, jwtRefreshExpirationInSeconds } = authenticationSettings
 
 export default class JwtTokenGenerator implements IJwtTokenGenerator {
-    generateToken(userId: string, username: string): string {
+    generateToken(userId: string, username: string, role: string): string {
         const payload = {
             userId,
             username,
+            role,
         }
         const options = { expiresIn: jwtExpirationInSeconds }
 

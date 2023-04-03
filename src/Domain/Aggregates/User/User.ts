@@ -2,21 +2,36 @@ import Entity from '@src/Domain/Base/Abstractions/Entity'
 import Password from './ValueObjects/Password'
 import UserId from './ValueObjects/UserId'
 import Username from './ValueObjects/Username'
+import UserRole from './ValueObjects/UserRole'
 
 export default class User extends Entity {
-    public userId: UserId
-    public username: Username
-    public password: Password
+    protected readonly userId: UserId
+    protected username: Username
+    protected role: UserRole
+    protected password: Password
 
-    constructor(userId: UserId, username: Username, password: Password) {
+    constructor(userId: UserId, username: Username, role: UserRole, password: Password) {
         super()
         this.userId = userId
         this.username = username
+        this.role = role
         this.password = password
     }
 
     public getId(): UserId {
         return this.userId
+    }
+
+    public getUsername(): Username {
+        return this.username
+    }
+
+    public getRole(): UserRole {
+        return this.role
+    }
+
+    public isPasswordCorrect(password: string): boolean {
+        return this.password.isEqual(new Password(password))
     }
 
     public isValid(): boolean {

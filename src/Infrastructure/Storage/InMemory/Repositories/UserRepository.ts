@@ -8,7 +8,7 @@ import dbContext from '../DbContext'
 export default class UserInMemoryRepository extends InMemoryRepository<User, UserId> implements IUserRepository {
     public async findByUsername(username: Username): Promise<User | null> {
         for (let i = 0; i < dbContext[this.tableName].length; i++) {
-            if ((dbContext[this.tableName][i] as User).username.isEqual(username)) {
+            if ((dbContext[this.tableName][i] as User).getUsername().isEqual(username)) {
                 return dbContext[this.tableName][i] as User
             }
         }

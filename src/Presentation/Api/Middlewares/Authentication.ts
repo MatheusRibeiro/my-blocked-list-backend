@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express'
 import { inject, injectable } from 'tsyringe'
-import IAuthenticationService from '@src/Application/Services/Authentication/IAuthenticationService'
+import IAuthenticationService from '@src/Application/Services/Authentication/AbstractAuthenticationService'
 import { errorHandler } from '../Base/ResultHandler'
 import UnauthenticatedError from '@src/Domain/Errors/UnauthenticatedError'
 import IMiddleware from '../Base/IMiddleware'
@@ -27,7 +27,12 @@ export default class AuthenticationMiddleware extends IMiddleware {
             return
         }
         try {
-            res.locals.User = await this.authService.validateToken(token)
+            const tokenDetails = await this.authService.validateToken(token)
+            if (this.authService.isARefreshToken(tokenDetails)) {
+                errorHandler(res, new UnauthenticatedError(missingTokenError))
+                return
+            }
+            res.locals.User = tokenDetails
             next()
         } catch (error) {
             errorHandler(res, error)
