@@ -1,6 +1,6 @@
 import Complaint from './Complaint'
 import UUID, { uuidFactory } from '@src/Domain/Base/Types/UUID'
-import ComplaintDescription from './ValueObjects/ComplaintDescription'
+import { assertIsComplaintDescription } from './ValueObjects/ComplaintDescription'
 import ComplaintType, { assertIsComplaintCategory, assertIsComplaintSeverity } from './ValueObjects/ComplaintType'
 import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 
@@ -29,10 +29,11 @@ export function complaintFactoryWithId({
 }: RawComplaintDataWithId): Complaint {
     assertIsComplaintCategory(category)
     assertIsComplaintSeverity(severity)
+    assertIsComplaintDescription(description)
 
     return new Complaint(
         complaintId,
-        new ComplaintDescription(description),
+        description,
         new ComplaintType({
             complaintCategory: category,
             complaintSeverity: severity,

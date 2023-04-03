@@ -38,7 +38,7 @@ export default class Complaint extends Entity {
     }
 
     public getDescription(): string {
-        return this.description.value
+        return this.description
     }
 
     public getType(): ComplaintType {
@@ -46,7 +46,7 @@ export default class Complaint extends Entity {
     }
 
     public isValid(): boolean {
-        return this.description.isValid() && this.complaintType.isValid()
+        return this.complaintType.isValid()
     }
 
     public isEqual(entity: Complaint): boolean {
@@ -60,7 +60,7 @@ export default class Complaint extends Entity {
     public toJSON(): ComplaintJson {
         return {
             id: this.complaintId,
-            description: this.description.toJSON(),
+            description: this.description,
             type: this.complaintType.toJSON(),
             author: { id: this.authorId },
         }

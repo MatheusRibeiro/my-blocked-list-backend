@@ -2,7 +2,7 @@ import Contact from './Contact'
 import Complaint from './Complaint/Complaint'
 import PhoneAccount from './ValueObjects/PhoneAccount'
 import EmailAccount from './ValueObjects/EmailAccount'
-import ComplaintDescription from './Complaint/ValueObjects/ComplaintDescription'
+import { assertIsComplaintDescription } from './Complaint/ValueObjects/ComplaintDescription'
 import ComplaintType from './Complaint/ValueObjects/ComplaintType'
 import { assertIsEmail } from '@src/Domain/Base/Types/Email'
 import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
@@ -19,10 +19,13 @@ const validEmail = new EmailAccount(email)
 const validPersonName = new PersonName({ firstName: 'John', lastName: 'Doe' })
 const validUuid = uuidFactory()
 
+const validDescription = 'valid description'
+assertIsComplaintDescription(validDescription)
+
 const complaintAuthorId = uuidFactory()
 const validComplaint = new Complaint(
     uuidFactory(),
-    new ComplaintDescription('valid description'),
+    validDescription,
     new ComplaintType({ complaintCategory: 'OTHER', complaintSeverity: 'CRITICAL' }),
     complaintAuthorId
 )
