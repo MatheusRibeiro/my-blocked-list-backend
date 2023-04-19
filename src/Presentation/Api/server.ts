@@ -11,9 +11,8 @@ import './Controllers/Authentication'
 import './Controllers/Contact'
 import './Controllers/WatchedContact'
 import './Controllers/UserNotification'
-import dbConnect from '@src/Infrastructure/Storage/InMemory/Base/dbConnect'
 
-void dbConnect().then(() => {
+void dbSetup().then(() => {
     const app = express()
 
     app.use(json())
@@ -24,3 +23,6 @@ void dbConnect().then(() => {
 
     console.log(`Application is running on port ${port}`)
 })
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+async function dbSetup(): Promise<void> {}
