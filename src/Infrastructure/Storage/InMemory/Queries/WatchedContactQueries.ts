@@ -3,7 +3,7 @@ import IWatchedContactQueries, {
     GetWatchedAccountsQuery,
 } from '@src/Application/WatchedContact/Queries/IWatchedContactQueries'
 import WatchedContact from '@src/Domain/Aggregates/WatchedContact/WatchedContact'
-import InMemoryQuery from './InMemoryQuery'
+import InMemoryQuery from '../Base/InMemoryQuery'
 import dbContext from '../Base/DbContext'
 import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 

@@ -3,7 +3,7 @@ import IUserNotificationQueries, {
     GetUserNotificationsQuery,
 } from '@src/Application/UserNotification/Queries/IUserNotificationQueries'
 import UserNotification from '@src/Domain/Aggregates/UserNotification/UserNotification'
-import InMemoryQuery from './InMemoryQuery'
+import InMemoryQuery from '../Base/InMemoryQuery'
 import dbContext from '../Base/DbContext'
 import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 

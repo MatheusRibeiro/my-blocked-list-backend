@@ -4,7 +4,7 @@ import IComplaintQueries, {
     GetComplaintsFromPhoneQuery,
 } from '@src/Application/Contact/Queries/IComplaintQueries'
 import Complaint from '@src/Domain/Aggregates/Contact/Complaint/Complaint'
-import InMemoryQuery from './InMemoryQuery'
+import InMemoryQuery from '../Base/InMemoryQuery'
 import dbContext from '../Base/DbContext'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
 import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccount'
