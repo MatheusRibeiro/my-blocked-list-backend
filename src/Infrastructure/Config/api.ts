@@ -1,4 +1,4 @@
-import currentEnvironment, { readEnvasNumber } from './environment'
+import currentEnvironment, { readEnvAsNumber } from './environment'
 
 export interface IApiSettings {
     port: number
@@ -9,7 +9,7 @@ const local: IApiSettings = {
 }
 
 const remote: IApiSettings = {
-    port: readEnvasNumber('API_PORT'),
+    port: readEnvAsNumber('API_PORT'),
 }
 
 const envs = {

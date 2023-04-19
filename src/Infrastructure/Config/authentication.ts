@@ -1,4 +1,4 @@
-import currentEnvironment, { readEnvAsString, readEnvasNumber } from './environment'
+import currentEnvironment, { readEnvAsString, readEnvAsNumber } from './environment'
 export interface IAuthSettings {
     jwtSecret: string
     jwtExpirationInSeconds: number
@@ -15,8 +15,8 @@ const local: IAuthSettings = {
 
 const remote: IAuthSettings = {
     jwtSecret: readEnvAsString('JWT_SECRET'),
-    jwtExpirationInSeconds: readEnvasNumber('JWT_EXPIRATION_IN_SECONDS', 1 * HourInSeconds),
-    jwtRefreshExpirationInSeconds: readEnvasNumber('JWT_REFRESH_EXPIRATION_IN_SECONDS', 24 * HourInSeconds),
+    jwtExpirationInSeconds: readEnvAsNumber('JWT_EXPIRATION_IN_SECONDS', 1 * HourInSeconds),
+    jwtRefreshExpirationInSeconds: readEnvAsNumber('JWT_REFRESH_EXPIRATION_IN_SECONDS', 24 * HourInSeconds),
 }
 
 const envs = {

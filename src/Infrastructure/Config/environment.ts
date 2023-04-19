@@ -5,7 +5,7 @@ export function readEnvAsString(name: string, defaultValue = ''): string {
     return value !== undefined ? value : defaultValue
 }
 
-export function readEnvasNumber(name: string, defaultValue?: number): number {
+export function readEnvAsNumber(name: string, defaultValue?: number): number {
     const envStr = readEnvAsString(name)
     const shouldUseDefault = envStr === '' && defaultValue !== undefined
     const value = shouldUseDefault ? defaultValue : parseInt(envStr)
