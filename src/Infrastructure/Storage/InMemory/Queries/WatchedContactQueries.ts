@@ -4,7 +4,7 @@ import IWatchedContactQueries, {
 } from '@src/Application/WatchedContact/Queries/IWatchedContactQueries'
 import WatchedContact from '@src/Domain/Aggregates/WatchedContact/WatchedContact'
 import InMemoryQuery from './InMemoryQuery'
-import dbContext from '../DbContext'
+import dbContext from '../Base/DbContext'
 import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 
 export default class WatchedContactInMemoryQueries extends InMemoryQuery implements IWatchedContactQueries {

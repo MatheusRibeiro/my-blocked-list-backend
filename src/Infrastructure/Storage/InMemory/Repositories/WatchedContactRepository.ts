@@ -1,12 +1,12 @@
 import IWatchedContactRepository from '@src/Domain/Aggregates/WatchedContact/IWatchedContactRepository'
 import WatchedContact from '@src/Domain/Aggregates/WatchedContact/WatchedContact'
 import WatchedContactId from '@src/Domain/Aggregates/WatchedContact/ValueObjects/WatchedContactId'
-import InMemoryRepository from './InMemoryRepository'
+import InMemoryRepository from '../Base/InMemoryRepository'
 import Phone from '@src/Domain/Base/Types/Phone'
 import Email from '@src/Domain/Base/Types/Email'
 import PhoneAccount from '@src/Domain/Aggregates/WatchedContact/ValueObjects/PhoneAccount'
 import EmailAccount from '@src/Domain/Aggregates/WatchedContact/ValueObjects/EmailAccount'
-import dbContext from '../DbContext'
+import dbContext from '../Base/DbContext'
 
 export default class WatchedContactInMemoryRepository
     extends InMemoryRepository<WatchedContact, WatchedContactId>

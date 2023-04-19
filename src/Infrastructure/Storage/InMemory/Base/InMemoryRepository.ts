@@ -1,6 +1,6 @@
 import Entity from '@src/Domain/Base/Abstractions/Entity'
 import UUID from '@src/Domain/Base/Types/UUID'
-import dbContext from '../DbContext'
+import dbContext from './DbContext'
 
 export default class InMemoryRepository<IEntity extends Entity, IdType extends UUID> {
     protected readonly tableName: string

@@ -4,7 +4,7 @@ import IUserNotificationQueries, {
 } from '@src/Application/UserNotification/Queries/IUserNotificationQueries'
 import UserNotification from '@src/Domain/Aggregates/UserNotification/UserNotification'
 import InMemoryQuery from './InMemoryQuery'
-import dbContext from '../DbContext'
+import dbContext from '../Base/DbContext'
 import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
 
 export default class UserNotificationInMemoryQueries extends InMemoryQuery implements IUserNotificationQueries {

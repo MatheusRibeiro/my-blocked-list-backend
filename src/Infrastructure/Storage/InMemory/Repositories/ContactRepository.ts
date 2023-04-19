@@ -1,12 +1,12 @@
 import IContactRepository from '@src/Domain/Aggregates/Contact/IContactRepository'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
 import ContactId from '@src/Domain/Aggregates/Contact/ValueObjects/ContactId'
-import InMemoryRepository from './InMemoryRepository'
+import InMemoryRepository from '../Base/InMemoryRepository'
 import Phone from '@src/Domain/Base/Types/Phone'
 import Email from '@src/Domain/Base/Types/Email'
 import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccount'
 import EmailAccount from '@src/Domain/Aggregates/Contact/ValueObjects/EmailAccount'
-import dbContext from '../DbContext'
+import dbContext from '../Base/DbContext'
 
 export default class ContactInMemoryRepository
     extends InMemoryRepository<Contact, ContactId>

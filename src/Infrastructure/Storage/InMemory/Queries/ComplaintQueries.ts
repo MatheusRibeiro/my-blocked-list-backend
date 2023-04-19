@@ -5,7 +5,7 @@ import IComplaintQueries, {
 } from '@src/Application/Contact/Queries/IComplaintQueries'
 import Complaint from '@src/Domain/Aggregates/Contact/Complaint/Complaint'
 import InMemoryQuery from './InMemoryQuery'
-import dbContext from '../DbContext'
+import dbContext from '../Base/DbContext'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
 import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccount'
 import Phone, { assertIsPhone } from '@src/Domain/Base/Types/Phone'
