@@ -49,6 +49,7 @@ export default class User extends Entity {
     public toJSON(): object {
         return {
             id: this.userId,
+            role: this.role,
             username: this.username.toJSON(),
         }
     }
