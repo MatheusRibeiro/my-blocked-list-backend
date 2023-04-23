@@ -44,7 +44,7 @@ describe('User In Memory Repository', () => {
         const found = await repo.findById(firstUser.getId())
 
         expect(result).toBeNull()
-        expect(found?.getUsername().value).toBe(newUsername)
+        expect(found?.getUsername().getValue()).toBe(newUsername)
     })
 
     test('update inexistent user', async () => {

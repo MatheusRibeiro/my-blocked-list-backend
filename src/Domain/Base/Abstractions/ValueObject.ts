@@ -1,8 +1,8 @@
-export default abstract class ValueObject<T> {
-    public value: T
+export default abstract class ValueObject<T = object | number | string | boolean> {
+    constructor(protected readonly value: T) {}
 
-    constructor(value: T) {
-        this.value = value
+    public getValue(): T {
+        return this.value
     }
 
     public abstract isValid(): boolean

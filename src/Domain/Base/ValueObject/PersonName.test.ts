@@ -1,4 +1,3 @@
-import BadRequestError from '@src/Domain/Errors/BadRequestError'
 import PersonName from './PersonName'
 
 const validPersonName1 = {
@@ -17,8 +16,8 @@ describe('PersonName Value Object', () => {
         expect(personName.isValid()).toBeTruthy()
     })
     test('person name with empty first name is invalid', () => {
-        const newPersonName = (): PersonName => new PersonName({ firstName: '', lastName: 'Doe' })
-        expect(newPersonName).toThrow(BadRequestError)
+        const personName = new PersonName({ firstName: '', lastName: 'Doe' })
+        expect(personName.isValid()).toBeFalsy()
     })
     test('person name with empty last name is valid', () => {
         const personName = new PersonName({ firstName: 'John', lastName: '' })
