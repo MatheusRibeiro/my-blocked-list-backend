@@ -41,7 +41,7 @@ export default class Contact extends Entity {
     }
 
     public isEqual(entity: Contact): boolean {
-        return this.contactId === entity.contactId
+        return this.contactId.isEqual(entity.contactId)
     }
 
     public addComplaint(complaint: Complaint): null {
@@ -52,7 +52,7 @@ export default class Contact extends Entity {
     public removeComplaint(complaintId: ComplaintId, userId: UserId): Complaint | null {
         for (let i = 0; i < this.complaints.length; i++) {
             const current = this.complaints[i]
-            const shouldBeRemoved = current.getId() === complaintId
+            const shouldBeRemoved = current.getId().isEqual(complaintId)
             const canBeRemoved = current.canBeRemovedBy(userId)
             if (shouldBeRemoved && canBeRemoved) {
                 this.complaints.splice(i, 1)
@@ -72,7 +72,7 @@ export default class Contact extends Entity {
 
     public toJSON(): ContactJson {
         return {
-            id: this.contactId,
+            id: this.contactId.toJSON(),
             name: this.personName.toJSON(),
             account: this.account.toJSON(),
             complaints: this.complaints.map(complaint => complaint.toJSON()),

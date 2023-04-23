@@ -2,9 +2,9 @@ import { container, inject, injectable } from 'tsyringe'
 import IEventHandler from '@src/Application/Base/EventDispatcher/IEventHandler'
 import ContactReported from '@src/Domain/Aggregates/Contact/DomainEvents/ContactReported'
 import IWatchedContactRepository from '@src/Domain/Aggregates/WatchedContact/IWatchedContactRepository'
-import { assertIsEmail } from '@src/Domain/Base/Types/Email'
+import Email from '@src/Domain/Base/ValueObject/Email'
 import CreateUserNotificationCommand from '@src/Application/UserNotification/Commands/CreateUserNotification'
-import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 import WatchedContact from '@src/Domain/Aggregates/WatchedContact/WatchedContact'
 
 interface GetWatchedContactParams {
@@ -32,12 +32,15 @@ export default class ContactReportedEventHandler implements IEventHandler {
             return null
         }
         const notification = {
-            authorId: event.audit.who,
+            authorId: event.audit.who.getValue(),
             payload: event.getPayload(),
             userNotificationType: event.constructor.name,
         }
         const promises = watchedContact.userIds.map(async userId => {
-            return await this.createUserNotification.execute(Object.assign({ userId }, notification), event.audit.who)
+            return await this.createUserNotification.execute(
+                Object.assign({ userId: userId.getValue() }, notification),
+                event.audit.who.getValue()
+            )
         })
         await Promise.all(promises)
         return null
@@ -48,12 +51,10 @@ export default class ContactReportedEventHandler implements IEventHandler {
         contactValue,
     }: GetWatchedContactParams): Promise<WatchedContact | null> {
         if (contactType === 'PhoneAccount') {
-            assertIsPhone(contactValue)
-            return await this.repository.findByPhone(contactValue)
+            return await this.repository.findByPhone(new Phone(contactValue))
         }
         if (contactType === 'EmailAccount') {
-            assertIsEmail(contactValue)
-            return await this.repository.findByEmail(contactValue)
+            return await this.repository.findByEmail(new Email(contactValue))
         }
 
         return null

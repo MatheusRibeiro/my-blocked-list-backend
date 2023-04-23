@@ -1,7 +1,7 @@
 import { container } from 'tsyringe'
 import RemoveComplaintUseCase, { RemoveComplaintDTO } from '@src/Domain/Aggregates/Contact/UseCases/RemoveComplaint'
 import ContactCommand from '../AbstractContactCommand'
-import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import ContactEventDispatcher from '../Events/ContactEventsDispatcher'
 
 export interface RemoveComplaintRequest {
@@ -10,14 +10,14 @@ export interface RemoveComplaintRequest {
     userId: string
 }
 function map(input: RemoveComplaintRequest): RemoveComplaintDTO {
-    assertIsUUID(input.contactId)
-    assertIsUUID(input.complaintId)
-    assertIsUUID(input.userId)
+    const contactId = new UUID(input.contactId)
+    const complaintId = new UUID(input.complaintId)
+    const userId = new UUID(input.userId)
 
     return {
-        contactId: input.contactId,
-        complaintId: input.complaintId,
-        userId: input.userId,
+        contactId,
+        complaintId,
+        userId,
     }
 }
 

@@ -1,5 +1,5 @@
 import Entity from '@src/Domain/Base/Abstractions/Entity'
-import UUID from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import dbContext from './DbContext'
 
 export default class InMemoryRepository<IEntity extends Entity, IdType extends UUID> {
@@ -12,7 +12,7 @@ export default class InMemoryRepository<IEntity extends Entity, IdType extends U
 
     public async findById(id: IdType): Promise<IEntity | null> {
         for (let i = 0; i < dbContext[this.tableName].length; i++) {
-            if (dbContext[this.tableName][i].getId() === id) {
+            if (dbContext[this.tableName][i].getId().isEqual(id as UUID)) {
                 return dbContext[this.tableName][i] as IEntity
             }
         }

@@ -1,4 +1,4 @@
-import { uuidFactory } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import Complaint from './Complaint'
 import { assertIsComplaintDescription } from './ValueObjects/ComplaintDescription'
 import ComplaintType from './ValueObjects/ComplaintType'
@@ -8,8 +8,8 @@ const complaintType = new ComplaintType({
     complaintSeverity: 'ALERT',
 })
 
-const validAuthorId = uuidFactory()
-const validComplaintId = uuidFactory()
+const validAuthorId = UUID.generate()
+const validComplaintId = UUID.generate()
 const validDescription = 'valid description'
 assertIsComplaintDescription(validDescription)
 
@@ -31,20 +31,20 @@ describe('Is Valid', () => {
 
 describe('is Equal', () => {
     test('should be equal when have the same id', () => {
-        const id = uuidFactory()
+        const id = UUID.generate()
         const sameId = id
 
-        const complaint = new Complaint(id, validDescription, complaintType, uuidFactory())
+        const complaint = new Complaint(id, validDescription, complaintType, UUID.generate())
 
         const anotherValidDescription = 'another valid description'
         assertIsComplaintDescription(anotherValidDescription)
-        const differentComplaint = new Complaint(sameId, anotherValidDescription, complaintType, uuidFactory())
+        const differentComplaint = new Complaint(sameId, anotherValidDescription, complaintType, UUID.generate())
 
         expect(complaint.isEqual(differentComplaint)).toBeTruthy()
     })
     test('should not be equal when have different ids', () => {
-        const id = uuidFactory()
-        const anotherId = uuidFactory()
+        const id = UUID.generate()
+        const anotherId = UUID.generate()
 
         const complaint = new Complaint(id, validDescription, complaintType, validAuthorId)
 

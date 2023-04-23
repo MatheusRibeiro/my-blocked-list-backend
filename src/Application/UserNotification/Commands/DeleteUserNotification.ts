@@ -3,7 +3,7 @@ import UserNotificationCommand from '../AbstrctUserNotificationCommand'
 import DeleteUserNotificationUseCase, {
     DeleteUserNotificationDTO,
 } from '@src/Domain/Aggregates/UserNotification/UseCases/DeleteUserNotification'
-import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import UserNotificationEventDispatcher from '../Events/UserNotificationEventsDispatcher'
 
 interface DeleteUserNotificationRequestData {
@@ -11,10 +11,10 @@ interface DeleteUserNotificationRequestData {
 }
 
 function mapper(input: DeleteUserNotificationRequestData): DeleteUserNotificationDTO {
-    assertIsUUID(input.userNotificationId)
+    const userNotificationId = new UUID(input.userNotificationId)
 
     return {
-        userNotificationId: input.userNotificationId,
+        userNotificationId,
     }
 }
 

@@ -1,6 +1,6 @@
 import { container } from 'tsyringe'
 import WatchedContactCommand from '../AbstractWatchedContactCommand'
-import { assertIsEmail } from '@src/Domain/Base/Types/Email'
+import Email from '@src/Domain/Base/ValueObject/Email'
 import WatchEmailContactUseCase, {
     WatchEmailContactDTO,
 } from '@src/Domain/Aggregates/WatchedContact/UseCases/WatchEmailContact'
@@ -11,9 +11,9 @@ interface WatchEmailContactRequestData {
 }
 
 function mapper(input: WatchEmailContactRequestData): WatchEmailContactDTO {
-    assertIsEmail(input.email)
+    const email = new Email(input.email)
     return {
-        email: input.email,
+        email,
     }
 }
 

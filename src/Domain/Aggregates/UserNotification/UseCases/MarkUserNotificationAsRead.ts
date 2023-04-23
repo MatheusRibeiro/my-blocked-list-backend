@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import Audit from '@src/Domain/Base/Audit'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
-import UUID from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import UserNotificationRead from '../DomainEvents/UserNotificationRead'
 import AbstractUserNotificationUseCase from '../Abstractions/UserNotificationUseCase'
 import IUserNotificationRepository from '../IUserNotificationRepository'
@@ -30,7 +30,7 @@ export default class MarkUserNotificationAsReadUseCase extends AbstractUserNotif
         if (notification === null) {
             throw new NotFoundError(notFoundMessage)
         }
-        if (notification.userId !== audit.who) {
+        if (!notification.userId.isEqual(audit.who)) {
             throw new NotFoundError(notFoundMessage)
         }
         notification.markAsRead()

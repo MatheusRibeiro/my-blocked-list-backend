@@ -1,10 +1,10 @@
 import { inject, injectable } from 'tsyringe'
 import Audit from '@src/Domain/Base/Audit'
-import Phone from '@src/Domain/Base/Types/Phone'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 import AbstractWatchedContactUseCase from '../Abstractions/WatchedContactUseCase'
 import IWatchedContactRepository from '../IWatchedContactRepository'
 import WatchedContact from '../WatchedContact'
-import { uuidFactory } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import PhoneAccount from '../ValueObjects/PhoneAccount'
 import UserWatchedContact from '../DomainEvents/UserWatchedContact'
 import WatchedContactCreated from '../DomainEvents/WatchedContactCreated'
@@ -29,13 +29,13 @@ export default class WatchPhoneContactUseCase extends AbstractWatchedContactUseC
         const isANewWatchedContact = existingWatchedContact === null
 
         const watchedContact = isANewWatchedContact
-            ? new WatchedContact(uuidFactory(), new PhoneAccount(phone))
+            ? new WatchedContact(UUID.generate(), new PhoneAccount(phone))
             : existingWatchedContact
 
         if (isANewWatchedContact) events.push(new WatchedContactCreated(watchedContact.toJSON(), audit))
 
         watchedContact.addUser(audit.who)
-        events.push(new UserWatchedContact(audit.who, watchedContact.toJSON(), audit))
+        events.push(new UserWatchedContact(audit.who.getValue(), watchedContact.toJSON(), audit))
 
         isANewWatchedContact
             ? await this.repository.create(watchedContact)

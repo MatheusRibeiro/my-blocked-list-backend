@@ -1,4 +1,4 @@
-import UUID, { assertIsUUID } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import Audit from '@src/Domain/Base/Audit'
 import AbstractUseCase from '@src/Domain/Base/Abstractions/UseCase'
 import Entity from '@src/Domain/Base/Abstractions/Entity'
@@ -30,8 +30,8 @@ export default abstract class AbstractCommand<
     }
 
     public execute = async (request: RequestData, authorId: string): Promise<null> => {
-        assertIsUUID(authorId)
-        const audit = new Audit(authorId)
+        const uuid = new UUID(authorId)
+        const audit = new Audit(uuid)
         const events = await this.useCase.execute(this.inputMapper(request), audit)
         const promises = events.map(this.eventDispatcher.notify)
         await Promise.all(promises)

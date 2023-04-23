@@ -4,7 +4,7 @@ import WatchedContactRemoved from '../DomainEvents/WatchedContactRemoved'
 import UserUnwatchedContact from '../DomainEvents/UserUnwatchedContact'
 import IWatchedContactRepository from '../IWatchedContactRepository'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
-import UUID from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import AbstractWatchedContactUseCase from '../Abstractions/WatchedContactUseCase'
 
 export interface UnwatchContactDTO {
@@ -32,7 +32,7 @@ export default class UnwatchContactUseCase extends AbstractWatchedContactUseCase
         if (userIdRemoved === null) {
             throw new NotFoundError(notFoundMessage)
         }
-        events.push(new UserUnwatchedContact(userIdRemoved, watchedContact.toJSON(), audit))
+        events.push(new UserUnwatchedContact(userIdRemoved.getValue(), watchedContact.toJSON(), audit))
 
         if (watchedContact.userIds.length === 0) {
             await this.repository.delete(watchedContact)

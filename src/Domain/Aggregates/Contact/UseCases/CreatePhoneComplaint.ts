@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import Audit from '@src/Domain/Base/Audit'
-import Phone from '@src/Domain/Base/Types/Phone'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 import { complaintFactoryWithoutId } from '../Complaint/ComplaintFactory'
 import { contactFactoryWithoutId } from '../ContactFactory'
 import ContactCreated from '../DomainEvents/ContactCreated'
@@ -8,7 +8,7 @@ import ContactReported from '../DomainEvents/ContactReported'
 import AbstractContactUseCase from '../Abstractions/ContactUseCase'
 import IContactRepository from '../IContactRepository'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
-import UUID from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 export interface CreatePhoneComplaintDTO {
     personName: PersonName

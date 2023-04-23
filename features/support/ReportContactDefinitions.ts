@@ -6,7 +6,7 @@ import { expect } from 'expect'
 import CreatePhoneComplaintCommand from '@src/Application/Contact/Commands/CreatePhoneComplaint'
 import CreateEmailComplaintCommand from '@src/Application/Contact/Commands/CreateEmailComplaint'
 import RemoveComplaintCommand from '@src/Application/Contact/Commands/RemoveComplaint'
-import { uuidFactory } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import ComplaintInMemoryQueries from '@src/Infrastructure/Storage/InMemory/Queries/ComplaintQueries'
 import { ComplaintViewModel } from '@src/Application/Contact/Queries/IComplaintQueries'
 
@@ -28,8 +28,8 @@ const createPhoneComplaintCommand = container.resolve(CreatePhoneComplaintComman
 const removeComplaintCommand = container.resolve(RemoveComplaintCommand)
 
 const world: World = {
-    myUserId: uuidFactory(),
-    otherUserId: uuidFactory(),
+    myUserId: UUID.generate().getValue(),
+    otherUserId: UUID.generate().getValue(),
     phone: '+55 9123-7654',
     anotherPhone: '+55 9876-5432',
     phoneDescription: 'any phone complaint description',

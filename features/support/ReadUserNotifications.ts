@@ -4,11 +4,11 @@ import '@src/Infrastructure/DependencyInjection'
 import { Given, When, Then } from '@cucumber/cucumber'
 import { expect } from 'expect'
 import CreateUserNotificationCommand from '@src/Application/UserNotification/Commands/CreateUserNotification'
-import { uuidFactory } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import UserNotificationInMemoryQueries from '@src/Infrastructure/Storage/InMemory/Queries/UserNotificationQueries'
 import { UserNotificationViewModel } from '@src/Application/UserNotification/Queries/IUserNotificationQueries'
 import { UserNotificatonPayload } from '@src/Domain/Aggregates/UserNotification/UserNotification'
-import Phone from '@src/Domain/Base/Types/Phone'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 import MarkUserNotificationAsReadCommand from '@src/Application/UserNotification/Commands/MarkUserNotificationAsRead'
 
 interface World {
@@ -23,16 +23,16 @@ const createUserNotificationCommand = container.resolve(CreateUserNotificationCo
 const markUserNotificationAsReadCommand = container.resolve(MarkUserNotificationAsReadCommand)
 
 const world: World = {
-    phone: '+55 9123-4567' as Phone,
+    phone: new Phone('+55 9123-4567'),
     phoneDescription: 'Phone complaint for behaviour test',
-    myUserId: uuidFactory(),
-    otherUserId: uuidFactory(),
+    myUserId: UUID.generate().getValue(),
+    otherUserId: UUID.generate().getValue(),
     notification: null,
 }
 
 const payload: UserNotificatonPayload = {
     complaint: {
-        id: uuidFactory(),
+        id: UUID.generate().getValue(),
         description: 'Any complaint for behaviour test',
         type: {
             category: 'HOAX',
@@ -41,9 +41,9 @@ const payload: UserNotificatonPayload = {
         author: { id: world.otherUserId },
     },
     contact: {
-        id: uuidFactory(),
+        id: UUID.generate().getValue(),
         name: { first_name: 'John', last_name: '' },
-        account: { contact_type: 'Phone', value: world.phone },
+        account: { contact_type: 'Phone', value: world.phone.getValue() },
         complaints: [],
     },
 }

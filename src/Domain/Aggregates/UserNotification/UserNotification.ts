@@ -53,7 +53,7 @@ export default class UserNotification extends Entity {
     }
 
     public isEqual(entity: UserNotification): boolean {
-        return this.userNotificationId === entity.userNotificationId
+        return this.userNotificationId.isEqual(entity.userNotificationId)
     }
 
     public markAsRead(): void {
@@ -66,9 +66,9 @@ export default class UserNotification extends Entity {
 
     public toJSON(): UserNotificationJson {
         return {
-            id: this.userNotificationId,
-            user: { id: this.userId },
-            author: { id: this.authorId },
+            id: this.userNotificationId.toJSON(),
+            user: { id: this.userId.toJSON() },
+            author: { id: this.authorId.toJSON() },
             type: this.userNotificationType,
             payload: this.payload,
             isRead: this.isRead(),

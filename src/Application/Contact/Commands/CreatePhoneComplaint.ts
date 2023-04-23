@@ -3,12 +3,12 @@ import CreatePhoneComplaintUseCase, {
     CreatePhoneComplaintDTO,
 } from '@src/Domain/Aggregates/Contact/UseCases/CreatePhoneComplaint'
 import ContactCommand from '../AbstractContactCommand'
-import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
-import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 import ContactEventDispatcher from '../Events/ContactEventsDispatcher'
 
-interface CreatePhoneComplaintRequestData {
+interface CreatePhoneComplaintRequest {
     firstName: string
     lastName: string
     description: string
@@ -18,21 +18,22 @@ interface CreatePhoneComplaintRequestData {
     authorId: string
 }
 
-function mapper(input: CreatePhoneComplaintRequestData): CreatePhoneComplaintDTO {
-    assertIsUUID(input.authorId)
-    assertIsPhone(input.phone)
+function mapper(input: CreatePhoneComplaintRequest): CreatePhoneComplaintDTO {
+    const authorId = new UUID(input.authorId)
+    const phone = new Phone(input.phone)
+
     return {
         personName: new PersonName({ firstName: input.firstName, lastName: input.lastName }),
         description: input.description,
-        phone: input.phone,
+        phone,
         complaintCategory: input.complaintCategory,
         complaintSeverity: input.complaintSeverity,
-        authorId: input.authorId,
+        authorId,
     }
 }
 
 export default class CreatePhoneComplaintCommand extends ContactCommand<
-    CreatePhoneComplaintRequestData,
+    CreatePhoneComplaintRequest,
     CreatePhoneComplaintDTO
 > {
     constructor() {

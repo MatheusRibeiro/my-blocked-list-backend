@@ -1,4 +1,4 @@
-import UUID from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 export interface WatchedContactViewModel {
     watched_contact_id: UUID

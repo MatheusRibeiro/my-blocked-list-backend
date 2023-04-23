@@ -1,5 +1,5 @@
 import Entity from './Entity'
-import UUID from '../Types/UUID'
+import UUID from '../ValueObject/UUID'
 
 export default interface IRepository<TEntity extends Entity, TId extends UUID> {
     create: (entity: TEntity) => Promise<null>

@@ -1,5 +1,5 @@
 import Audit from '../Audit'
-import UUID, { uuidFactory } from '../Types/UUID'
+import UUID from '../ValueObject/UUID'
 
 export default abstract class DomainEvent {
     public readonly eventId: UUID
@@ -7,7 +7,7 @@ export default abstract class DomainEvent {
     abstract readonly version: number
 
     constructor(audit: Audit) {
-        this.eventId = uuidFactory()
+        this.eventId = UUID.generate()
         this.audit = audit
     }
 

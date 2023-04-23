@@ -2,7 +2,7 @@ import Audit from '../Audit'
 import DomainEvent from './DomainEvent'
 import IRepository from './Repository'
 import Entity from './Entity'
-import UUID from '../Types/UUID'
+import UUID from '../ValueObject/UUID'
 
 export default abstract class UseCase<
     DTO,

@@ -1,15 +1,15 @@
 import User from '@src/Domain/Aggregates/User/User'
 import Password from '@src/Domain/Aggregates/User/ValueObjects/Password'
 import Username from '@src/Domain/Aggregates/User/ValueObjects/Username'
-import { uuidFactory } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import UserInMemoryRepository from './UserRepository'
 import { DEFAULT_USER_ROLE } from '@src/Domain/Aggregates/User/ValueObjects/UserRole'
 
 describe('User In Memory Repository', () => {
     const repo = new UserInMemoryRepository()
 
-    const firstUser = new User(uuidFactory(), new Username('username'), DEFAULT_USER_ROLE, new Password('1234'))
-    const anotherUser = new User(uuidFactory(), new Username('username2'), DEFAULT_USER_ROLE, new Password('4321'))
+    const firstUser = new User(UUID.generate(), new Username('username'), DEFAULT_USER_ROLE, new Password('1234'))
+    const anotherUser = new User(UUID.generate(), new Username('username2'), DEFAULT_USER_ROLE, new Password('4321'))
 
     test('create', async () => {
         await repo.create(firstUser)
@@ -23,7 +23,7 @@ describe('User In Memory Repository', () => {
     })
 
     test('not found by id', async () => {
-        const notFound = await repo.findById(uuidFactory())
+        const notFound = await repo.findById(UUID.generate())
         expect(notFound).toBeNull()
     })
 

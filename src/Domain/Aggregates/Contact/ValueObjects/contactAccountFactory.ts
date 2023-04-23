@@ -1,5 +1,5 @@
-import Email from '@src/Domain/Base/Types/Email'
-import Phone from '@src/Domain/Base/Types/Phone'
+import Email from '@src/Domain/Base/ValueObject/Email'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 import BadRequestError from '@src/Domain/Errors/BadRequestError'
 import type ContactAccount from './ContactAccount'
 import EmailAccount from './EmailAccount'

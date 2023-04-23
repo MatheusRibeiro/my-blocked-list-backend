@@ -1,4 +1,3 @@
-import UUID from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 
-type UserNotificationId = UUID
-export default UserNotificationId
+export default class UserNotificationId extends UUID {}

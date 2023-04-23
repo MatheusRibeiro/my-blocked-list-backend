@@ -1,6 +1,6 @@
 import { container } from 'tsyringe'
 import UserNotificationCommand from '../AbstrctUserNotificationCommand'
-import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import CreateUserNotificationUseCase, {
     CreateUserNotificationDTO,
 } from '@src/Domain/Aggregates/UserNotification/UseCases/CreateUserNotification'
@@ -15,12 +15,12 @@ interface CreateUserNotificationRequestData {
 }
 
 function mapper(input: CreateUserNotificationRequestData): CreateUserNotificationDTO {
-    assertIsUUID(input.userId)
-    assertIsUUID(input.authorId)
+    const userId = new UUID(input.userId)
+    const authorId = new UUID(input.authorId)
 
     return {
-        userId: input.userId,
-        authorId: input.authorId,
+        userId,
+        authorId,
         payload: input.payload,
         userNotificationType: input.userNotificationType,
     }

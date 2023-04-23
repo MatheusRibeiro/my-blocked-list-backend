@@ -8,14 +8,17 @@ import InMemoryQuery from '../Base/InMemoryQuery'
 import dbContext from '../Base/DbContext'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
 import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccount'
-import Phone, { assertIsPhone } from '@src/Domain/Base/Types/Phone'
-import UUID from '@src/Domain/Base/Types/UUID'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import EmailAccount from '@src/Domain/Aggregates/Contact/ValueObjects/EmailAccount'
-import Email, { assertIsEmail } from '@src/Domain/Base/Types/Email'
+import Email from '@src/Domain/Base/ValueObject/Email'
 
 export default class ComplaintInMemoryQueries extends InMemoryQuery implements IComplaintQueries {
-    async getComplaintsFromPhone({ phone }: GetComplaintsFromPhoneQuery): Promise<ComplaintViewModel[]> {
-        assertIsPhone(phone)
+    async getComplaintsFromPhone({ phone: phoneAsString }: GetComplaintsFromPhoneQuery): Promise<ComplaintViewModel[]> {
+        const phone = new Phone(phoneAsString)
+        if (!phone.isValid()) {
+            return []
+        }
         const contact = this.getContactByPhone(phone)
         if (contact === null) {
             return []
@@ -38,8 +41,11 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
         return null
     }
 
-    async getComplaintsFromEmail({ email }: GetComplaintsFromEmailQuery): Promise<ComplaintViewModel[]> {
-        assertIsEmail(email)
+    async getComplaintsFromEmail({ email: emailAsString }: GetComplaintsFromEmailQuery): Promise<ComplaintViewModel[]> {
+        const email = new Email(emailAsString)
+        if (!email.isValid()) {
+            return []
+        }
         const contact = this.getContactByEmail(email)
         if (contact === null) {
             return []
@@ -75,10 +81,10 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
 
     private toViewModel(complaint: Complaint, contact: Contact): ComplaintViewModel {
         return {
-            id: complaint.getId(),
+            id: complaint.getId().getValue(),
             description: complaint.getDescription(),
             type: complaint.getType().toJSON(),
-            contact: { id: contact.getId() },
+            contact: { id: contact.getId().getValue() },
         }
     }
 }

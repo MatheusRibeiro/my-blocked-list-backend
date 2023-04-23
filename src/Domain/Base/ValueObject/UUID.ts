@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import ValueObject from '../Abstractions/ValueObject'
 
 export default class UUID extends ValueObject<string> {
@@ -9,5 +10,9 @@ export default class UUID extends ValueObject<string> {
 
     public toJSON(): string {
         return this.value
+    }
+
+    public static generate(): UUID {
+        return new UUID(uuidv4())
     }
 }

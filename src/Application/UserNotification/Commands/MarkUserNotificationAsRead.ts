@@ -3,7 +3,7 @@ import UserNotificationCommand from '../AbstrctUserNotificationCommand'
 import MarkUserNotificationAsReadUseCase, {
     MarkUserNotificationAsReadDTO,
 } from '@src/Domain/Aggregates/UserNotification/UseCases/MarkUserNotificationAsRead'
-import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import UserNotificationEventDispatcher from '../Events/UserNotificationEventsDispatcher'
 
 interface MarkUserNotificationAsReadRequestData {
@@ -11,9 +11,9 @@ interface MarkUserNotificationAsReadRequestData {
 }
 
 function mapper(input: MarkUserNotificationAsReadRequestData): MarkUserNotificationAsReadDTO {
-    assertIsUUID(input.userNotificationId)
+    const userNotificationId = new UUID(input.userNotificationId)
     return {
-        userNotificationId: input.userNotificationId,
+        userNotificationId,
     }
 }
 

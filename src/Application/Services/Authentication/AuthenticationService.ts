@@ -7,7 +7,7 @@ import type AuthenticationResponse from './IAuthenticationResponse'
 import User from '@src/Domain/Aggregates/User/User'
 import Username from '@src/Domain/Aggregates/User/ValueObjects/Username'
 import Password from '@src/Domain/Aggregates/User/ValueObjects/Password'
-import { assertIsUUID, uuidFactory } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import ConflictError from '@src/Domain/Errors/ConflictError'
 import NotFoundError from '@src/Domain/Errors/NotFoundError'
 import { DEFAULT_USER_ROLE } from '@src/Domain/Aggregates/User/ValueObjects/UserRole'
@@ -37,7 +37,7 @@ export default class AuthenticationService extends AbstractAuthenticationService
             throw new ConflictError(usernameAlreadyTakenMessage)
         }
 
-        const userId = uuidFactory()
+        const userId = UUID.generate()
         const user = new User(userId, newUsername, DEFAULT_USER_ROLE, new Password(password))
         await this.userRepository.create(user)
 
@@ -70,8 +70,8 @@ export default class AuthenticationService extends AbstractAuthenticationService
         }
 
         const { userId } = tokenDetails
-        assertIsUUID(userId)
-        const user = await this.userRepository.findById(userId)
+        const uuid = new UUID(userId)
+        const user = await this.userRepository.findById(uuid)
         if (user === null) {
             throw new NotFoundError(invalidCredentialsMessage)
         }
@@ -82,12 +82,12 @@ export default class AuthenticationService extends AbstractAuthenticationService
 
     private generateLoginResponse(user: User): AuthenticationResponse {
         const userId = user.getId()
-        const username = user.getUsername().value
+        const username = user.getUsername().getValue()
         const role = user.getRole()
 
-        const token = this.jwtTokenGenerator.generateToken(userId, username, role)
-        const refreshToken = this.jwtTokenGenerator.generateRefreshToken(userId, username)
+        const token = this.jwtTokenGenerator.generateToken(userId.getValue(), username, role)
+        const refreshToken = this.jwtTokenGenerator.generateRefreshToken(userId.getValue(), username)
 
-        return { id: userId, username, token, refresh_token: refreshToken }
+        return { id: userId.getValue(), username, token, refresh_token: refreshToken }
     }
 }

@@ -1,6 +1,6 @@
 import ValueObject from '@src/Domain/Base/Abstractions/ValueObject'
-import Email from '@src/Domain/Base/Types/Email'
-import Phone from '@src/Domain/Base/Types/Phone'
+import Email from '@src/Domain/Base/ValueObject/Email'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 
 export type AccountType = Phone | Email
 

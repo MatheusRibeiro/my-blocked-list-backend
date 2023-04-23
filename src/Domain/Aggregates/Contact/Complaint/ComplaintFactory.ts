@@ -1,5 +1,5 @@
 import Complaint from './Complaint'
-import UUID, { uuidFactory } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import { assertIsComplaintDescription } from './ValueObjects/ComplaintDescription'
 import ComplaintType, { assertIsComplaintCategory, assertIsComplaintSeverity } from './ValueObjects/ComplaintType'
 import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
@@ -16,7 +16,7 @@ export interface RawComplaintDataWithId extends RawComplaintDataWithoutId {
 }
 
 export function complaintFactoryWithoutId(rawData: RawComplaintDataWithoutId): Complaint {
-    const complaintId = uuidFactory()
+    const complaintId = UUID.generate()
     return complaintFactoryWithId(Object.assign({ complaintId }, rawData))
 }
 

@@ -4,27 +4,26 @@ import PhoneAccount from './ValueObjects/PhoneAccount'
 import EmailAccount from './ValueObjects/EmailAccount'
 import { assertIsComplaintDescription } from './Complaint/ValueObjects/ComplaintDescription'
 import ComplaintType from './Complaint/ValueObjects/ComplaintType'
-import { assertIsEmail } from '@src/Domain/Base/Types/Email'
-import { assertIsPhone } from '@src/Domain/Base/Types/Phone'
+import Email from '@src/Domain/Base/ValueObject/Email'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
-import { uuidFactory } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 
-const phone = '+55 9876-5432'
-assertIsPhone(phone)
+const phone = new Phone('+55 9876-5432')
 const validPhone = new PhoneAccount(phone)
 
-const email = 'email1@gmail.com'
-assertIsEmail(email)
+const email = new Email('email1@gmail.com')
 const validEmail = new EmailAccount(email)
+
 const validPersonName = new PersonName({ firstName: 'John', lastName: 'Doe' })
-const validUuid = uuidFactory()
+const validUuid = UUID.generate()
 
 const validDescription = 'valid description'
 assertIsComplaintDescription(validDescription)
 
-const complaintAuthorId = uuidFactory()
+const complaintAuthorId = UUID.generate()
 const validComplaint = new Complaint(
-    uuidFactory(),
+    UUID.generate(),
     validDescription,
     new ComplaintType({ complaintCategory: 'OTHER', complaintSeverity: 'CRITICAL' }),
     complaintAuthorId
@@ -62,7 +61,7 @@ describe('validate', () => {
 
 describe('is Equal', () => {
     test('should be equal when have the same id', () => {
-        const initId = uuidFactory()
+        const initId = UUID.generate()
         const copyId = initId
 
         const contact1 = new Contact(initId, new PersonName({ firstName: 'John', lastName: '' }), validPhone, [
@@ -76,8 +75,8 @@ describe('is Equal', () => {
     })
 
     test('should not be equal when have different ids', () => {
-        const id1 = uuidFactory()
-        const id2 = uuidFactory()
+        const id1 = UUID.generate()
+        const id2 = UUID.generate()
 
         const contact1 = new Contact(id1, new PersonName({ firstName: 'John', lastName: '' }), validPhone, [
             validComplaint,
@@ -100,13 +99,13 @@ describe('Remove complaint', () => {
     })
     it('should return null if the complaint was not found complaint', () => {
         const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
-        const removedComplaint = contact.removeComplaint(uuidFactory(), complaintAuthorId)
+        const removedComplaint = contact.removeComplaint(UUID.generate(), complaintAuthorId)
         expect(removedComplaint).toBeNull()
         expect(contact.getComplaints().length).toBe(1)
     })
     it('should return null if the complaint was not from who is trying to remove it', () => {
         const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
-        const removedComplaint = contact.removeComplaint(validComplaint.getId(), uuidFactory())
+        const removedComplaint = contact.removeComplaint(validComplaint.getId(), UUID.generate())
         expect(removedComplaint).toBeNull()
         expect(contact.getComplaints().length).toBe(1)
     })

@@ -5,7 +5,7 @@ import IUserNotificationQueries, {
 import UserNotification from '@src/Domain/Aggregates/UserNotification/UserNotification'
 import InMemoryQuery from '../Base/InMemoryQuery'
 import dbContext from '../Base/DbContext'
-import { assertIsUUID } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 
 export default class UserNotificationInMemoryQueries extends InMemoryQuery implements IUserNotificationQueries {
     async getUserNotifications({ userId }: GetUserNotificationsQuery): Promise<UserNotificationViewModel[]> {
@@ -14,21 +14,24 @@ export default class UserNotificationInMemoryQueries extends InMemoryQuery imple
     }
 
     private getUserNotificationsByUser(userId: string): UserNotification[] {
-        assertIsUUID(userId)
+        const uuid = new UUID(userId)
+        if (!uuid.isValid()) {
+            return []
+        }
         const repositoryName = this.repositoryNames.UserNotification
         const notificatonsForUser: UserNotification[] = []
         for (let i = 0; i < dbContext[repositoryName].length; i++) {
             const notification = dbContext[repositoryName][i] as UserNotification
-            if (notification.userId === userId) notificatonsForUser.push(notification)
+            if (notification.userId.isEqual(uuid)) notificatonsForUser.push(notification)
         }
         return notificatonsForUser
     }
 
     private toViewModel(userNotification: UserNotification): UserNotificationViewModel {
         return {
-            id: userNotification.userNotificationId,
+            id: userNotification.userNotificationId.getValue(),
             type: userNotification.userNotificationType,
-            author: { id: userNotification.authorId },
+            author: { id: userNotification.authorId.getValue() },
             payload: userNotification.payload,
             isRead: userNotification.isRead(),
         }

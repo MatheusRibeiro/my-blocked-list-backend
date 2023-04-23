@@ -1,10 +1,10 @@
-import { uuidFactory } from '@src/Domain/Base/Types/UUID'
+import UUID from '@src/Domain/Base/ValueObject/UUID'
 import User from './User'
 import Password from './ValueObjects/Password'
 import Username from './ValueObjects/Username'
 import { DEFAULT_USER_ROLE } from './ValueObjects/UserRole'
 
-const validUuid = uuidFactory()
+const validUuid = UUID.generate()
 const validUsername = new Username('my_username')
 const validPassword = new Password('123456')
 
@@ -35,7 +35,7 @@ describe('is valid', () => {
 
 describe('is Equal', () => {
     test('should be equal when have the same id', () => {
-        const id = uuidFactory()
+        const id = UUID.generate()
         const sameId = id
 
         const user = new User(id, new Username('first_one'), DEFAULT_USER_ROLE, new Password('1234'))
@@ -45,8 +45,8 @@ describe('is Equal', () => {
     })
 
     test('should not be equal when have different ids', () => {
-        const id = uuidFactory()
-        const anotherId = uuidFactory()
+        const id = UUID.generate()
+        const anotherId = UUID.generate()
 
         const user = new User(id, validUsername, DEFAULT_USER_ROLE, validPassword)
         const differentUser = new User(anotherId, validUsername, DEFAULT_USER_ROLE, validPassword)
