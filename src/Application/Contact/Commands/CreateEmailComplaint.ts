@@ -7,6 +7,7 @@ import UUID from '@src/Domain/Base/ValueObject/UUID'
 import Email from '@src/Domain/Base/ValueObject/Email'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 import ContactEventDispatcher from '../Events/ContactEventsDispatcher'
+import BadRequestError from '@src/Domain/Errors/BadRequestError'
 
 interface CreateEmailComplaintRequest {
     firstName: string
@@ -19,9 +20,28 @@ interface CreateEmailComplaintRequest {
 }
 
 function mapper(input: CreateEmailComplaintRequest): CreateEmailComplaintDTO {
+    const errors: string[] = []
+
     const authorId = new UUID(input.authorId)
+    const authorIdError = authorId.getError()
+    if (authorIdError !== undefined) {
+        errors.push(authorIdError)
+    }
+
     const email = new Email(input.email)
+    const emailError = email.getError()
+    if (emailError !== undefined) {
+        errors.push(emailError)
+    }
     const personName = new PersonName({ firstName: input.firstName, lastName: input.lastName })
+    const personNameError = personName.getError()
+    if (personNameError !== undefined) {
+        errors.push(personNameError)
+    }
+
+    if (errors.length > 0) {
+        throw new BadRequestError(`Invalid parameters for CreateEmailComplaint: ${errors.join(', ')}`)
+    }
 
     return {
         personName: personName.getValidatedInstance(),
