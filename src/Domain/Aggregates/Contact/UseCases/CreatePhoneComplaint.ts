@@ -9,9 +9,10 @@ import AbstractContactUseCase from '../Abstractions/ContactUseCase'
 import IContactRepository from '../IContactRepository'
 import PersonName from '@src/Domain/Base/ValueObject/PersonName'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
+import { Valid } from '@src/Domain/Base/Abstractions/ValueObject'
 
 export interface CreatePhoneComplaintDTO {
-    personName: PersonName
+    personName: Valid<PersonName>
     description: string
     complaintCategory: string
     complaintSeverity: string

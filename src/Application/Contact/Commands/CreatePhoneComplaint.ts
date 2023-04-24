@@ -21,9 +21,10 @@ interface CreatePhoneComplaintRequest {
 function mapper(input: CreatePhoneComplaintRequest): CreatePhoneComplaintDTO {
     const authorId = new UUID(input.authorId)
     const phone = new Phone(input.phone)
+    const personName = new PersonName({ firstName: input.firstName, lastName: input.lastName })
 
     return {
-        personName: new PersonName({ firstName: input.firstName, lastName: input.lastName }),
+        personName: personName.getValidatedInstance(),
         description: input.description,
         phone,
         complaintCategory: input.complaintCategory,

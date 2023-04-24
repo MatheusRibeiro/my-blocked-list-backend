@@ -21,9 +21,10 @@ interface CreateEmailComplaintRequest {
 function mapper(input: CreateEmailComplaintRequest): CreateEmailComplaintDTO {
     const authorId = new UUID(input.authorId)
     const email = new Email(input.email)
+    const personName = new PersonName({ firstName: input.firstName, lastName: input.lastName })
 
     return {
-        personName: new PersonName({ firstName: input.firstName, lastName: input.lastName }),
+        personName: personName.getValidatedInstance(),
         description: input.description,
         email,
         complaintCategory: input.complaintCategory,

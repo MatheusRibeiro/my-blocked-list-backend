@@ -4,9 +4,10 @@ import contactAccountFactory from './ValueObjects/contactAccountFactory'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
 import Phone from '@src/Domain/Base/ValueObject/Phone'
 import Email from '@src/Domain/Base/ValueObject/Email'
+import { Valid } from '@src/Domain/Base/Abstractions/ValueObject'
 
 export interface RawContactDataWithoutId {
-    personName: PersonName
+    personName: Valid<PersonName>
     email?: Email
     phone?: Phone
 }

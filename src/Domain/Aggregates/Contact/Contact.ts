@@ -5,6 +5,7 @@ import Complaint, { ComplaintJson } from './Complaint/Complaint'
 import ComplaintId from './Complaint/ValueObjects/ComplaintId'
 import ContactAccount, { AccountType, ContactAccountJSON } from './ValueObjects/ContactAccount'
 import ContactId from './ValueObjects/ContactId'
+import { Valid } from '@src/Domain/Base/Abstractions/ValueObject'
 
 export interface ContactJson {
     id: string
@@ -14,22 +15,13 @@ export interface ContactJson {
 }
 
 export default class Contact extends Entity {
-    protected readonly contactId: ContactId
-    protected personName: PersonName
-    protected readonly account: ContactAccount<AccountType>
-    protected readonly complaints: Complaint[]
-
     constructor(
-        contactId: ContactId,
-        personName: PersonName,
-        account: ContactAccount<AccountType>,
-        complaints: Complaint[]
+        protected readonly contactId: ContactId,
+        protected readonly personName: Valid<PersonName>,
+        protected readonly account: ContactAccount<AccountType>,
+        protected readonly complaints: Complaint[]
     ) {
         super()
-        this.contactId = contactId
-        this.personName = personName
-        this.account = account
-        this.complaints = complaints
     }
 
     public getId(): ContactId {
@@ -37,7 +29,7 @@ export default class Contact extends Entity {
     }
 
     public isValid(): boolean {
-        return this.personName.isValid() && this.account.isValid() && this.complaints.length >= 0
+        return this.account.isValid() && this.complaints.length >= 0
     }
 
     public isEqual(entity: Contact): boolean {
@@ -72,7 +64,7 @@ export default class Contact extends Entity {
 
     public toJSON(): ContactJson {
         return {
-            id: this.contactId.toJSON(),
+            id: this.contactId.getValue(),
             name: this.personName.toJSON(),
             account: this.account.toJSON(),
             complaints: this.complaints.map(complaint => complaint.toJSON()),

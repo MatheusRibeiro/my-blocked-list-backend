@@ -31,7 +31,7 @@ const validComplaint = new Complaint(
 
 describe('get Id', () => {
     test('should return the contact id', () => {
-        const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
+        const contact = new Contact(validUuid, validPersonName.getValidatedInstance(), validPhone, [validComplaint])
 
         expect(contact.getId()).toBe(validUuid)
     })
@@ -39,13 +39,13 @@ describe('get Id', () => {
 
 describe('Is Valid', () => {
     test('is valid with phone as contact', () => {
-        const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
+        const contact = new Contact(validUuid, validPersonName.getValidatedInstance(), validPhone, [validComplaint])
 
         expect(contact.isValid()).toBeTruthy()
     })
 
     test('is valid with email as contact', () => {
-        const contact = new Contact(validUuid, validPersonName, validEmail, [validComplaint])
+        const contact = new Contact(validUuid, validPersonName.getValidatedInstance(), validEmail, [validComplaint])
 
         expect(contact.isValid()).toBeTruthy()
     })
@@ -53,7 +53,7 @@ describe('Is Valid', () => {
 
 describe('validate', () => {
     test('returns an empty result when valid', () => {
-        const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
+        const contact = new Contact(validUuid, validPersonName.getValidatedInstance(), validPhone, [validComplaint])
 
         expect(contact.validate()).toBeNull()
     })
@@ -64,12 +64,18 @@ describe('is Equal', () => {
         const initId = UUID.generate()
         const copyId = initId
 
-        const contact1 = new Contact(initId, new PersonName({ firstName: 'John', lastName: '' }), validPhone, [
-            validComplaint,
-        ])
-        const contact2 = new Contact(copyId, new PersonName({ firstName: 'Mary', lastName: '' }), validEmail, [
-            validComplaint,
-        ])
+        const contact1 = new Contact(
+            initId,
+            new PersonName({ firstName: 'John', lastName: '' }).getValidatedInstance(),
+            validPhone,
+            [validComplaint]
+        )
+        const contact2 = new Contact(
+            copyId,
+            new PersonName({ firstName: 'Mary', lastName: '' }).getValidatedInstance(),
+            validEmail,
+            [validComplaint]
+        )
 
         expect(contact1.isEqual(contact2)).toBeTruthy()
     })
@@ -78,12 +84,18 @@ describe('is Equal', () => {
         const id1 = UUID.generate()
         const id2 = UUID.generate()
 
-        const contact1 = new Contact(id1, new PersonName({ firstName: 'John', lastName: '' }), validPhone, [
-            validComplaint,
-        ])
-        const contact2 = new Contact(id2, new PersonName({ firstName: 'John', lastName: '' }), validPhone, [
-            validComplaint,
-        ])
+        const contact1 = new Contact(
+            id1,
+            new PersonName({ firstName: 'John', lastName: '' }).getValidatedInstance(),
+            validPhone,
+            [validComplaint]
+        )
+        const contact2 = new Contact(
+            id2,
+            new PersonName({ firstName: 'John', lastName: '' }).getValidatedInstance(),
+            validPhone,
+            [validComplaint]
+        )
 
         expect(contact1.isEqual(contact2)).toBeFalsy()
     })
@@ -91,20 +103,20 @@ describe('is Equal', () => {
 
 describe('Remove complaint', () => {
     it('should return the removed complaint', () => {
-        const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
+        const contact = new Contact(validUuid, validPersonName.getValidatedInstance(), validPhone, [validComplaint])
         const removedComplaint = contact.removeComplaint(validComplaint.getId(), complaintAuthorId)
         expect(removedComplaint === null).toBeFalsy()
         expect(validComplaint.isEqual(removedComplaint as Complaint))
         expect(contact.getComplaints().length).toBe(0)
     })
     it('should return null if the complaint was not found complaint', () => {
-        const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
+        const contact = new Contact(validUuid, validPersonName.getValidatedInstance(), validPhone, [validComplaint])
         const removedComplaint = contact.removeComplaint(UUID.generate(), complaintAuthorId)
         expect(removedComplaint).toBeNull()
         expect(contact.getComplaints().length).toBe(1)
     })
     it('should return null if the complaint was not from who is trying to remove it', () => {
-        const contact = new Contact(validUuid, validPersonName, validPhone, [validComplaint])
+        const contact = new Contact(validUuid, validPersonName.getValidatedInstance(), validPhone, [validComplaint])
         const removedComplaint = contact.removeComplaint(validComplaint.getId(), UUID.generate())
         expect(removedComplaint).toBeNull()
         expect(contact.getComplaints().length).toBe(1)

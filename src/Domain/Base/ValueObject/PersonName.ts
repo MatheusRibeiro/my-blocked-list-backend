@@ -12,7 +12,7 @@ export interface PersonNameJSON {
 
 const MIN_FIRSTNAME_LENGTH = 1
 
-export default class PersonName extends ValueObject<IPersonlName> {
+export default class PersonName extends ValueObject<IPersonlName, PersonNameJSON> {
     public isValid(): boolean {
         const { firstName } = this.value
         return firstName.length >= MIN_FIRSTNAME_LENGTH
