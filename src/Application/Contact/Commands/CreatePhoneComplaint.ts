@@ -44,7 +44,7 @@ function mapper(input: CreatePhoneComplaintRequest): CreatePhoneComplaintDTO {
     }
 
     return {
-        personName: personName.getValidatedInstance(),
+        personName,
         description: input.description,
         phone,
         complaintCategory: input.complaintCategory,

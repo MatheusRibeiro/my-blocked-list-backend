@@ -44,7 +44,7 @@ function mapper(input: CreateEmailComplaintRequest): CreateEmailComplaintDTO {
     }
 
     return {
-        personName: personName.getValidatedInstance(),
+        personName,
         description: input.description,
         email,
         complaintCategory: input.complaintCategory,

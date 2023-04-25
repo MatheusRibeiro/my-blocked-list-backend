@@ -3,22 +3,27 @@ import PersonName, { PersonNameJSON } from '@src/Domain/Base/ValueObject/PersonN
 import UserId from '@src/Domain/Aggregates/User/ValueObjects/UserId'
 import Complaint, { ComplaintJson } from './Complaint/Complaint'
 import ComplaintId from './Complaint/ValueObjects/ComplaintId'
-import ContactAccount, { AccountType, ContactAccountJSON } from './ValueObjects/ContactAccount'
 import ContactId from './ValueObjects/ContactId'
-import { Valid } from '@src/Domain/Base/Abstractions/ValueObject'
+import Email from '@src/Domain/Base/ValueObject/Email'
+import Phone from '@src/Domain/Base/ValueObject/Phone'
 
 export interface ContactJson {
     id: string
     name: PersonNameJSON
-    account: ContactAccountJSON
+    account: {
+        contact_type: string
+        value: string
+    }
     complaints: ComplaintJson[]
 }
+
+type ContactAccount = Email | Phone
 
 export default class Contact extends Entity {
     constructor(
         protected readonly contactId: ContactId,
-        protected readonly personName: Valid<PersonName>,
-        protected readonly account: ContactAccount<AccountType>,
+        protected readonly personName: PersonName,
+        protected readonly account: ContactAccount,
         protected readonly complaints: Complaint[]
     ) {
         super()
@@ -29,7 +34,7 @@ export default class Contact extends Entity {
     }
 
     public isValid(): boolean {
-        return this.account.isValid() && this.complaints.length >= 0
+        return this.complaints.length >= 0
     }
 
     public isEqual(entity: Contact): boolean {
@@ -54,7 +59,7 @@ export default class Contact extends Entity {
         return null
     }
 
-    public getAccount(): ContactAccount<AccountType> {
+    public getAccount(): ContactAccount {
         return this.account
     }
 
@@ -66,7 +71,10 @@ export default class Contact extends Entity {
         return {
             id: this.contactId.getValue(),
             name: this.personName.toJSON(),
-            account: this.account.toJSON(),
+            account: {
+                contact_type: this.account.constructor.name,
+                value: this.account.getValue(),
+            },
             complaints: this.complaints.map(complaint => complaint.toJSON()),
         }
     }

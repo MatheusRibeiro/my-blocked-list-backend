@@ -59,10 +59,10 @@ export default class Complaint extends Entity {
 
     public toJSON(): ComplaintJson {
         return {
-            id: this.complaintId.toJSON(),
+            id: this.complaintId.getValue(),
             description: this.description,
             type: this.complaintType.toJSON(),
-            author: { id: this.authorId.toJSON() },
+            author: { id: this.authorId.getValue() },
         }
     }
 }

@@ -7,10 +7,8 @@ import Complaint from '@src/Domain/Aggregates/Contact/Complaint/Complaint'
 import InMemoryQuery from '../Base/InMemoryQuery'
 import dbContext from '../Base/DbContext'
 import Contact from '@src/Domain/Aggregates/Contact/Contact'
-import PhoneAccount from '@src/Domain/Aggregates/Contact/ValueObjects/PhoneAccount'
 import Phone from '@src/Domain/Base/ValueObject/Phone'
 import UUID from '@src/Domain/Base/ValueObject/UUID'
-import EmailAccount from '@src/Domain/Aggregates/Contact/ValueObjects/EmailAccount'
 import Email from '@src/Domain/Base/ValueObject/Email'
 
 export default class ComplaintInMemoryQueries extends InMemoryQuery implements IComplaintQueries {
@@ -32,9 +30,8 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
 
     private getContactByPhone(phone: Phone): Contact | null {
         const repositoryName = this.repositoryNames.Contact
-        const phoneAccount = new PhoneAccount(phone)
         for (let i = 0; i < dbContext[repositoryName].length; i++) {
-            if ((dbContext[repositoryName][i] as Contact).getAccount().isEqual(phoneAccount)) {
+            if ((dbContext[repositoryName][i] as Contact).getAccount().isEqual(phone)) {
                 return dbContext[repositoryName][i] as Contact
             }
         }
@@ -59,9 +56,8 @@ export default class ComplaintInMemoryQueries extends InMemoryQuery implements I
 
     private getContactByEmail(email: Email): Contact | null {
         const repositoryName = this.repositoryNames.Contact
-        const emailAccount = new EmailAccount(email)
         for (let i = 0; i < dbContext[repositoryName].length; i++) {
-            if ((dbContext[repositoryName][i] as Contact).getAccount().isEqual(emailAccount)) {
+            if ((dbContext[repositoryName][i] as Contact).getAccount().isEqual(email)) {
                 return dbContext[repositoryName][i] as Contact
             }
         }
