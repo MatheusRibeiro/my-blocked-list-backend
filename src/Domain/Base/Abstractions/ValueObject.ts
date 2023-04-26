@@ -1,4 +1,4 @@
-type Value = object | number | string | boolean
+export type Value = object | number | string | boolean
 
 export default abstract class ValueObject<T extends Value> {
     protected readonly error: string | undefined
