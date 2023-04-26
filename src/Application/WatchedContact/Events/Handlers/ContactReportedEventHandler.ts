@@ -50,10 +50,10 @@ export default class ContactReportedEventHandler implements IEventHandler {
         contactType,
         contactValue,
     }: GetWatchedContactParams): Promise<WatchedContact | null> {
-        if (contactType === 'PhoneAccount') {
+        if (contactType === 'Phone') {
             return await this.repository.findByPhone(new Phone(contactValue))
         }
-        if (contactType === 'EmailAccount') {
+        if (contactType === 'Email') {
             return await this.repository.findByEmail(new Email(contactValue))
         }
 
