@@ -40,7 +40,7 @@ function mapper(input: CreatePhoneComplaintRequest): CreatePhoneComplaintDTO {
     }
 
     if (errors.length > 0) {
-        throw new BadRequestError(`Invalid parameters for CreatePhoneComplaint: ${errors.join(', ')}`)
+        throw new BadRequestError(`Invalid parameters for CreatePhoneComplaint: [${errors.join(', ')}]`)
     }
 
     return {

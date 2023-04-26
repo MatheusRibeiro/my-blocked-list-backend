@@ -40,7 +40,7 @@ function mapper(input: CreateEmailComplaintRequest): CreateEmailComplaintDTO {
     }
 
     if (errors.length > 0) {
-        throw new BadRequestError(`Invalid parameters for CreateEmailComplaint: ${errors.join(', ')}`)
+        throw new BadRequestError(`Invalid parameters for CreateEmailComplaint: [${errors.join(', ')}]`)
     }
 
     return {
